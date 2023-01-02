@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <style>
+ .ql-toolbar.ql-snow + .ql-container.ql-snow {
+    border-top: 0px;
+    height: 255px!important;
+}
+.col-12 {
+    flex: 0 0 auto;
+    width: 100%;
+    margin-top: 32px;
+}
+  </style>
+<body>
+  <div id="headerDiv"></div>
+  <div id="sidebarDiv"></div>
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Form Editors</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
+          
+          <li class="breadcrumb-item active">Privacy Policy</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <form>
+              <div class="col-12">
+                <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
+                <input type="text" class="form-control" value="Privacy Policy" disabled>
+              </div>
+
+              <div class="col-12">
+                <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
+                <div class="quill-editor-full">
+                  <textarea id="discription"> </textarea>
+                </div>
+              </div>
+              </form>
+             </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+  <div id="footerDiv"></div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+  $(function () {
+    $("#headerDiv").load("header.html");
+    $("#sidebarDiv").load("sidebar.html");
+    $("#footerDiv").load("footer.html");
+  });  
+</script>
+
+</html>

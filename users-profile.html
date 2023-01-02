@@ -2,14 +2,7 @@
 <html>
 
 <head>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-  <script>
-    $(function () {
-      $("#headerDiv").load("header.html");
-      $("#sidebarDiv").load("sidebar.html");
-      $("#footerDiv").load("footer.html");
-    });  
-  </script>
+  
 </head>
 
 <body>
@@ -187,209 +180,218 @@
     </section>
 
   </main><!-- End #main -->
-  <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-  <script>
+ 
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+  $(function () {
+    $("#headerDiv").load("header.html");
+    $("#sidebarDiv").load("sidebar.html");
+    $("#footerDiv").load("footer.html");
+  });  
+</script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
-    $('#adminImage').change(function () {
-      readImgUrlAndPreview(this);
+<script>
 
-      function readImgUrlAndPreview(input) {
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            $('#profileImge').attr('src', e.target.result);
-          }
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
+  $('#adminImage').change(function () {
+    readImgUrlAndPreview(this);
+
+    function readImgUrlAndPreview(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#profileImge').attr('src', e.target.result);
+        }
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  });
+
+
+  function adminProfileUpdate() {
+    jQuery.support.cors = true;
+    var id = $('.adminId').val();
+    var firstName = $('#firstName').val();
+    var lastName = $('#lastName').val();
+    var image = $('#adminImage')[0].files[0];
+    console.log(id + "==" + firstName + "==" + lastName);
+    console.log("image", image);
+    if (firstName.length === 0 || !(firstName)) {
+      $("#firstNameValid").show();
+      return
+    } else {
+      $("#firstNameValid").hide();
+
+    }
+
+    let formData = new FormData();
+    // formData.append("_id", id);
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append('_method', 'PUT');
+    if (image) {
+      formData.append("image", image, image.name);
+    }
+    // return  
+    var url = "http://192.168.0.150:8000/admin/update/" + id;
+    $.ajax({
+      url: url,
+      method: "PUT",
+      type: "PUT",
+      enctype: 'multipart/form-data',
+      data: formData,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function (response) {
+        console.log(response);
+        $("#updateProgileMessage").show().text(response.message);
+        console.log(response);
+        $("#updateProgileMessage").fadeTo(2000, 500).slideUp(500, function () {
+          $("#updateProgileMessage").hide();
+        });
+        location.reload()
+      },
+      error: function (err) {
+        // var error = JSON.parse(err.responseText);
+
+        console.log(err);
+
+      },
     });
+  }
+
+  getAdminDetails();
+  function getAdminDetails() {
+    jQuery.support.cors = true;
+    var url = "http://192.168.0.150:8000/admin/data";
+    $.ajax({
+      url: url,
+      type: "GET",
+      success: function (response) {
+        var res = JSON.parse(JSON.stringify(response));
+        var admin = res.data[0];
+        console.log(admin);
+        var fullname = admin.firstName + " " + admin.lastName;
+        $('.fullName').text(fullname ? fullname : "Admin")
+        $('.emailId').text(admin.email)
+
+        $('#firstName').val(admin.firstName ? admin.firstName : "Admin")
+        $('#lastName').val(admin.lastName)
+        $('#myEmail').val(admin.email)
+        $('.adminId').val(admin._id)
+
+        $('.profileImge').attr('src', admin.image)
+      },
+      error: function (err) {
+        var error = JSON.parse(err);
+
+        console.log(JSON.stringify(error));
+
+      },
+    });
+  }
 
 
-    function adminProfileUpdate() {
-      jQuery.support.cors = true;
-      var id = $('.adminId').val();
-      var firstName = $('#firstName').val();
-      var lastName = $('#lastName').val();
-      var image = $('#adminImage')[0].files[0];
-      console.log(id + "==" + firstName + "==" + lastName);
-      console.log("image", image);
-      if (firstName.length === 0 || !(firstName)) {
-        $("#firstNameValid").show();
-        return
-      } else {
-        $("#firstNameValid").hide();
 
+  $("#changePassword").validate({
+    rules: {
+      password: {
+        required: true,
+        minlength: 8
+
+      },
+      newpassword: {
+        required: true,
+        minlength: 8
+
+      },
+
+      renewpassword: {
+        required: true,
+        minlength: 8,
+        equalTo: "#newpassword"
       }
 
-      let formData = new FormData();
-      // formData.append("_id", id);
-      formData.append("firstName", firstName);
-      formData.append("lastName", lastName);
-      formData.append('_method', 'PUT');
-      if (image) {
-        formData.append("image", image, image.name);
+    },
+    messages: {
+      password: {
+        required: "Old password field is required.",
+        minlength: "Old password must be at least 8 characters long."
+      },
+      newpassword: {
+        required: "New password field is required.",
+        minlength: "New password must be at least 8 characters long."
+      },
+      renewpassword: {
+        required: "Confirm password field is required.",
+        minlength: "Confirm password must be at least 8 characters long.",
+        equalTo: "New password and confirm password does not matched."
       }
-      // return  
-      var url = "http://192.168.0.150:8000/admin/update/" + id;
-      $.ajax({
-        url: url,
-        method: "PUT",
-        type: "PUT",
-        enctype: 'multipart/form-data',
-        data: formData,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (response) {
-          console.log(response);
-          $("#updateProgileMessage").show().text(response.message);
-          console.log(response);
-          $("#updateProgileMessage").fadeTo(2000, 500).slideUp(500, function () {
-            $("#updateProgileMessage").hide();
-          });
-          location.reload()
-        },
-        error: function (err) {
-          // var error = JSON.parse(err.responseText);
-
-          console.log(err);
-
-        },
-      });
     }
 
-    getAdminDetails();
-    function getAdminDetails() {
-      jQuery.support.cors = true;
-      var url = "http://192.168.0.150:8000/admin/data";
-      $.ajax({
-        url: url,
-        type: "GET",
-        success: function (response) {
-          var res = JSON.parse(JSON.stringify(response));
-          var admin = res.data[0];
-          console.log(admin);
-          var fullname = admin.firstName + " " + admin.lastName;
-          $('.fullName').text(fullname ? fullname : "Admin")
-          $('.emailId').text(admin.email)
+  });
 
-          $('#firstName').val(admin.firstName ? admin.firstName : "Admin")
-          $('#lastName').val(admin.lastName)
-          $('#myEmail').val(admin.email)
-          $('.adminId').val(admin._id)
+  $("#changePassword").on("submit", function (e) {
+    e.preventDefault();
+    jQuery.support.cors = true;
+    var url = "http://192.168.0.150:8000/admin/changePassword";
+    var data = {};
+    data._id = $(".adminId").val();
+    data.oldPassword = $("#currentPassword").val();
+    data.newPassword = $("#newPassword").val();
+    data.confirmPassword = $("#renewPassword").val();
+    $.ajax({
+      url: url,
+      type: "POST",
+      data: data,
+      crossDomain: true,
+      success: function (response) {
+        $("#errorMessage").show().text(response.message);
+        console.log(response);
+        $("#errorMessage").fadeTo(2000, 500).slideUp(500, function () {
+          $("#errorMessage").hide();
+        });
+      },
+      error: function (err) {
+        var jso = JSON.parse(err.responseText);
+        var error = jso.message[0];
+        console.log(error);
+        console.log("old", jso);
 
-          $('.profileImge').attr('src', admin.image)
-        },
-        error: function (err) {
-          var error = JSON.parse(err);
-
-          console.log(JSON.stringify(error));
-
-        },
-      });
-    }
+        // if (jso.status == "422") {
+        //   if (error.context.key == "oldPassword") {
+        //     console.log("old");
+        //     // $('#newPasswordvalid').hide()
+        //     // $('#reNewPasswordValid').hide()
+        //     $('#oldPasswordValid').text(error.message)
 
 
+        //   } else if (error.context.key == "newPassword") {
+        //     console.log("new");
+        //     // $('#oldPasswordValid').hide()
+        //     // $('#reNewPasswordValid').hide()
+        //     $('#newPasswordvalid').text(error.message)
 
-    $("#changePassword").validate({
-      rules: {
-        password: {
-          required: true,
-          minlength: 8
 
-        },
-        newpassword: {
-          required: true,
-          minlength: 8
+        //   } else if (error.context.key == "confirmPassword") {
+        //     console.log("confirm");
+        //     // $('#newPasswordvalid').hide()
+        //     // $('#oldPasswordValid').hide()
+        //     $('#reNewPasswordValid').text(error.message)
 
-        },
-
-        renewpassword: {
-          required: true,
-          minlength: 8,
-          equalTo: "#newpassword"
+        //   }
+        // } else if (jso.status == "409") {
+        //   $('#oldPasswordValid').text(jso.message)
+        // }
+        if (jso.status == "409") {
+          $('#oldPasswordValid').text(jso.message)
         }
 
       },
-      messages: {
-        password: {
-          required: "Old password field is required.",
-          minlength: "Old password must be at least 8 characters long."
-        },
-        newpassword: {
-          required: "New password field is required.",
-          minlength: "New password must be at least 8 characters long."
-        },
-        renewpassword: {
-          required: "Confirm password field is required.",
-          minlength: "Confirm password must be at least 8 characters long.",
-          equalTo: "New password and confirm password does not matched."
-        }
-      }
-
     });
-
-    $("#changePassword").on("submit", function (e) {
-      e.preventDefault();
-      jQuery.support.cors = true;
-      var url = "http://192.168.0.150:8000/admin/changePassword";
-      var data = {};
-      data._id = $(".adminId").val();
-      data.oldPassword = $("#currentPassword").val();
-      data.newPassword = $("#newPassword").val();
-      data.confirmPassword = $("#renewPassword").val();
-      $.ajax({
-        url: url,
-        type: "POST",
-        data: data,
-        crossDomain: true,
-        success: function (response) {
-          $("#errorMessage").show().text(response.message);
-          console.log(response);
-          $("#errorMessage").fadeTo(2000, 500).slideUp(500, function () {
-            $("#errorMessage").hide();
-          });
-        },
-        error: function (err) {
-          var jso = JSON.parse(err.responseText);
-          var error = jso.message[0];
-          console.log(error);
-          console.log("old", jso);
-
-          // if (jso.status == "422") {
-          //   if (error.context.key == "oldPassword") {
-          //     console.log("old");
-          //     // $('#newPasswordvalid').hide()
-          //     // $('#reNewPasswordValid').hide()
-          //     $('#oldPasswordValid').text(error.message)
-
-
-          //   } else if (error.context.key == "newPassword") {
-          //     console.log("new");
-          //     // $('#oldPasswordValid').hide()
-          //     // $('#reNewPasswordValid').hide()
-          //     $('#newPasswordvalid').text(error.message)
-
-
-          //   } else if (error.context.key == "confirmPassword") {
-          //     console.log("confirm");
-          //     // $('#newPasswordvalid').hide()
-          //     // $('#oldPasswordValid').hide()
-          //     $('#reNewPasswordValid').text(error.message)
-
-          //   }
-          // } else if (jso.status == "409") {
-          //   $('#oldPasswordValid').text(jso.message)
-          // }
-          if (jso.status == "409") {
-            $('#oldPasswordValid').text(jso.message)
-          }
-
-        },
-      });
-    });
-  </script>
-  <div id="footerDiv"></div>
-</body>
-
+  });
+</script>
+<div id="footerDiv"></div>
 </html>
