@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        .ql-toolbar.ql-snow+.ql-container.ql-snow {
+            border-top: 0px;
+            height: 255px !important;
+        }
+
+        .col-12 {
+            flex: 0 0 auto;
+            width: 100%;
+            margin-top: 32px;
+        }
+
+        .img-thumbs {
+            background: #eee;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            margin: 1.5rem 0;
+            padding: 0.75rem;
+        }
+
+        .img-thumbs-hidden {
+            display: none;
+        }
+
+        .wrapper-thumb {
+            position: relative;
+            display: inline-block;
+            margin: 1rem 0;
+            justify-content: space-around;
+        }
+
+        .img-preview-thumb {
+            background: #fff;
+            border: 1px solid none;
+            border-radius: 0.25rem;
+            box-shadow: 0.125rem 0.125rem 0.0625rem rgba(0, 0, 0, 0.12);
+            margin-right: 1rem;
+            max-width: 140px;
+            padding: 0.25rem;
+        }
+
+        .remove-btn {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: .7rem;
+            top: -5px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .remove-btn:hover {
+            box-shadow: 0px 0px 3px grey;
+            transition: all .3s ease-in-out;
+        }
+
+        div#addButton {
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="headerDiv"></div>
+    <div id="sidebarDiv"></div>
+    <main id="main" class="main">
+        <div>
+            <div class="row col-12 ">
+                <div class="col-6">
+                    <h3>Edit Case Studies</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
+
+                            <li class="breadcrumb-item active">edit case studies</li>
+                        </ol>
+                    </nav>
+                </div><!-- End Page Title -->
+                <div class="col-6">
+                    <div id="addButton"> <a href="case-studies.html" class="btn btn-warning">Back</a></div>
+                </div>
+
+
+            </div><!-- End Page Title -->
+
+        </div>
+
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="" id="caseStudyForm" method="post" enctype="multipart/form-data">
+                                <div class="col-12">
+                                    <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
+                                    <input type="text" class="form-control" id="title">
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group mt-5">
+                                        <label for=""><strong>Image</strong></label>
+                                        <input type="file" class="form-control" name="files[]" id="caseStudyImage"
+                                            multiple />
+                                    </div>
+                                    <div id="divImageMediaPreview"></div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
+                                    <div class="quill-editor-full">
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-12"><button type="button" class="btn btn-primary"
+                                        onclick="updateCaseStudyFunction();">Update</button></div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main><!-- End #main -->
+    <div id="footerDiv"></div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("#headerDiv").load("header.html");
+        $("#sidebarDiv").load("sidebar.html");
+        $("#footerDiv").load("footer.html");
+    });
+
+
+    $("#caseStudyImage").change(function () {
+        if (typeof (FileReader) != "undefined") {
+            var dvPreview = $("#divImageMediaPreview");
+            dvPreview.html("");
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = $("<img />");
+                    img.attr("style", "width: 150px; height:100px; padding: 10px");
+                    img.attr("src", e.target.result);
+                    dvPreview.append(img);
+                }
+                reader.readAsDataURL(file[0]);
+            });
+        } else {
+            alert("This browser does not support HTML5 FileReader.");
+        }
+    });
+
+    getAllCaseStudy();
+    function getAllCaseStudy() {
+        jQuery.support.cors = true;
+        var url = "https://e66c-60-254-111-90.in.ngrok.io/case/getSection/63b560bd5cab2f38b409b8dd";
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (response) {
+                console.log(response);
+
+            },
+            error: function (err) {
+                console.log(err);
+
+            },
+        });
+    }
+    function updateCaseStudyFunction() {
+        var title = $('#title').val();
+        var content = $('.quill-editor-full').html();
+        var file = $('#caseStudyImage')[0].files[0];
+        console.log(file);
+        let formData = new FormData();
+        formData.append("title", title);
+        formData.append("content", content);
+        if (file) {
+            formData.append("image[]", file);
+        }
+
+
+        var url = "https://3719-60-254-111-90.in.ngrok.io/case/createSection";
+        $.ajax({
+            url: url,
+            method: "POST",
+            type: "POST",
+            enctype: 'multipart/form-data',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            crossDomain: true,
+            success: function (response) {
+                console.log(response);
+                // $("#updateProgileMessage").show().text(response.message);
+                console.log(response);
+                // $("#updateProgileMessage").fadeTo(2000, 500).slideUp(500, function () {
+                //   $("#updateProgileMessage").hide();
+                // });
+                // location.reload()
+            },
+            error: function (err) {
+                // var error = JSON.parse(err.responseText);
+
+                console.log(err);
+
+            },
+        });
+
+    }
+
+
+
+</script>
+
+</html>

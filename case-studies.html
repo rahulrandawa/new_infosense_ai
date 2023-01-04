@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+  $(function () {
+    $("#headerDiv").load("header.html");
+    $("#sidebarDiv").load("sidebar.html");
+    $("#footerDiv").load("footer.html");
+  });  
+</script>
+<style>
+  div#caseStudiesTable_filter {
+    float: right;
+  }
+
+  div#caseStudiesTable_paginate {
+    float: right;
+  }
+
+  div#addButton {
+    float: right;
+  }
+</style>
+
+<body>
+  <div id="headerDiv"></div>
+  <div id="sidebarDiv"></div>
+  <main id="main" class="main">
+    <div>
+      <div class="row col-12 ">
+        <div class="col-6">
+          <h3>All Case Studies</h3>
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
+
+              <li class="breadcrumb-item active">Case Studies</li>
+
+            </ol>
+
+          </nav>
+        </div>
+        <div class="col-6">
+          <div id="addButton"> <a href="create-case-studies.html" class="btn btn-primary">Add Case Studies</a></div>
+        </div>
+
+
+      </div><!-- End Page Title -->
+
+    </div>
+
+
+
+    <div class="row">
+
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div style="margin-top: 27px;" class="table-responsive">
+              <table id="caseStudiesTable" class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </main>
+  <script>
+    getAllCaseStudy();
+    function getAllCaseStudy() {
+      jQuery.support.cors = true;
+      var url = "https://ad72-60-254-111-90.in.ngrok.io/case/details?page=1&limit=250";
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (response) {
+          console.log(response.getList);
+          var data = response.getList;
+          $("#caseStudiesTable").DataTable().clear();
+          var length = Object.keys(data).length;
+          console.log("length of service line", length);
+          var status;
+          var num = 1;
+          if (length != 0) {
+            for (var i = 0; i <= length; i++) {
+              var cat = data[i];
+              $('#caseStudiesTable').dataTable().fnAddData([
+                num,
+                '<img src="' + cat.image + '" width="50" height="50"/>',
+                cat.title,
+                '<a href="edit-case-studies.html" class="btn btn-primary">View</a> <a href="edit-case-studies.html" class="btn btn-secondary">Edit</a> <a type="button" class="btn btn-danger">Delete</a>',
+
+              ]);
+
+
+              num++;
+            }
+          }
+          // var html = '';
+          // var i = 1;
+          //   $.each(data,function(key,value){
+          //       html +='<tr>';
+          //       html +='<td>'+ i++ + '</td>';
+          //       html +='<td><img src="+value.image+" width="50" height="50"/></td>';
+          //       html +='<td>'+ value.title + '</td>';
+          //       html +='<td><button type="button" class="btn btn-primary">View</button> <button type="button" class="btn btn-secondary">Edit</button> <button type="button" class="btn btn-danger">Delete</button></td>';
+          //       html +='</tr>';
+          //   });
+          // $('tbody').html(html);
+        },
+        error: function (err) {
+          console.log(err);
+          $('#caseStudiesTable').dataTable().fnAddData([
+            '', '', '<h5> Data not found</h5>', '', ''
+          ]);
+        },
+      });
+    }
+  </script>
+  <div id="footerDiv"></div>
+</body>
+
+</html>

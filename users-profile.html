@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  
+
 </head>
 
 <body>
@@ -68,13 +68,13 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                    <div class="col-lg-9 col-md-8 fullName">Kevin Anderson</div>
+                    <div class="col-lg-9 col-md-8 fullName">Admin</div>
                   </div>
 
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">Email</div>
-                    <div class="col-lg-9 col-md-8 emailId">k.anderson@example.com</div>
+                    <div class="col-lg-9 col-md-8 emailId">admin.infosense@gmail.com</div>
                   </div>
 
                 </div>
@@ -180,7 +180,7 @@
     </section>
 
   </main><!-- End #main -->
- 
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>
@@ -295,43 +295,43 @@
 
 
 
-  $("#changePassword").validate({
-    rules: {
-      password: {
-        required: true,
-        minlength: 8
+  // $("#changePassword").validate({
+  //   rules: {
+  //     password: {
+  //       required: true,
+  //       minlength: 8
 
-      },
-      newpassword: {
-        required: true,
-        minlength: 8
+  //     },
+  //     newpassword: {
+  //       required: true,
+  //       minlength: 8
 
-      },
+  //     },
 
-      renewpassword: {
-        required: true,
-        minlength: 8,
-        equalTo: "#newpassword"
-      }
+  //     renewpassword: {
+  //       required: true,
+  //       minlength: 8,
+  //       equalTo: "#newpassword"
+  //     }
 
-    },
-    messages: {
-      password: {
-        required: "Old password field is required.",
-        minlength: "Old password must be at least 8 characters long."
-      },
-      newpassword: {
-        required: "New password field is required.",
-        minlength: "New password must be at least 8 characters long."
-      },
-      renewpassword: {
-        required: "Confirm password field is required.",
-        minlength: "Confirm password must be at least 8 characters long.",
-        equalTo: "New password and confirm password does not matched."
-      }
-    }
+  //   },
+  //   messages: {
+  //     password: {
+  //       required: "Old password field is required.",
+  //       minlength: "Old password must be at least 8 characters long."
+  //     },
+  //     newpassword: {
+  //       required: "New password field is required.",
+  //       minlength: "New password must be at least 8 characters long."
+  //     },
+  //     renewpassword: {
+  //       required: "Confirm password field is required.",
+  //       minlength: "Confirm password must be at least 8 characters long.",
+  //       equalTo: "New password and confirm password does not matched."
+  //     }
+  //   }
 
-  });
+  // });
 
   $("#changePassword").on("submit", function (e) {
     e.preventDefault();
@@ -353,6 +353,7 @@
         $("#errorMessage").fadeTo(2000, 500).slideUp(500, function () {
           $("#errorMessage").hide();
         });
+        $("form").reset();
       },
       error: function (err) {
         var jso = JSON.parse(err.responseText);
@@ -360,31 +361,31 @@
         console.log(error);
         console.log("old", jso);
 
-        // if (jso.status == "422") {
-        //   if (error.context.key == "oldPassword") {
-        //     console.log("old");
-        //     // $('#newPasswordvalid').hide()
-        //     // $('#reNewPasswordValid').hide()
-        //     $('#oldPasswordValid').text(error.message)
+        if (jso.status == "422") {
+          if (error.context.key == "oldPassword") {
+            console.log("old");
+            // $('#newPasswordvalid').hide()
+            // $('#reNewPasswordValid').hide()
+            $('#oldPasswordValid').text(error.message)
 
 
-        //   } else if (error.context.key == "newPassword") {
-        //     console.log("new");
-        //     // $('#oldPasswordValid').hide()
-        //     // $('#reNewPasswordValid').hide()
-        //     $('#newPasswordvalid').text(error.message)
+          } else if (error.context.key == "newPassword") {
+            console.log("new");
+            // $('#oldPasswordValid').hide()
+            // $('#reNewPasswordValid').hide()
+            $('#newPasswordvalid').text(error.message)
 
 
-        //   } else if (error.context.key == "confirmPassword") {
-        //     console.log("confirm");
-        //     // $('#newPasswordvalid').hide()
-        //     // $('#oldPasswordValid').hide()
-        //     $('#reNewPasswordValid').text(error.message)
+          } else if (error.context.key == "confirmPassword") {
+            console.log("confirm");
+            // $('#newPasswordvalid').hide()
+            // $('#oldPasswordValid').hide()
+            $('#reNewPasswordValid').text(error.message)
 
-        //   }
-        // } else if (jso.status == "409") {
-        //   $('#oldPasswordValid').text(jso.message)
-        // }
+          }
+        } else if (jso.status == "409") {
+          $('#oldPasswordValid').text(jso.message)
+        }
         if (jso.status == "409") {
           $('#oldPasswordValid').text(jso.message)
         }
@@ -394,4 +395,5 @@
   });
 </script>
 <div id="footerDiv"></div>
+
 </html>
