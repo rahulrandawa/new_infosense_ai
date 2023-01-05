@@ -147,7 +147,11 @@
         $("#sidebarDiv").load("sidebar.html");
         $("#footerDiv").load("footer.html");
     });
-
+    var search = window.location.search
+    console.log(search);
+    const urlParams = new URLSearchParams(search);
+    const id = urlParams.get('id');
+     console.log("urlParams",id);
 
     $("#caseStudyImage").change(function () {
         if (typeof (FileReader) != "undefined") {
@@ -169,10 +173,11 @@
         }
     });
 
-    getAllCaseStudy();
-    function getAllCaseStudy() {
+    getAllCaseStudy(id);
+    function getAllCaseStudy(id) {
+        console.log("fun",id);
         jQuery.support.cors = true;
-        var url = "https://e66c-60-254-111-90.in.ngrok.io/case/getSection/63b560bd5cab2f38b409b8dd";
+        var url = "http://192.168.0.150:8000/case/getSection/"+id;
         $.ajax({
             url: url,
             type: "GET",
@@ -199,7 +204,7 @@
         }
 
 
-        var url = "https://3719-60-254-111-90.in.ngrok.io/case/createSection";
+        var url = "http://192.168.0.150:8000/case/createSection";
         $.ajax({
             url: url,
             method: "POST",

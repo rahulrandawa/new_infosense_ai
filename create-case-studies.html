@@ -94,22 +94,16 @@
       </div><!-- End Page Title -->
 
     </div>
-    <div class="pagetitle">
-      <h1>Add Case Studies</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
 
-          <li class="breadcrumb-item active">Add case studies</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
 
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
+              <div class="alert alert-success" role="alert" id="errorMessage" style="display: none;">
+
+              </div>
               <form action="" id="caseStudyForm" method="post" enctype="multipart/form-data">
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
@@ -187,11 +181,11 @@
     formData.append("title", title);
     formData.append("content", content);
     if (file) {
-      formData.append("image[]", file);
+      formData.append("image", file);
     }
 
 
-    var url = "https://3719-60-254-111-90.in.ngrok.io/case/createSection";
+    var url = "http://192.168.0.150:8000/case/createSection";
     $.ajax({
       url: url,
       method: "POST",
@@ -204,11 +198,11 @@
       crossDomain: true,
       success: function (response) {
         console.log(response);
-        // $("#updateProgileMessage").show().text(response.message);
+        $("#errorMessage").show().text(response.message);
         console.log(response);
-        // $("#updateProgileMessage").fadeTo(2000, 500).slideUp(500, function () {
-        //   $("#updateProgileMessage").hide();
-        // });
+        $("#errorMessage").fadeTo(2000, 500).slideUp(500, function () {
+          $("#errorMessage").hide();
+        });
         // location.reload()
       },
       error: function (err) {
