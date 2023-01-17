@@ -1,13 +1,170 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Infosense AI Admin</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/infosense.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
 
 </head>
 
+
 <body>
-  <div id="headerDiv"></div>
-  <div id="sidebarDiv"></div>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+    <div class="d-flex align-items-center justify-content-between">
+      <a href="dashboard.html" class="logo d-flex align-items-center">
+        <img src="assets/img/logo.png" alt="">
+        <span class="d-none d-lg-block">Infosense AI</span>
+      </a>
+      <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="POST" action="#">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div><!-- End Search Bar -->
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li><!-- End Search Icon-->
+
+
+
+
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img alt="Profile" class="rounded-circle" id="adminProfileImage">
+            <span class="d-none d-md-block dropdown-toggle ps-2" id="adminName"></span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="#">
+                <i class="bi bi-box-arrow-right"></i>
+                <span onclick="logOut();">Sign Out</span>
+              </a>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+
+      </ul>
+    </nav><!-- End Icons Navigation -->
+
+  </header><!-- End Header -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="dashboard.html">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+      <li class="nav-item">
+        <a class="nav-link " href="case-studies.html">
+          <i class="bi bi-grid"></i>
+          <span>Case studies</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link " href="blog.html">
+          <i class="bi bi-grid"></i>
+          <span>Blog</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="about-us.html">
+              <i class="bi bi-circle"></i><span>about us</span>
+            </a>
+          </li>
+          <li>
+            <a href="privacy-policy.html">
+              <i class="bi bi-circle"></i><span>privacy policy</span>
+            </a>
+          </li>
+
+
+
+        </ul>
+      </li>
+
+
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -181,219 +338,285 @@
 
   </main><!-- End #main -->
 
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-<script>
-  $(function () {
-    $("#headerDiv").load("header.html");
-    $("#sidebarDiv").load("sidebar.html");
-    $("#footerDiv").load("footer.html");
-  });  
-</script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 
-<script>
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Infosense AI</span></strong>. All Rights Reserved
+    </div>
+    
+  </footer>
 
-  $('#adminImage').change(function () {
-    readImgUrlAndPreview(this);
+  <!-- Vendor JS Files -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/echarts/echarts.min.js"></script>
+  <script src="assets/vendor/quill/quill.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
 
-    function readImgUrlAndPreview(input) {
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          $('#profileImge').attr('src', e.target.result);
-        }
-      };
-      reader.readAsDataURL(input.files[0]);
+  <script src="assets/vendor/datatable/chart.umd.js"></script>
+  <script src="assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="assets/vendor/extra-libs/DataTables/datatables.min.js"></script>
+  <script src="assets/vendor/datatable/datatable-basic.init.js"></script>
+  <!-- Template Main JS File -->
+  <script src="assets/js/main.js"></script>
+  <script>
+    var token = localStorage.getItem("loginToken");
+    console.log("token", token);
+    if (!token) {
+      window.location.href = "index.html";
     }
-  });
+    getAdminDetails();
+    function getAdminDetails() {
+      jQuery.support.cors = true;
+      var url = "http://infosense.tech:8000/admin/data";
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (response) {
+          var res = JSON.parse(JSON.stringify(response));
+          var admin = res.data[0];
+          console.log(admin);
+          var fullname = admin.firstName + " " + admin.lastName;
+          $('#adminName').text(fullname ? fullname : "Admin")
+          $('#adminProfileImage').attr('src', admin.image)
+        },
+        error: function (err) {
+          var error = JSON.parse(err);
 
+          console.log(JSON.stringify(error));
 
-  function adminProfileUpdate() {
-    jQuery.support.cors = true;
-    var id = $('.adminId').val();
-    var firstName = $('#firstName').val();
-    var lastName = $('#lastName').val();
-    var image = $('#adminImage')[0].files[0];
-    console.log(id + "==" + firstName + "==" + lastName);
-    console.log("image", image);
-    if (firstName.length === 0 || !(firstName)) {
-      $("#firstNameValid").show();
-      return
-    } else {
-      $("#firstNameValid").hide();
-
+        },
+      });
     }
 
-    let formData = new FormData();
-    // formData.append("_id", id);
-    formData.append("firstName", firstName);
-    formData.append("lastName", lastName);
-    formData.append('_method', 'PUT');
-    if (image) {
-      formData.append("image", image, image.name);
+
+    function logOut() {
+      jQuery.support.cors = true;
+      var url = "http://infosense.tech:8000/admin/logout   ";
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (response) {
+          console.log(response);
+          localStorage.clear()
+
+          var token = localStorage.getItem("loginToken");
+          console.log("token", token);
+          window.location.href = "index.html";
+        },
+        error: function (err) {
+          console.log(err);
+
+        },
+      });
     }
-    // return  
-    var url = "http://192.168.0.150:8000/admin/update/" + id;
-    $.ajax({
-      url: url,
-      method: "PUT",
-      type: "PUT",
-      enctype: 'multipart/form-data',
-      data: formData,
-      cache: false,
-      contentType: false,
-      processData: false,
-      success: function (response) {
-        console.log(response);
-        $("#updateProgileMessage").show().text(response.message);
-        console.log(response);
-        $("#updateProgileMessage").fadeTo(2000, 500).slideUp(500, function () {
-          $("#updateProgileMessage").hide();
-        });
-        location.reload()
-      },
-      error: function (err) {
-        // var error = JSON.parse(err.responseText);
-
-        console.log(err);
-
-      },
-    });
-  }
-
-  getAdminDetails();
-  function getAdminDetails() {
-    jQuery.support.cors = true;
-    var url = "http://192.168.0.150:8000/admin/data";
-    $.ajax({
-      url: url,
-      type: "GET",
-      success: function (response) {
-        var res = JSON.parse(JSON.stringify(response));
-        var admin = res.data[0];
-        console.log(admin);
-        var fullname = admin.firstName + " " + admin.lastName;
-        $('.fullName').text(fullname ? fullname : "Admin")
-        $('.emailId').text(admin.email)
-
-        $('#firstName').val(admin.firstName ? admin.firstName : "Admin")
-        $('#lastName').val(admin.lastName)
-        $('#myEmail').val(admin.email)
-        $('.adminId').val(admin._id)
-
-        $('.profileImge').attr('src', admin.image)
-      },
-      error: function (err) {
-        var error = JSON.parse(err);
-
-        console.log(JSON.stringify(error));
-
-      },
-    });
-  }
 
 
+    $('#adminImage').change(function () {
+      readImgUrlAndPreview(this);
 
-  // $("#changePassword").validate({
-  //   rules: {
-  //     password: {
-  //       required: true,
-  //       minlength: 8
-
-  //     },
-  //     newpassword: {
-  //       required: true,
-  //       minlength: 8
-
-  //     },
-
-  //     renewpassword: {
-  //       required: true,
-  //       minlength: 8,
-  //       equalTo: "#newpassword"
-  //     }
-
-  //   },
-  //   messages: {
-  //     password: {
-  //       required: "Old password field is required.",
-  //       minlength: "Old password must be at least 8 characters long."
-  //     },
-  //     newpassword: {
-  //       required: "New password field is required.",
-  //       minlength: "New password must be at least 8 characters long."
-  //     },
-  //     renewpassword: {
-  //       required: "Confirm password field is required.",
-  //       minlength: "Confirm password must be at least 8 characters long.",
-  //       equalTo: "New password and confirm password does not matched."
-  //     }
-  //   }
-
-  // });
-
-  $("#changePassword").on("submit", function (e) {
-    e.preventDefault();
-    jQuery.support.cors = true;
-    var url = "http://192.168.0.150:8000/admin/changePassword";
-    var data = {};
-    data._id = $(".adminId").val();
-    data.oldPassword = $("#currentPassword").val();
-    data.newPassword = $("#newPassword").val();
-    data.confirmPassword = $("#renewPassword").val();
-    $.ajax({
-      url: url,
-      type: "POST",
-      data: data,
-      crossDomain: true,
-      success: function (response) {
-        $("#errorMessage").show().text(response.message);
-        console.log(response);
-        $("#errorMessage").fadeTo(2000, 500).slideUp(500, function () {
-          $("#errorMessage").hide();
-        });
-        $("form").reset();
-      },
-      error: function (err) {
-        var jso = JSON.parse(err.responseText);
-        var error = jso.message[0];
-        console.log(error);
-        console.log("old", jso);
-
-        if (jso.status == "422") {
-          if (error.context.key == "oldPassword") {
-            console.log("old");
-            // $('#newPasswordvalid').hide()
-            // $('#reNewPasswordValid').hide()
-            $('#oldPasswordValid').text(error.message)
-
-
-          } else if (error.context.key == "newPassword") {
-            console.log("new");
-            // $('#oldPasswordValid').hide()
-            // $('#reNewPasswordValid').hide()
-            $('#newPasswordvalid').text(error.message)
-
-
-          } else if (error.context.key == "confirmPassword") {
-            console.log("confirm");
-            // $('#newPasswordvalid').hide()
-            // $('#oldPasswordValid').hide()
-            $('#reNewPasswordValid').text(error.message)
-
+      function readImgUrlAndPreview(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            $('#profileImge').attr('src', e.target.result);
           }
-        } else if (jso.status == "409") {
-          $('#oldPasswordValid').text(jso.message)
-        }
-        if (jso.status == "409") {
-          $('#oldPasswordValid').text(jso.message)
-        }
-
-      },
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
     });
-  });
-</script>
-<div id="footerDiv"></div>
+
+
+    function adminProfileUpdate() {
+      jQuery.support.cors = true;
+      var id = $('.adminId').val();
+      var firstName = $('#firstName').val();
+      var lastName = $('#lastName').val();
+      var image = $('#adminImage')[0].files[0];
+      console.log(id + "==" + firstName + "==" + lastName);
+      console.log("image", image);
+      if (firstName.length === 0 || !(firstName)) {
+        $("#firstNameValid").show();
+        return
+      } else {
+        $("#firstNameValid").hide();
+
+      }
+
+      let formData = new FormData();
+      // formData.append("_id", id);
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append('_method', 'PUT');
+      if (image) {
+        formData.append("image", image, image.name);
+      }
+      // return  
+      var url = "http://infosense.tech:8000/admin/update/" + id;
+      $.ajax({
+        url: url,
+        method: "PUT",
+        type: "PUT",
+        enctype: 'multipart/form-data',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (response) {
+          console.log(response);
+          $("#updateProgileMessage").show().text(response.message);
+          console.log(response);
+          $("#updateProgileMessage").fadeTo(2000, 500).slideUp(500, function () {
+            $("#updateProgileMessage").hide();
+          });
+          location.reload()
+        },
+        error: function (err) {
+          // var error = JSON.parse(err.responseText);
+
+          console.log(err);
+
+        },
+      });
+    }
+
+    getAdminDetails();
+    function getAdminDetails() {
+      jQuery.support.cors = true;
+      var url = "http://infosense.tech:8000/admin/data";
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (response) {
+          var res = JSON.parse(JSON.stringify(response));
+          var admin = res.data[0];
+          console.log(admin);
+          var fullname = admin.firstName + " " + admin.lastName;
+          $('.fullName').text(fullname ? fullname : "Admin")
+          $('.emailId').text(admin.email)
+
+          $('#firstName').val(admin.firstName ? admin.firstName : "Admin")
+          $('#lastName').val(admin.lastName)
+          $('#myEmail').val(admin.email)
+          $('.adminId').val(admin._id)
+
+          $('.profileImge').attr('src', admin.image)
+        },
+        error: function (err) {
+          var error = JSON.parse(err);
+
+          console.log(JSON.stringify(error));
+
+        },
+      });
+    }
+
+
+
+    // $("#changePassword").validate({
+    //   rules: {
+    //     password: {
+    //       required: true,
+    //       minlength: 8
+
+    //     },
+    //     newpassword: {
+    //       required: true,
+    //       minlength: 8
+
+    //     },
+
+    //     renewpassword: {
+    //       required: true,
+    //       minlength: 8,
+    //       equalTo: "#newpassword"
+    //     }
+
+    //   },
+    //   messages: {
+    //     password: {
+    //       required: "Old password field is required.",
+    //       minlength: "Old password must be at least 8 characters long."
+    //     },
+    //     newpassword: {
+    //       required: "New password field is required.",
+    //       minlength: "New password must be at least 8 characters long."
+    //     },
+    //     renewpassword: {
+    //       required: "Confirm password field is required.",
+    //       minlength: "Confirm password must be at least 8 characters long.",
+    //       equalTo: "New password and confirm password does not matched."
+    //     }
+    //   }
+
+    // });
+
+    $("#changePassword").on("submit", function (e) {
+      e.preventDefault();
+      jQuery.support.cors = true;
+      var url = "http://infosense.tech:8000/admin/changePassword";
+      var data = {};
+      data._id = $(".adminId").val();
+      data.oldPassword = $("#currentPassword").val();
+      data.newPassword = $("#newPassword").val();
+      data.confirmPassword = $("#renewPassword").val();
+      $.ajax({
+        url: url,
+        type: "POST",
+        data: data,
+        crossDomain: true,
+        success: function (response) {
+          $("#errorMessage").show().text(response.message);
+          console.log(response);
+          $("#errorMessage").fadeTo(2000, 500).slideUp(500, function () {
+            $("#errorMessage").hide();
+          });
+          $("form").reset();
+        },
+        error: function (err) {
+          var jso = JSON.parse(err.responseText);
+          var error = jso.message[0];
+          console.log(error);
+          console.log("old", jso);
+
+          if (jso.status == "422") {
+            if (error.context.key == "oldPassword") {
+              console.log("old");
+              // $('#newPasswordvalid').hide()
+              // $('#reNewPasswordValid').hide()
+              $('#oldPasswordValid').text(error.message)
+
+
+            } else if (error.context.key == "newPassword") {
+              console.log("new");
+              // $('#oldPasswordValid').hide()
+              // $('#reNewPasswordValid').hide()
+              $('#newPasswordvalid').text(error.message)
+
+
+            } else if (error.context.key == "confirmPassword") {
+              console.log("confirm");
+              // $('#newPasswordvalid').hide()
+              // $('#oldPasswordValid').hide()
+              $('#reNewPasswordValid').text(error.message)
+
+            }
+          } else if (jso.status == "409") {
+            $('#oldPasswordValid').text(jso.message)
+          }
+          if (jso.status == "409") {
+            $('#oldPasswordValid').text(jso.message)
+          }
+
+        },
+      });
+    });
+  </script>
+</body>
+
 
 </html>

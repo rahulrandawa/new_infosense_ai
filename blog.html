@@ -34,6 +34,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
 
+
 </head>
 
 
@@ -164,55 +165,68 @@
 
   </aside><!-- End Sidebar-->
 
-<!-- 
-  <div id="headerDiv"></div>
-  <div id="sidebarDiv"></div> -->
   <main id="main" class="main">
+    <div>
+      <div class="row col-12 ">
+        <div class="col-6">
+          <h3>All Blogs</h3>
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
 
-    <div class="pagetitle">
-      <h1>Form Editors</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
-          
-          <li class="breadcrumb-item active">Privacy Policy</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+              <li class="breadcrumb-item active">blogs</li>
 
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <form>
-              <div class="col-12">
-                <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
-                <input type="text" class="form-control" value="Privacy Policy" disabled>
-              </div>
+            </ol>
 
-              <div class="col-12">
-                <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
-                <div class="quill-editor-full">
-                  <textarea id="discription"> </textarea>
-                </div>
-              </div>
-              </form>
-             </div>
+          </nav>
+        </div>
+        <div class="col-6">
+          <div id="addButton"> <a href="craete-blog.html" class="btn btn-primary">Add Blog</a></div>
+        </div>
+
+
+      </div><!-- End Page Title -->
+
+    </div>
+
+
+
+    <div class="row">
+
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+            <div style="margin-top: 27px;" class="table-responsive">
+              <table id="blogTable" class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+
+              </table>
+            </div>
           </div>
-
         </div>
       </div>
-    </section>
+    </div>
 
-  </main><!-- End #main -->
-  <!-- <div id="footerDiv"></div> -->
+
+  </main>
   <footer id="footer" class="footer">
     <div class="copyright">
       &copy; Copyright <strong><span>Infosense AI</span></strong>. All Rights Reserved
     </div>
     
   </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -230,57 +244,82 @@
   <script src="assets/vendor/datatable/datatable-basic.init.js"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  <script>
-    var token = localStorage.getItem("loginToken");
-    console.log("token", token);
-    if (!token) {
-      window.location.href = "index.html";
-    }
-    getAdminDetails();
-    function getAdminDetails() {
-      jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/data";
-      $.ajax({
-        url: url,
-        type: "GET",
-        success: function (response) {
-          var res = JSON.parse(JSON.stringify(response));
-          var admin = res.data[0];
-          console.log(admin);
-          var fullname = admin.firstName + " " + admin.lastName;
-          $('#adminName').text(fullname ? fullname : "Admin")
-          $('#adminProfileImage').attr('src', admin.image)
-        },
-        error: function (err) {
-          var error = JSON.parse(err);
 
-          console.log(JSON.stringify(error));
-
-        },
-      });
-    }
-
-
-    function logOut() {
-      jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/logout   ";
-      $.ajax({
-        url: url,
-        type: "GET",
-        success: function (response) {
-          console.log(response);
-          localStorage.clear()
-
-          var token = localStorage.getItem("loginToken");
-          console.log("token", token);
-          window.location.href = "index.html";
-        },
-        error: function (err) {
-          console.log(err);
-
-        },
-      });
-    }
-  </script>
 </body>
+
+
+<script>
+
+  getAllCaseStudy();
+  function deletBlog(id) {
+    console.log("fun", id);
+    jQuery.support.cors = true;
+    var url = "http://infosense.tech:8000/blog/delete-blog/" + id;
+    
+    $.ajax({
+      url: url,
+      type: "GET",
+      success: function (response) {
+        console.log(response);
+
+
+      },
+      error: function (err) {
+        console.log(err);
+
+      },
+    });
+  }
+  function getAllCaseStudy() {
+    // jQuery.support.cors = true;
+
+    var url = "http://infosense.tech:8000/blog/get-blogList?page=1&limit=200";
+    $.ajax({
+      url: url,
+      type: "GET",
+      success: function (response) {
+        console.log(response.getList);
+        var data = response.getList;
+        $("#blogTable").DataTable().clear();
+        var length = Object.keys(data).length;
+        console.log("length of service line", length);
+        var status;
+        var num = 1;
+        if (length != 0) {
+          for (var i = 0; i <= length; i++) {
+            var cat = data[i];
+            $('#blogTable').dataTable({
+              "bLengthChange": false,
+              "bPaginate": true,
+              "bInfo": false,
+              "autoWidth": false,
+              "order": [[0, "desc"]],
+              "processing": true,
+              "serverSide": false,
+              "destroy": true,
+              "dom": 'lrtip'
+            }).fnAddData([
+              num,
+              '<img src="' + cat.image + '" width="50" height="50"/>',
+              cat.title,
+              '<a href="edit-blog.html" class="btn btn-primary">View</a> <a href="edit-blog.html?slug=' + cat.slug + '" class="btn btn-secondary">Edit</a> <a type="button" onclick="deletBlog("' + cat.slug + '")" class="btn btn-danger">Delete</a>',
+
+            ]);
+
+
+            num++;
+          }
+        }
+
+      },
+      error: function (err) {
+        console.log(err);
+        $('#blogTable').dataTable().fnAddData([
+          '', '', '<h5> Data not found</h5>', '', ''
+        ]);
+      },
+    });
+  }
+</script>
+
 </html>

@@ -164,55 +164,82 @@
 
   </aside><!-- End Sidebar-->
 
-<!-- 
-  <div id="headerDiv"></div>
-  <div id="sidebarDiv"></div> -->
-  <main id="main" class="main">
+    <main id="main" class="main">
+        <div>
+            <div class="row col-12 ">
+                <div class="col-6">
+                    <h3>Edit Blog</h3>
+                    <nav>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
 
-    <div class="pagetitle">
-      <h1>Form Editors</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
-          
-          <li class="breadcrumb-item active">Privacy Policy</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="card">
-            <div class="card-body">
-              <form>
-              <div class="col-12">
-                <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
-                <input type="text" class="form-control" value="Privacy Policy" disabled>
-              </div>
-
-              <div class="col-12">
-                <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
-                <div class="quill-editor-full">
-                  <textarea id="discription"> </textarea>
+                            <li class="breadcrumb-item active">edit blog</li>
+                        </ol>
+                    </nav>
+                </div><!-- End Page Title -->
+                <div class="col-6">
+                    <div id="addButton"> <a href="blog.html" class="btn btn-warning">Back</a></div>
                 </div>
-              </div>
-              </form>
-             </div>
-          </div>
+
+
+            </div><!-- End Page Title -->
 
         </div>
-      </div>
-    </section>
 
-  </main><!-- End #main -->
-  <!-- <div id="footerDiv"></div> -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
-      &copy; Copyright <strong><span>Infosense AI</span></strong>. All Rights Reserved
-    </div>
-    
-  </footer>
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                          <div class="alert alert-success" role="alert" id="updateBlogMessage" style="display: none;"></div>
+                            <form action="" id="caseStudyForm" method="post" enctype="multipart/form-data">
+                                <input type="hidden" id="blogId"/>
+                                <div class="col-12">
+                                    <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
+                                    <input type="text" class="form-control" id="title">
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-group mt-5">
+                                        <label for=""><strong>Image</strong></label>
+                                        <input type="file" class="form-control" name="files" id="blogImage"
+                                            multiple />
+                                    </div>
+                                    <div id="divImageMediaPreview"></div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
+                                    <div class="quill-editor-full">
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-12"><button type="button" class="btn btn-primary"
+                                        onclick="updateBlogFunction(id);">Update</button></div>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main><!-- End #main -->
+    <!-- <div id="footerDiv"></div> -->
+    <footer id="footer" class="footer">
+        <div class="copyright">
+          &copy; Copyright <strong><span>Infosense AI</span></strong>. All Rights Reserved
+        </div>
+        
+      </footer>
+
+ 
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -281,6 +308,105 @@
         },
       });
     }
+
+    var search = window.location.search
+    console.log(search);
+    const urlParams = new URLSearchParams(search);
+    const slug = urlParams.get('slug');
+    console.log("urlParams", slug);
+     $('#blogId').val(slug)
+    $("#blogImage").change(function () {
+        if (typeof (FileReader) != "undefined") {
+            var dvPreview = $("#divImageMediaPreview");
+            dvPreview.html("");
+            $($(this)[0].files).each(function () {
+                var file = $(this);
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var img = $("<img />");
+                    img.attr("style", "width: 150px; height:100px; padding: 10px");
+                    img.attr("src", e.target.result);
+                    dvPreview.append(img);
+                }
+                reader.readAsDataURL(file[0]);
+            });
+        } else {
+            alert("This browser does not support HTML5 FileReader.");
+        }
+    });
+
+    getAllCaseStudy(slug);
+    function getAllCaseStudy(slug) {
+        console.log("fun", slug);
+        jQuery.support.cors = true;
+        var url = "http://infosense.tech:8000/blog/get-blog/" + slug;
+        $.ajax({
+            url: url,
+            type: "GET",
+            success: function (response) {
+                console.log(response.data);
+                $('#title').val(response.data.title);
+                $('.quill-editor-full').html(response.data.description );
+                var dvPreview = $("#divImageMediaPreview");
+                var img = $("<img />");
+                img.attr("style", "width: 150px; height:100px; padding: 10px");
+                img.attr("src", response.data.image);
+                dvPreview.append(img);
+            },
+            error: function (err) {
+                console.log(err);
+
+            },
+        });
+    }
+    function updateBlogFunction() {
+        var slug =   $('#blogId').val();
+        var title = $('#title').val();
+        var description = $('.quill-editor-full').html();
+        var file = $('#blogImage')[0].files[0];
+        console.log(slug+"="+description+"="+title);
+        console.log(file);
+        // return;
+        let formData = new FormData();
+        formData.append("title", title);
+        formData.append("description", description);
+        if (file) {
+            formData.append("image", file);
+        }
+
+
+        var url = "http://infosense.tech:8000/blog/update-blog/"+slug;
+        $.ajax({
+            url: url,
+            method: "PUT",
+            type: "PUT",
+            enctype: 'multipart/form-data',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log(response);
+                $("#updateBlogMessage").show().text(response.message);
+                console.log(response);
+                $("#updateBlogMessage").fadeTo(2000, 500).slideUp(500, function () {
+                  $("#updateBlogMessage").hide();
+                });
+                // location.reload()
+            },
+            error: function (err) {
+                // var error = JSON.parse(err.responseText);
+
+                console.log(err);
+
+            },
+        });
+
+    }
+
+
   </script>
 </body>
+
+
 </html>

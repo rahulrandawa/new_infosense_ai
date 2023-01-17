@@ -38,6 +38,13 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js "></script>
+  <script>
+      var token = localStorage.getItem("loginToken");
+      console.log("token",token);
+      if(token){
+        window.location.href = "dashboard.html";
+      }
+  </script>
 </head>
 <style>
   .error {
@@ -68,7 +75,7 @@
 
                   <div class="pt-4 pb-2">
                     <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
-                    <p class="text-center small">Enter your username & password to login</p>
+                    <p class="text-center small">Enter your email & password to login</p>
                   </div>
                   <div class="alert alert-danger" role="alert" id="errorMessage" style="display: none;">
 
@@ -76,7 +83,7 @@
                   <form class="row g-3 needs-validation" id="loginForm" method="post">
 
                     <div class="col-12">
-                      <label for="yourUsername" class="form-label">Username</label>
+                      <label for="yourUsername" class="form-label">Email</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
                         <input type="text" name="email" class="form-control" id="yourEmail">
@@ -94,8 +101,8 @@
 
                     <div class="col-12">
                       <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
-                        <label class="form-check-label" for="rememberMe">Remember me</label>
+                        <!-- <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Remember me</label> -->
                       </div>
                     </div>
                     <div class="col-12">
@@ -108,11 +115,6 @@
               </div>
 
               <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
               </div>
 
             </div>
@@ -143,7 +145,9 @@
     $("#loginForm").on("submit", function (e) {
       e.preventDefault();
       jQuery.support.cors = true;
-      var url = "http://192.168.0.150:8000/admin/sign-in";
+      // var url = "http://192.168.0.150:8000/admin/sign-in";
+      var url = "http://infosense.tech:8000/admin/sign-in";
+      
       var data = {};
       data.email = $("#yourEmail").val().toLowerCase();
       data.password = $("#yourPassword").val();
@@ -154,9 +158,10 @@
         data: data,
         crossDomain: true,
         success: function (response) {
-          var res = JSON.stringify(response);
-          console.log(JSON.stringify(res));
-          // localStorage.setItem("loginToken", JSON.stringify({ token: res }));
+          var res = JSON.parse(JSON.stringify(response));
+          console.log("AAAAAAAAAA",res.token);
+          localStorage.setItem("loginToken", res.token);
+          
           window.location.href = "dashboard.html";
         },
         error: function (err) {

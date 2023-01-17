@@ -34,6 +34,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
 
+
 </head>
 
 
@@ -164,41 +165,65 @@
 
   </aside><!-- End Sidebar-->
 
-<!-- 
-  <div id="headerDiv"></div>
-  <div id="sidebarDiv"></div> -->
   <main id="main" class="main">
+    <div>
+      <div class="row col-12 ">
+        <div class="col-6">
+          <h3>Add Blog</h3>
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
 
-    <div class="pagetitle">
-      <h1>Form Editors</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
-          
-          <li class="breadcrumb-item active">Privacy Policy</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+              <li class="breadcrumb-item active">Add Blog</li>
+            </ol>
+          </nav>
+        </div><!-- End Page Title -->
+        <div class="col-6">
+          <div id="addButton"> <a href="blog.html" class="btn btn-warning">Back</a></div>
+        </div>
+
+
+      </div><!-- End Page Title -->
+
+    </div>
+
 
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <form>
-              <div class="col-12">
-                <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
-                <input type="text" class="form-control" value="Privacy Policy" disabled>
-              </div>
+              <div class="alert alert-success" role="alert" id="errorMessage" style="display: none;">
 
-              <div class="col-12">
-                <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
-                <div class="quill-editor-full">
-                  <textarea id="discription"> </textarea>
-                </div>
               </div>
+              <form action="" id="caseStudyForm" method="post" enctype="multipart/form-data">
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
+                  <input type="text" class="form-control" id="title">
+                </div>
+
+                <div class="col-12">
+                  <div class="form-group mt-5">
+                    <label for=""><strong>Image</strong></label>
+                    <input type="file" class="form-control" name="files" id="blogImage" multiple />
+                  </div>
+                  <div id="divImageMediaPreview"></div>
+                </div>
+
+                <div class="col-12">
+                  <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
+                  <textarea id="editor" class="form-control" style="height: 300px"></textarea>
+
+                </div>
+
+
+
+                <div class="col-12"><button type="button" class="btn btn-primary" onclick="blogFunction();">Add</button>
+                </div>
+
               </form>
-             </div>
+
+            </div>
           </div>
 
         </div>
@@ -206,13 +231,15 @@
     </section>
 
   </main><!-- End #main -->
-  <!-- <div id="footerDiv"></div> -->
   <footer id="footer" class="footer">
     <div class="copyright">
       &copy; Copyright <strong><span>Infosense AI</span></strong>. All Rights Reserved
     </div>
     
   </footer>
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -230,57 +257,84 @@
   <script src="assets/vendor/datatable/datatable-basic.init.js"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
   <script>
-    var token = localStorage.getItem("loginToken");
-    console.log("token", token);
-    if (!token) {
-      window.location.href = "index.html";
-    }
-    getAdminDetails();
-    function getAdminDetails() {
-      jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/data";
-      $.ajax({
-        url: url,
-        type: "GET",
-        success: function (response) {
-          var res = JSON.parse(JSON.stringify(response));
-          var admin = res.data[0];
-          console.log(admin);
-          var fullname = admin.firstName + " " + admin.lastName;
-          $('#adminName').text(fullname ? fullname : "Admin")
-          $('#adminProfileImage').attr('src', admin.image)
-        },
-        error: function (err) {
-          var error = JSON.parse(err);
 
-          console.log(JSON.stringify(error));
 
-        },
+    ClassicEditor.create(document.querySelector('#editor'))
+      .then(editor => {
+        console.log(editor);
+      })
+      .catch(error => {
+        console.error(error);
       });
-    }
+    $("#blogImage").change(function () {
+      if (typeof (FileReader) != "undefined") {
+        var dvPreview = $("#divImageMediaPreview");
+        dvPreview.html("");
+        $($(this)[0].files).each(function () {
+          var file = $(this);
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var img = $("<img />");
+            img.attr("style", "width: 150px; height:100px; padding: 10px");
+            img.attr("src", e.target.result);
+            dvPreview.append(img);
+          }
+          reader.readAsDataURL(file[0]);
+        });
+      } else {
+        alert("This browser does not support HTML5 FileReader.");
+      }
+    });
 
 
-    function logOut() {
-      jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/logout   ";
+    function blogFunction() {
+      var title = $('#title').val();
+      var content = $('.quill-editor-full').html();
+      var file = $('#blogImage')[0].files[0];
+      console.log(file);
+      let formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+      if (file) {
+        formData.append("image", file);
+      }
+
+
+      var url = "http://infosense.tech:8000/blog/create-blog";
       $.ajax({
         url: url,
-        type: "GET",
+        method: "POST",
+        type: "POST",
+        enctype: 'multipart/form-data',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        crossDomain: true,
         success: function (response) {
           console.log(response);
-          localStorage.clear()
-
-          var token = localStorage.getItem("loginToken");
-          console.log("token", token);
-          window.location.href = "index.html";
+          $("#errorMessage").show().text(response.message);
+          console.log(response);
+          $("#errorMessage").fadeTo(2000, 500).slideUp(500, function () {
+            $("#errorMessage").hide();
+          });
+          // location.reload()
         },
         error: function (err) {
+          // var error = JSON.parse(err.responseText);
+
           console.log(err);
 
         },
       });
+
     }
+
+
+
   </script>
 </body>
+
 </html>

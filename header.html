@@ -37,6 +37,7 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+ 
 </head>
 <style>
     .error {
@@ -118,6 +119,7 @@
             </ul>
         </nav><!-- End Icons Navigation -->
         <script>
+           
             getAdminDetails();
             function getAdminDetails() {
                 jQuery.support.cors = true;
@@ -151,6 +153,10 @@
                     type: "GET",
                     success: function (response) {
                         console.log(response);
+                        localStorage.clear()
+
+                        var token = localStorage.getItem("loginToken");
+                       console.log("token",token);
                         window.location.href = "index.html";
                     },
                     error: function (err) {
