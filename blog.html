@@ -45,8 +45,8 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="dashboard.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">Infosense AI</span>
+        <img src="assets/img/infosense Ai-Logo.png" alt="infosense Ai-Logo">
+        <!-- <span class="d-none d-lg-block">Infosense AI</span> -->
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -112,13 +112,13 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="dashboard.html">
+        <a class="nav-link collapsed" href="dashboard.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
       <li class="nav-item">
-        <a class="nav-link " href="case-studies.html">
+        <a class="nav-link collapsed" href="case-studies.html">
           <i class="bi bi-grid"></i>
           <span>Case studies</span>
         </a>
@@ -143,17 +143,28 @@
           <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
+           <!-- <li>
             <a href="about-us.html">
               <i class="bi bi-circle"></i><span>about us</span>
             </a>
-          </li>
+          </li> -->
           <li>
             <a href="privacy-policy.html">
-              <i class="bi bi-circle"></i><span>privacy policy</span>
+              <i class="bi bi-circle"></i><span>Privacy Policy</span>
             </a>
           </li>
 
+          <li>
+            <a href="terms_condition.html">
+              <i class="bi bi-circle"></i><span>Terms and Conditions</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="cookies.html">
+              <i class="bi bi-circle"></i><span>Cookie Policy </span>
+            </a>
+          </li>
 
 
         </ul>
@@ -181,10 +192,8 @@
           </nav>
         </div>
         <div class="col-6">
-          <div id="addButton"> <a href="craete-blog.html" class="btn btn-primary">Add Blog</a></div>
+          <div id="addButton"> <a href="create-blog.html" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Add Blog</a></div>
         </div>
-
-
       </div><!-- End Page Title -->
 
     </div>
@@ -249,6 +258,58 @@
 
 
 <script>
+
+var token = localStorage.getItem("loginToken");
+    console.log("token", token);
+    if (!token) {
+      window.location.href = "index.html";
+    }
+    getAdminDetails();
+    function getAdminDetails() {
+      console.log("progileeeeee")
+      jQuery.support.cors = true;
+      var url = "http://infosense.tech:8000/admin/data";
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (response) {
+          var res = JSON.parse(JSON.stringify(response));
+          var admin = res.data[0];
+          console.log(admin);
+          var fullname = admin.firstName + " " + admin.lastName;
+          $('#adminName').text(fullname ? fullname : "Admin")
+          $('#adminProfileImage').attr('src', admin.image)
+        },
+        error: function (err) {
+          var error = JSON.parse(err);
+
+          console.log(JSON.stringify(error));
+
+        },
+      });
+    }
+
+
+    function logOut() {
+      jQuery.support.cors = true;
+      var url = "http://infosense.tech:8000/admin/logout   ";
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (response) {
+          console.log(response);
+          localStorage.clear()
+
+          var token = localStorage.getItem("loginToken");
+          console.log("token", token);
+          window.location.href = "index.html";
+        },
+        error: function (err) {
+          console.log(err);
+
+        },
+      });
+    }
 
   getAllCaseStudy();
   function deletBlog(id) {

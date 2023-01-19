@@ -44,8 +44,8 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="dashboard.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">Infosense AI</span>
+        <img src="assets/img/infosense Ai-Logo.png" alt="infosense Ai-Logo">
+        <!-- <span class="d-none d-lg-block">Infosense AI</span> -->
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -111,7 +111,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="dashboard.html">
+        <a class="nav-link collapsed" href="dashboard.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -124,7 +124,7 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link " href="blog.html">
+        <a class="nav-link collapsed" href="blog.html">
           <i class="bi bi-grid"></i>
           <span>Blog</span>
         </a>
@@ -142,14 +142,26 @@
           <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
+           <!-- <li>
             <a href="about-us.html">
               <i class="bi bi-circle"></i><span>about us</span>
             </a>
-          </li>
+          </li> -->
           <li>
             <a href="privacy-policy.html">
-              <i class="bi bi-circle"></i><span>privacy policy</span>
+              <i class="bi bi-circle"></i><span>Privacy Policy</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="terms_condition.html">
+              <i class="bi bi-circle"></i><span>Terms and Conditions</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="cookies.html">
+              <i class="bi bi-circle"></i><span>Cookie Policy </span>
             </a>
           </li>
 
@@ -206,13 +218,13 @@
                  
                   <div class="form-group mt-5">
                     <label for=""><strong>Image</strong></label>
-                    <input type="file" class="form-control" name="files[]" id="caseStudyImage" multiple />
+                    <input type="file" class="form-control" name="files" id="caseStudyImage" />
                   </div>
                   <div id="divImageMediaPreview"></div>
                   <div class="form-group mt-5">
                     <label for=""><strong>Image type</strong></label>
                     <select  class="form-control" name="imageType" id="imageType">
-                      <option>Please select type</option>
+                      <option>Please select image type</option>
                       <option value="main">Main</option>
                       <option value="additional">Additional</option>
 
@@ -344,9 +356,11 @@
 
 
   function caseStudyFunction() {
+    
     var title = $('#title').val();
     var content = $('.quill-editor-full').html();
     var file = $('#caseStudyImage')[0].files[0];
+    var imageType = $("#imageType option:selected").val();
     console.log(file);
     let formData = new FormData();
     formData.append("title", title);

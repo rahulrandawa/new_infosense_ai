@@ -44,8 +44,8 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="dashboard.html" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
-        <span class="d-none d-lg-block">Infosense AI</span>
+        <img src="assets/img/infosense Ai-Logo.png" alt="infosense Ai-Logo">
+        <!-- <span class="d-none d-lg-block">Infosense AI</span> -->
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -141,21 +141,32 @@
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
+        <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+          <!-- <li>
             <a href="about-us.html">
               <i class="bi bi-circle"></i><span>about us</span>
             </a>
-          </li>
+          </li> -->
           <li>
-            <a href="privacy-policy.html">
-              <i class="bi bi-circle"></i><span>privacy policy</span>
+            <a href="privacy-policy.html" class="active">
+              <i class="bi bi-circle"></i><span>Privacy Policy</span>
             </a>
           </li>
 
+          <li>
+            <a href="terms_condition.html">
+              <i class="bi bi-circle"></i><span>Terms and Conditions</span>
+            </a>
+          </li>
 
+          <li>
+            <a href="cookies.html">
+              <i class="bi bi-circle"></i><span>Cookie Policy </span>
+            </a>
+          </li>
 
         </ul>
+
       </li>
 
 
@@ -164,17 +175,17 @@
 
   </aside><!-- End Sidebar-->
 
-<!-- 
+  <!-- 
   <div id="headerDiv"></div>
   <div id="sidebarDiv"></div> -->
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Form Editors</h1>
+      <h1>Privacy Policy</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
-          
+
           <li class="breadcrumb-item active">Privacy Policy</li>
         </ol>
       </nav>
@@ -186,19 +197,23 @@
           <div class="card">
             <div class="card-body">
               <form>
-              <div class="col-12">
-                <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
-                <input type="text" class="form-control" value="Privacy Policy" disabled>
-              </div>
+                <input type="text" class="form-control" id="privacy_id">
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
+                  <input type="text" class="form-control" value="Privacy Policy" id="title" disabled>
 
-              <div class="col-12">
-                <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
-                <div class="quill-editor-full">
-                  <textarea id="discription"> </textarea>
                 </div>
-              </div>
+
+                <div class="col-12">
+                  <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
+                  <div class="quill-editor-full">
+                    <textarea id="discription" id="description"> </textarea>
+                  </div>​​​​​​
+                </div>
+                <div class="col-12"><button type="button" class="btn btn-primary"
+                    onclick="updatePrivacyPolicy();">Update</button>
               </form>
-             </div>
+            </div>
           </div>
 
         </div>
@@ -211,7 +226,7 @@
     <div class="copyright">
       &copy; Copyright <strong><span>Infosense AI</span></strong>. All Rights Reserved
     </div>
-    
+
   </footer>
 
   <!-- Vendor JS Files -->
@@ -281,6 +296,85 @@
         },
       });
     }
+
+    getPrivacyPolicy();
+
+    function getPrivacyPolicy() {
+      jQuery.support.cors = true;
+      var url = "http://infosense.tech:8000/policy/privacy-policy-details";
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (response) {
+          var res = JSON.parse(JSON.stringify(response));
+          var cms_data = response.userDetails;
+
+
+          var title = response.userDetails.title;
+          var description = response.userDetails.description;
+          var privacy_id = response.userDetails._id;
+
+          console.log("cms_responsetitle", description);
+
+          new Quill(".quill-editor-full").clipboard.dangerouslyPasteHTML(description);
+
+          $('#title').val(title)
+
+          $('#privacy_id').val(privacy_id)
+        },
+        error: function (err) {
+          var error = JSON.parse(err);
+
+          console.log(JSON.stringify(error));
+
+        },
+      });
+    }
+
+    function updatePrivacyPolicy() {
+      console.log(1)
+
+      var title = $('#title').val();
+
+      var privacy_id = $('#privacy_id').val();
+      var description = $('#description').val();
+
+      console.log("privacy_id", privacy_id);
+      console.log("title", title);
+      console.log("description", description);
+
+      var quill_description = new Quill(".quill-editor-full").root.innerHTML;
+
+      let formData = new FormData();
+      formData.append("title", title);
+      formData.append("description", quill_description);
+
+      var url = "http://infosense.tech:8000/policy/update-policy/"+privacy_id;
+      $.ajax({
+          url: url,
+          method: "POST",
+          type: "POST",
+          enctype: 'multipart/form-data',
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (response) {
+              console.log(response);
+              $("#updateBlogMessage").show().text(response.message);
+              console.log(response);
+              $("#updateBlogMessage").fadeTo(2000, 500).slideUp(500, function () {
+                $("#updateBlogMessage").hide();
+              });
+              // location.reload()
+          },
+          error: function (err) {
+              console.log(err);
+          },
+      });
+
+    }
   </script>
 </body>
+
 </html>
