@@ -32,12 +32,8 @@
   <link href="assets/css/style.css" rel="stylesheet">
   <link href="assets/css/infosense.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-
-
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 </head>
-
-
 
 <body>
 
@@ -67,9 +63,6 @@
             <i class="bi bi-search"></i>
           </a>
         </li><!-- End Search Icon-->
-
-
-
 
 
         <li class="nav-item dropdown pe-3">
@@ -118,10 +111,17 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="case-studies.html">
           <i class="bi bi-grid"></i>
           <span>Case studies</span>
+        </a>
+      </li> -->
+      <!-- End Dashboard Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="success_story.html">
+          <i class="bi bi-grid"></i>
+          <span>Success Stories</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
@@ -144,7 +144,7 @@
           <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-           <!-- <li>
+          <!-- <li>
             <a href="about-us.html">
               <i class="bi bi-circle"></i><span>about us</span>
             </a>
@@ -156,8 +156,8 @@
           </li>
 
           <li>
-            <a href="terms_condition.html">
-              <i class="bi bi-circle"></i><span>Terms and Conditions</span>
+            <a href="terms_use.html">
+              <i class="bi bi-circle"></i><span>Terms of use</span>
             </a>
           </li>
 
@@ -166,9 +166,6 @@
               <i class="bi bi-circle"></i><span>Cookie Policy </span>
             </a>
           </li>
-
-
-
         </ul>
       </li>
 
@@ -194,45 +191,42 @@
         <div class="col-6">
           <div id="addButton"> <a href="blog.html" class="btn btn-primary"><i class="bi bi-arrow-left-short"></i> Back</a></div>
         </div>
-
       </div><!-- End Page Title -->
-
     </div>
-
-
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
               <div class="alert alert-success" role="alert" id="errorMessage" style="display: none;">
-
               </div>
               <form action="" id="caseStudyForm" method="post" enctype="multipart/form-data">
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
                   <input type="text" class="form-control" id="title">
+                  <div class="error" id="errorTitle"></div>​​​​​​
                 </div>
 
                 <div class="col-12">
                   <div class="form-group mt-5">
                     <label for=""><strong>Image</strong></label>
-                    <input type="file" class="form-control" name="files" id="blogImage" multiple />
+                    <input type="file" class="form-control" name="files" id="blogImage" />
                   </div>
-                  <div id="divImageMediaPreview"></div>
+                  <div class="error" id="errorImg"></div>
+                  <div style="margin: 14px;">
+                    <img class="file-upload-image profile-user-img" src="" alt="blogImgPreview" id="blogImgPreview" style="display: none;" width="100px;" height="100px;">
+                  </div>
                 </div>
 
                 <div class="col-12">
-                  <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
-                  <!-- <textarea id="editor" class="form-control" style="height: 300px"></textarea> -->
+                  <label for="inputEmail4" class="form-label"><strong>Description</strong></label>
 
                   <div class="quill-editor-full">
-                    <textarea class="form-control" style="height: 300px"></textarea>
+                    <textarea class="form-control" id="description" style="height: 300px"></textarea>
                   </div>
+                  <div class="error" id="errorDesc"></div>​​​​​​
 
                 </div>
-
-
 
                 <div class="col-12"><button type="button" class="btn btn-primary" onclick="blogFunction();">Add</button>
                 </div>
@@ -251,7 +245,7 @@
     <div class="copyright">
       &copy; Copyright <strong><span>Infosense AI</span></strong>. All Rights Reserved
     </div>
-    
+
   </footer>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
@@ -273,8 +267,55 @@
   <script src="assets/vendor/datatable/datatable-basic.init.js"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  <script src="https://cdn.ckeditor.com/ckeditor5/35.4.0/classic/ckeditor.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <script>
+    $(document).ready(function () {
+      new Quill(".quill-editor-full", {
+        modules: {
+          toolbar: [
+            [{
+              font: []
+            }, {
+              size: []
+            }],
+            ["bold", "italic", "underline", "strike"],
+            [{
+              color: []
+            },
+            {
+              background: []
+            }
+            ],
+            [{
+              script: "super"
+            },
+            {
+              script: "sub"
+            }
+            ],
+            [{
+              list: "ordered"
+            },
+            {
+              list: "bullet"
+            },
+            {
+              indent: "-1"
+            },
+            {
+              indent: "+1"
+            }
+            ],
+            ["direction", {
+              align: []
+            }],
+            ["link", "image", "video"],
+            ["clean"]
+          ]
+        },
+        theme: "snow"
+      });
+    });
     var token = localStorage.getItem("loginToken");
     console.log("token", token);
     if (!token) {
@@ -328,46 +369,111 @@
     }
 
 
-    ClassicEditor.create(document.querySelector('#editor'))
-      .then(editor => {
-        console.log(editor);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    // ClassicEditor.create(document.querySelector('#editor'))
+    //   .then(editor => {
+    //     console.log(editor);
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
+
+    // -------------Add Image Preview------------------------------
+    function read(input) {
+      $('#blogImgPreview').show();
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $('#blogImgPreview').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
     $("#blogImage").change(function () {
-      if (typeof (FileReader) != "undefined") {
-        var dvPreview = $("#divImageMediaPreview");
-        dvPreview.html("");
-        $($(this)[0].files).each(function () {
-          var file = $(this);
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            var img = $("<img />");
-            img.attr("style", "width: 150px; height:100px; padding: 10px");
-            img.attr("src", e.target.result);
-            dvPreview.append(img);
-          }
-          reader.readAsDataURL(file[0]);
-        });
+      read(this);
+    });
+
+    $('#blogImage').bind('change', function () {
+      var ext = $('#blogImage').val().split('.').pop().toLowerCase();
+
+      console.log("ext", ext)
+
+      if (ext == "png" || ext == "jpg" || ext == "jpeg") {
+        $("#errorImg").hide();
+
+        console.log("yes extenstion")
+
       } else {
-        alert("This browser does not support HTML5 FileReader.");
+        $('#blogImgPreview').hide();
+        $('#error1').show();
+        $("#errorImg").show().text("Image formate should be png,jpg,jpeg");
+        console.log("no extenstion")
       }
     });
 
+
+    $(document).ready(function () {
+      $('input[id="title"]').on('keyup', function () {
+        if (title != '' || title != 0) {
+          $("#errorTitle").hide();
+        }
+      });
+    });
 
     function blogFunction() {
       var title = $('#title').val();
       var content = $('.quill-editor-full').html();
       var file = $('#blogImage')[0].files[0];
-      console.log(file);
+      console.log("blogImg", file);
+
+      var check_quillDescription = new Quill(".quill-editor-full").getText(); // check data avaiable in ckeditor or not
+      console.log("check_quillDescription", check_quillDescription);
+
+      var quill_description = new Quill(".quill-editor-full").root.innerHTML; //desc with html
+
+      var title_valid = false;
+      var file_valid = false;
+      var description_valid = false;
+
+      if (title == '' || title == 0) {
+        $("#errorTitle").show().text("Enter Title");
+        var title_valid = false;
+      } else {
+        var title_valid = true;
+        $("#errorTitle").hide();
+      }
+
+      if (check_quillDescription == '' || check_quillDescription == 0) {
+        $("#errorDesc").show().text("Enter Description");
+        var description_valid = false;
+      } else {
+        var description_valid = true;
+        $("#errorDesc").hide();
+      }
+
+      if (file == '' || file == 0 || file == undefined) {
+        $("#errorImg").show().text("Select Image");
+        var file_valid = false;
+      } else {
+        var file_valid = true;
+        $("#errorImg").hide();
+      }
+
+      if (description_valid == false || description_valid == false || file_valid == false) {
+        console.log("login error")
+        $(window).scrollTop(0);
+        return false;
+      }
+
+      $("#errorTitle").hide();
+      $("#errorDesc").hide();
+      $("#errorImg").hide();
+
       let formData = new FormData();
       formData.append("title", title);
-      formData.append("content", content);
+      formData.append("description", quill_description);
       if (file) {
         formData.append("image", file);
       }
-
 
       var url = "http://infosense.tech:8000/blog/create-blog";
       $.ajax({
@@ -383,25 +489,23 @@
         success: function (response) {
           console.log("Update");
           console.log(response);
+          toastr.success('Blog added successfully');
           // $("#errorMessage").show().text(response.message);
           // console.log(response);
           // $("#errorMessage").fadeTo(2000, 500).slideUp(500, function () {
           //   $("#errorMessage").hide();
           // });
-          // location.reload()
+          location.reload()
         },
         error: function (err) {
+          toastr.success("Somethings went wrong");
           // var error = JSON.parse(err.responseText);
-
           console.log(err);
 
         },
       });
 
     }
-
-
-
   </script>
 </body>
 

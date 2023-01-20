@@ -32,6 +32,7 @@
   <link href="assets/css/style.css" rel="stylesheet">
   <link href="assets/css/infosense.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
 
 </head>
@@ -117,12 +118,19 @@
         </a>
 
       </li><!-- End Dashboard Nav -->
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="case-studies.html">
           <i class="bi bi-grid"></i>
           <span>Case studies</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li> -->
+      <!-- End Dashboard Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="success_story.html">
+            <i class="bi bi-grid"></i>
+            <span>Success Stories</span>
+        </a>
+    </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="blog.html">
@@ -143,7 +151,7 @@
           <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-           <!-- <li>
+          <!-- <li>
             <a href="about-us.html">
               <i class="bi bi-circle"></i><span>about us</span>
             </a>
@@ -155,10 +163,10 @@
           </li>
 
           <li>
-            <a href="terms_condition.html">
-              <i class="bi bi-circle"></i><span>Terms and Conditions</span>
+            <a href="terms_use.html">
+                <i class="bi bi-circle"></i><span>Terms of use</span>
             </a>
-          </li>
+        </li>
 
           <li>
             <a href="cookies.html">
@@ -273,7 +281,7 @@
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">First Name</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="firstname" type="text" class="form-control" id="firstName">
-                        <div id="firstNameValid" style="display: none;color: red;">Name filed is required.</div>
+                        <div id="firstNameValid" style="display: none;color: red;">First Name is required.</div>
                       </div>
 
                     </div>
@@ -303,16 +311,15 @@
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
-                  <div class="alert alert-success" role="alert" id="errorMessage" style="display: none;">
-
-                  </div>
+                  <div class="alert alert-success" role="alert" id="successMessage" style="display: none;"></div>
+                  <div class="alert alert-danger" role="alert" id="dangerMessage" style="display: none;"> </div>
                   <form id="changePassword" method="post">
                     <input type="hidden" class="adminId" name="id" />
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="password" type="password" class="form-control" id="currentPassword">
-                        <p class="error" id="oldPasswordValid"></p>
+                        <p class="error" id="currentPassError"></p>
                       </div>
 
                     </div>
@@ -355,7 +362,7 @@
     <div class="copyright">
       &copy; Copyright <strong><span>Infosense AI</span></strong>. All Rights Reserved
     </div>
-    
+
   </footer>
 
   <!-- Vendor JS Files -->
@@ -369,18 +376,64 @@
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
 
-  <script src="assets/vendor/datatable/chart.umd.js"></script>
+  <!-- <script src="assets/vendor/datatable/chart.umd.js"></script> -->
   <script src="assets/vendor/chart.js/chart.umd.js"></script>
   <script src="assets/vendor/extra-libs/DataTables/datatables.min.js"></script>
   <script src="assets/vendor/datatable/datatable-basic.init.js"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <script>
     var token = localStorage.getItem("loginToken");
     console.log("token", token);
     if (!token) {
       window.location.href = "index.html";
     }
+
+    $("#currentPassword").keyup(function () {
+      var cPassword = $("#currentPassword").val();
+      var cPasswordlength = $.trim(cPassword).length;
+      if (!cPassword || (cPasswordlength == 0)) {
+        $("#currentPassError").text('Current password field is required.');
+        error = true;
+      } else if ((cPassword.length < 8)) {
+        $("#currentPassError").text("Password length must be atleast 8 characters");
+        error = true;
+      } else {
+        $("#currentPassError").text('');
+        error = false;
+      }
+    });
+
+    $("#newPassword").keyup(function () {
+      var nPassword = $("#newPassword").val();
+      var nPasswordlength = $.trim(nPassword).length;
+      if (!nPassword || (nPasswordlength == 0)) {
+        $("#newPasswordvalid").text('New password field is required.');
+        error = true;
+      } else if ((nPassword.length < 8)) {
+        $("#newPasswordvalid").text("Password length must be atleast 8 characters");
+        error = true;
+      } else {
+        $("#newPasswordvalid").text('');
+        error = false;
+      }
+    });
+
+    $("#renewPassword").keyup(function () {
+      var reNewPassword = $("#renewPassword").val();
+      var reNewPasswordlength = $.trim(reNewPassword).length;
+      if (!reNewPassword || (reNewPasswordlength == 0)) {
+        $("#reNewPasswordValid").text('Re-new password field is required.');
+        error = true;
+      } else if ((reNewPassword.length < 8)) {
+        $("#reNewPasswordValid").text("Password length must be atleast 8 characters");
+        error = true;
+      } else {
+        $("#reNewPasswordValid").text('');
+        error = false;
+      }
+    });
 
     getAdminDetails();
     function getAdminDetails() {
@@ -416,7 +469,7 @@
       });
     }
 
- 
+
     function logOut() {
       jQuery.support.cors = true;
       var url = "http://infosense.tech:8000/admin/logout   ";
@@ -507,49 +560,76 @@
       });
     }
 
-   
 
 
-    // $("#changePassword").validate({
-    //   rules: {
-    //     password: {
-    //       required: true,
-    //       minlength: 8
 
-    //     },
-    //     newpassword: {
-    //       required: true,
-    //       minlength: 8
 
-    //     },
-
-    //     renewpassword: {
-    //       required: true,
-    //       minlength: 8,
-    //       equalTo: "#newpassword"
-    //     }
-
-    //   },
-    //   messages: {
-    //     password: {
-    //       required: "Old password field is required.",
-    //       minlength: "Old password must be at least 8 characters long."
-    //     },
-    //     newpassword: {
-    //       required: "New password field is required.",
-    //       minlength: "New password must be at least 8 characters long."
-    //     },
-    //     renewpassword: {
-    //       required: "Confirm password field is required.",
-    //       minlength: "Confirm password must be at least 8 characters long.",
-    //       equalTo: "New password and confirm password does not matched."
-    //     }
-    //   }
-
-    // });
 
     $("#changePassword").on("submit", function (e) {
       e.preventDefault();
+      var cPassword = $("#currentPassword").val();
+      var cPasswordlength = $.trim(cPassword).length;
+      var nPassword = $("#newPassword").val();
+      var nPasswordlength = $.trim(nPassword).length;
+      var reNewPassword = $("#renewPassword").val();
+      var reNewPasswordlength = $.trim(reNewPassword).length;
+
+
+      if (!cPassword || (cPasswordlength == 0)) {
+        $("#currentPassError").text('Current password field is required.');
+        error = true;
+      } else if ((cPassword.length < 8)) {
+        $("#currentPassError").text("Password length must be atleast 8 characters");
+        error = true;
+      } else {
+        $("#currentPassError").text('');
+        error = false;
+      }
+
+
+
+
+      if (!nPassword || (nPasswordlength == 0)) {
+        $("#newPasswordvalid").text('New password field is required.');
+        error = true;
+      } else if ((nPassword.length < 8)) {
+        $("#newPasswordvalid").text("Password length must be atleast 8 characters");
+        error = true;
+      } else {
+        $("#newPasswordvalid").text('');
+        error = false;
+      }
+
+
+
+
+      if (!reNewPassword || (reNewPasswordlength == 0)) {
+        $("#reNewPasswordValid").text('Re-new password field is required.');
+        error = true;
+      } else if ((reNewPassword.length < 8)) {
+        $("#reNewPasswordValid").text("Password length must be atleast 8 characters");
+        error = true;
+      } else {
+        $("#reNewPasswordValid").text('');
+        error = false;
+      }
+
+      if (nPassword && reNewPassword) {
+        if (nPassword != reNewPassword) {
+          $("#reNewPasswordValid").text('New password and confirm password does not matched.');
+          error = true;
+        } else {
+          $("#reNewPasswordValid").text('');
+          error = false;
+        }
+      }
+
+      if (error == true) {
+        console.log("error=======", error);
+        return true;
+      }
+      console.log("error", error);
+
       jQuery.support.cors = true;
       var url = "http://infosense.tech:8000/admin/changePassword";
       var data = {};
@@ -557,53 +637,63 @@
       data.oldPassword = $("#currentPassword").val();
       data.newPassword = $("#newPassword").val();
       data.confirmPassword = $("#renewPassword").val();
+
       $.ajax({
         url: url,
         type: "POST",
         data: data,
         crossDomain: true,
         success: function (response) {
-          $("#errorMessage").show().text(response.message);
-          console.log(response);
-          $("#errorMessage").fadeTo(2000, 500).slideUp(500, function () {
-            $("#errorMessage").hide();
-          });
-          $("form").reset();
+          if (response.statusCode == 200) {
+            // $("#successMessage").show().text(response.message);
+            console.log(response);
+
+            toastr.success(response.message);
+            location.reload();
+
+          } else if (response.statusCode == 409) {
+            $("#dangerMessage").show().text(response.message);
+            console.log(response);
+            $("#dangerMessage").fadeTo(2000, 500).slideUp(500, function () {
+              $("#dangerMessage").hide();
+            });
+          }
+
         },
         error: function (err) {
           var jso = JSON.parse(err.responseText);
           var error = jso.message[0];
-          console.log(error);
+          console.log("eeeeeeeeeeeeeeeeeee", error);
           console.log("old", jso);
-
-          if (jso.status == "422") {
-            if (error.context.key == "oldPassword") {
-              console.log("old");
-              // $('#newPasswordvalid').hide()
-              // $('#reNewPasswordValid').hide()
-              $('#oldPasswordValid').text(error.message)
-
-
-            } else if (error.context.key == "newPassword") {
-              console.log("new");
-              // $('#oldPasswordValid').hide()
-              // $('#reNewPasswordValid').hide()
-              $('#newPasswordvalid').text(error.message)
-
-
-            } else if (error.context.key == "confirmPassword") {
-              console.log("confirm");
-              // $('#newPasswordvalid').hide()
-              // $('#oldPasswordValid').hide()
-              $('#reNewPasswordValid').text(error.message)
-
-            }
-          } else if (jso.status == "409") {
-            $('#oldPasswordValid').text(jso.message)
-          }
           if (jso.status == "409") {
-            $('#oldPasswordValid').text(jso.message)
+            $('#currentPassError').text(jso.message)
           }
+          // if (jso.status == "422") {
+          //   if (error.context.key == "oldPassword") {
+          //     console.log("old");
+          //     // $('#newPasswordvalid').hide()
+          //     // $('#reNewPasswordValid').hide()
+          //     $('#currentPassError').text(error.message)
+
+
+          //   } else if (error.context.key == "newPassword") {
+          //     console.log("new");
+          //     // $('#currentPassError').hide()
+          //     // $('#reNewPasswordValid').hide()
+          //     $('#newPasswordvalid').text(error.message)
+
+
+          //   } else if (error.context.key == "confirmPassword") {
+          //     console.log("confirm");
+          //     // $('#newPasswordvalid').hide()
+          //     // $('#currentPassError').hide()
+          //     $('#reNewPasswordValid').text(error.message)
+
+          //   }
+          // } else if (jso.status == "409") {
+          //   $('#currentPassError').text(jso.message)
+          // }
+
 
         },
       });

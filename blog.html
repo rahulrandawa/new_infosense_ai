@@ -117,10 +117,18 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="case-studies.html">
           <i class="bi bi-grid"></i>
           <span>Case studies</span>
+        </a>
+      </li> -->
+      <!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="success_story.html">
+          <i class="bi bi-grid"></i>
+          <span>Success Stories</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
@@ -143,7 +151,7 @@
           <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-           <!-- <li>
+          <!-- <li>
             <a href="about-us.html">
               <i class="bi bi-circle"></i><span>about us</span>
             </a>
@@ -155,8 +163,8 @@
           </li>
 
           <li>
-            <a href="terms_condition.html">
-              <i class="bi bi-circle"></i><span>Terms and Conditions</span>
+            <a href="terms_use.html">
+              <i class="bi bi-circle"></i><span>Terms of use</span>
             </a>
           </li>
 
@@ -185,14 +193,15 @@
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
 
-              <li class="breadcrumb-item active">blogs</li>
+              <li class="breadcrumb-item active">Blogs</li>
 
             </ol>
 
           </nav>
         </div>
         <div class="col-6">
-          <div id="addButton"> <a href="create-blog.html" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Add Blog</a></div>
+          <div id="addButton"> <a href="create-blog.html" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Add
+              Blog</a></div>
         </div>
       </div><!-- End Page Title -->
 
@@ -231,7 +240,7 @@
     <div class="copyright">
       &copy; Copyright <strong><span>Infosense AI</span></strong>. All Rights Reserved
     </div>
-    
+
   </footer>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
@@ -259,64 +268,64 @@
 
 <script>
 
-var token = localStorage.getItem("loginToken");
-    console.log("token", token);
-    if (!token) {
-      window.location.href = "index.html";
-    }
-    getAdminDetails();
-    function getAdminDetails() {
-      console.log("progileeeeee")
-      jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/data";
-      $.ajax({
-        url: url,
-        type: "GET",
-        success: function (response) {
-          var res = JSON.parse(JSON.stringify(response));
-          var admin = res.data[0];
-          console.log(admin);
-          var fullname = admin.firstName + " " + admin.lastName;
-          $('#adminName').text(fullname ? fullname : "Admin")
-          $('#adminProfileImage').attr('src', admin.image)
-        },
-        error: function (err) {
-          var error = JSON.parse(err);
+  var token = localStorage.getItem("loginToken");
+  console.log("token", token);
+  if (!token) {
+    window.location.href = "index.html";
+  }
+  getAdminDetails();
+  function getAdminDetails() {
+    console.log("progileeeeee")
+    jQuery.support.cors = true;
+    var url = "http://infosense.tech:8000/admin/data";
+    $.ajax({
+      url: url,
+      type: "GET",
+      success: function (response) {
+        var res = JSON.parse(JSON.stringify(response));
+        var admin = res.data[0];
+        console.log(admin);
+        var fullname = admin.firstName + " " + admin.lastName;
+        $('#adminName').text(fullname ? fullname : "Admin")
+        $('#adminProfileImage').attr('src', admin.image)
+      },
+      error: function (err) {
+        var error = JSON.parse(err);
 
-          console.log(JSON.stringify(error));
+        console.log(JSON.stringify(error));
 
-        },
-      });
-    }
+      },
+    });
+  }
 
 
-    function logOut() {
-      jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/logout   ";
-      $.ajax({
-        url: url,
-        type: "GET",
-        success: function (response) {
-          console.log(response);
-          localStorage.clear()
+  function logOut() {
+    jQuery.support.cors = true;
+    var url = "http://infosense.tech:8000/admin/logout   ";
+    $.ajax({
+      url: url,
+      type: "GET",
+      success: function (response) {
+        console.log(response);
+        localStorage.clear()
 
-          var token = localStorage.getItem("loginToken");
-          console.log("token", token);
-          window.location.href = "index.html";
-        },
-        error: function (err) {
-          console.log(err);
+        var token = localStorage.getItem("loginToken");
+        console.log("token", token);
+        window.location.href = "index.html";
+      },
+      error: function (err) {
+        console.log(err);
 
-        },
-      });
-    }
+      },
+    });
+  }
 
   getAllCaseStudy();
   function deletBlog(id) {
     console.log("fun", id);
     jQuery.support.cors = true;
     var url = "http://infosense.tech:8000/blog/delete-blog/" + id;
-    
+
     $.ajax({
       url: url,
       type: "GET",
@@ -350,23 +359,21 @@ var token = localStorage.getItem("loginToken");
           for (var i = 0; i <= length; i++) {
             var cat = data[i];
             $('#blogTable').dataTable({
-              "bLengthChange": false,
-              "bPaginate": true,
-              "bInfo": false,
-              "autoWidth": false,
-              "order": [[0, "desc"]],
-              "processing": true,
-              "serverSide": false,
+              // "bLengthChange": false,
+              // "bPaginate": true,
+              // "bInfo": false,
+              // "autoWidth": false,
+              // "order": [[0, "desc"]],
+              // "processing": true,
+              // "serverSide": false,
               "destroy": true,
-              "dom": 'lrtip'
+              // "dom": 'lrtip'
             }).fnAddData([
               num,
               '<img src="' + cat.image + '" width="50" height="50"/>',
               cat.title,
-              '<a href="edit-blog.html" class="btn btn-primary">View</a> <a href="edit-blog.html?slug=' + cat.slug + '" class="btn btn-secondary">Edit</a> <a type="button" onclick="deletBlog("' + cat.slug + '")" class="btn btn-danger">Delete</a>',
-
+              '<a title="View" href="view-blog.html?slug=' + cat.slug + '" class="btn btn-primary">View</a> <a title="Edit" href="edit-blog.html?slug=' + cat.slug + '" class="btn btn-primary">Edit</a> <a title="Delete" type="button" onclick="deletBlog("' + cat.slug + '")" class="btn btn-danger">Delete</a>',
             ]);
-
 
             num++;
           }

@@ -68,10 +68,6 @@
           </a>
         </li><!-- End Search Icon-->
 
-
-
-
-
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
@@ -113,20 +109,27 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="dashboard.html">
+        <a class="nav-link collapsed" href="dashboard.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-      <li class="nav-item">
-        <a class="nav-link " href="case-studies.html">
+      <!-- <li class="nav-item">
+        <a class="nav-link collapsed" href="case-studies.html">
           <i class="bi bi-grid"></i>
           <span>Case studies</span>
+        </a>
+      </li> -->
+      <!-- End Dashboard Nav -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="success_story.html">
+          <i class="bi bi-grid"></i>
+          <span>Success Stories</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link " href="blog.html">
+        <a class="nav-link collapsed" href="blog.html">
           <i class="bi bi-grid"></i>
           <span>Blog</span>
         </a>
@@ -150,19 +153,19 @@
             </a>
           </li> -->
           <li>
-            <a href="privacy-policy.html">
+            <a href="privacy-policy.html" >
               <i class="bi bi-circle"></i><span>Privacy Policy</span>
             </a>
           </li>
 
           <li>
-            <a href="terms_condition.html">
-              <i class="bi bi-circle"></i><span>Terms and Conditions</span>
+            <a href="terms_use.html">
+              <i class="bi bi-circle"></i><span>Terms of use</span>
             </a>
           </li>
 
           <li>
-            <a href="cookies.html"  class="active">
+            <a href="cookies.html" class="active">
               <i class="bi bi-circle"></i><span>Cookie Policy </span>
             </a>
           </li>
@@ -183,12 +186,12 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Privacy Policy</h1>
+      <h1>Cookie Policy</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
 
-          <li class="breadcrumb-item active">Cookies Policy</li>
+          <li class="breadcrumb-item active">Cookie Policy</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -202,18 +205,24 @@
                 <input type="hidden" class="form-control" id="cookies_id">
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
-                  <input type="text" class="form-control" value="Cookies Policy" id="title" disabled>
+                  <input type="text" class="form-control" value="Cookie Policy" id="title" disabled>
 
                 </div>
 
                 <div class="col-12">
-                  <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
+                  <label for="inputEmail4" class="form-label"><strong>Description</strong></label>
+
+
                   <div class="quill-editor-full">
-                    <textarea id="discription" id="description"> </textarea>
-                  </div>​​​​​​
+                    <textarea class="form-control" style="height: 300px"></textarea>
+                  </div>
+
+
+
+                  <div class="error" id="errorDesc"></div>​​​​​​
                 </div>
                 <div class="col-12"><button type="button" class="btn btn-primary"
-                    onclick="updateCookies();">Update</button>
+                    onclick="updateCookiePolicy();">Update</button>
               </form>
             </div>
           </div>
@@ -282,7 +291,7 @@
 
     function logOut() {
       jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/logout";
+      var url = "http://infosense.tech:8000/admin/logout   ";
       $.ajax({
         url: url,
         type: "GET",
@@ -301,10 +310,10 @@
       });
     }
 
-    geCookies();
+    getCookiePolicy();
 
-    function geCookies() {
-        console.log("hiiiiiiiii")
+
+    function getCookiePolicy() {
       jQuery.support.cors = true;
       var url = "http://infosense.tech:8000/policy/cookie-policy-details";
       $.ajax({
@@ -318,10 +327,58 @@
           var description = response.userDetails.description;
           var cookies_id = response.userDetails._id;
 
-          new Quill(".quill-editor-full").clipboard.dangerouslyPasteHTML(description);
+          // var quill = new Quill('.quill-editor-ful', {
+          //   theme: 'snow'
+          // });
+
+
+          new Quill(".quill-editor-full", {
+            modules: {
+              toolbar: [
+                [{
+                  font: []
+                }, {
+                  size: []
+                }],
+                ["bold", "italic", "underline", "strike"],
+                [{
+                  color: []
+                },
+                {
+                  background: []
+                }
+                ],
+                [{
+                  script: "super"
+                },
+                {
+                  script: "sub"
+                }
+                ],
+                [{
+                  list: "ordered"
+                },
+                {
+                  list: "bullet"
+                },
+                {
+                  indent: "-1"
+                },
+                {
+                  indent: "+1"
+                }
+                ],
+                ["direction", {
+                  align: []
+                }],
+                ["link", "image", "video"],
+                ["clean"]
+              ]
+            },
+            theme: "snow"
+          }).clipboard.dangerouslyPasteHTML(description);
 
           $('#title').val(title)
-
           $('#cookies_id').val(cookies_id)
         },
         error: function (err) {
@@ -333,45 +390,64 @@
       });
     }
 
-    function updateCookies() {
+    function updateCookiePolicy() {
       console.log(1)
 
       var title = $('#title').val();
 
       var cookies_id = $('#cookies_id').val();
-      var description = $('#description').val();
-
-      console.log("cookies_id", cookies_id);
-      console.log("title", title);
-      
       var quill_description = new Quill(".quill-editor-full").root.innerHTML;
 
-      console.log("quill_description", quill_description);
+      var check_quillDescription = new Quill(".quill-editor-full").getText();
+      console.log("check_quillDescription", check_quillDescription);
 
-      var url = "http://infosense.tech:8000/policy/update-cookies/"+cookies_id;
-      // var url = "http://infosense.tech:8000/policy/update-policy/63c8d2b5bde3580b72d82a08"
+
+      var description_valid = false;
+
+      if (check_quillDescription == '' || check_quillDescription == 0) {
+        $("#errorDesc").show().text("Enter Description");
+        var description_valid = false;
+        // return false;
+      } else {
+        var description_valid = true;
+        $("#errorDesc").hide();
+
+      }
+
+      if (description_valid == false) {
+        console.log("login error")
+        $(window).scrollTop(0);
+        return false;
+      }
+
+      $("#errorDesc").hide();
+
+      console.log("privacy_id", cookies_id);
+      console.log("title", title);
+
+      var url = "http://infosense.tech:8000/policy/update-cookies/" + cookies_id;
       $.ajax({
-          url: url,
-          type: "POST",
-          data:{
-            'title':title,
-            'description':quill_description,
-          },
-          success: function (response) {
-              console.log(response);
-              // $("#updateBlogMessage").show().text(response.message);
-              // console.log(response);
-              // $("#updateBlogMessage").fadeTo(2000, 500).slideUp(500, function () {
-              //   $("#updateBlogMessage").hide();
-              // });
-              toastr.success('Cookies updated successfully');
-              // location.reload()
-          },
-          error: function (err) {
-              // console.log(err);
-              toastr.success("Somethings went wrong");
-              // location.reload()
-          },
+        url: url,
+        type: "POST",
+        data: {
+          'title': title,
+          'description': quill_description,
+        },
+        success: function (response) {
+          console.log(response);
+          // $("#updateBlogMessage").show().text(response.message);
+          // console.log(response);
+          // $("#updateBlogMessage").fadeTo(2000, 500).slideUp(500, function () {
+          //   $("#updateBlogMessage").hide();
+          // });
+          toastr.success('Cookies Policy updated successfully');
+          // location.reload()
+        },
+        error: function (err) {
+          // console.log(err);
+          toastr.success("Somethings went wrong");
+          // location.reload()
+        },
       });
 
     }

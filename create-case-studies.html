@@ -154,8 +154,8 @@
           </li>
 
           <li>
-            <a href="terms_condition.html">
-              <i class="bi bi-circle"></i><span>Terms and Conditions</span>
+            <a href="terms_use.html">
+              <i class="bi bi-circle"></i><span>Terms of use</span>
             </a>
           </li>
 
@@ -232,14 +232,13 @@
                   </div>
                 </div>
 
+                
                 <div class="col-12">
-                  <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
+                  <label for="inputEmail4" class="form-label"><strong>Description</strong></label>
                   <div class="quill-editor-full">
-
+                    <textarea class="form-control" style="height: 300px"></textarea>
                   </div>
                 </div>
-
-
 
                 <div class="col-12"><button type="button" class="btn btn-primary"
                     onclick="caseStudyFunction();">Add</button></div>
@@ -282,6 +281,54 @@
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script>
+    $(document).ready(function() {
+      new Quill(".quill-editor-full", {
+            modules: {
+              toolbar: [
+                [{
+                  font: []
+                }, {
+                  size: []
+                }],
+                ["bold", "italic", "underline", "strike"],
+                [{
+                  color: []
+                },
+                {
+                  background: []
+                }
+                ],
+                [{
+                  script: "super"
+                },
+                {
+                  script: "sub"
+                }
+                ],
+                [{
+                  list: "ordered"
+                },
+                {
+                  list: "bullet"
+                },
+                {
+                  indent: "-1"
+                },
+                {
+                  indent: "+1"
+                }
+                ],
+                ["direction", {
+                  align: []
+                }],
+                ["link", "image", "video"],
+                ["clean"]
+              ]
+            },
+            theme: "snow"
+          });
+});
+
     var token = localStorage.getItem("loginToken");
     console.log("token", token);
     if (!token) {
