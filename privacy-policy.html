@@ -32,6 +32,8 @@
   <link href="assets/css/style.css" rel="stylesheet">
   <link href="assets/css/infosense.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+
 
 
 </head>
@@ -65,10 +67,6 @@
             <i class="bi bi-search"></i>
           </a>
         </li><!-- End Search Icon-->
-
-
-
-
 
         <li class="nav-item dropdown pe-3">
 
@@ -111,20 +109,20 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="dashboard.html">
+        <a class="nav-link collapsed" href="dashboard.html">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
       <li class="nav-item">
-        <a class="nav-link " href="case-studies.html">
+        <a class="nav-link collapsed" href="case-studies.html">
           <i class="bi bi-grid"></i>
           <span>Case studies</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link " href="blog.html">
+        <a class="nav-link collapsed" href="blog.html">
           <i class="bi bi-grid"></i>
           <span>Blog</span>
         </a>
@@ -197,7 +195,7 @@
           <div class="card">
             <div class="card-body">
               <form>
-                <input type="text" class="form-control" id="privacy_id">
+                <input type="hidden" class="form-control" id="privacy_id">
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
                   <input type="text" class="form-control" value="Privacy Policy" id="title" disabled>
@@ -206,9 +204,15 @@
 
                 <div class="col-12">
                   <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
+
+
                   <div class="quill-editor-full">
-                    <textarea id="discription" id="description"> </textarea>
-                  </div>​​​​​​
+                    <textarea class="form-control" style="height: 300px"></textarea>
+                  </div>
+
+
+
+                  <div class="error" id="errorDesc"></div>​​​​​​
                 </div>
                 <div class="col-12"><button type="button" class="btn btn-primary"
                     onclick="updatePrivacyPolicy();">Update</button>
@@ -243,6 +247,8 @@
   <script src="assets/vendor/chart.js/chart.umd.js"></script>
   <script src="assets/vendor/extra-libs/DataTables/datatables.min.js"></script>
   <script src="assets/vendor/datatable/datatable-basic.init.js"></script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script>
@@ -299,6 +305,7 @@
 
     getPrivacyPolicy();
 
+
     function getPrivacyPolicy() {
       jQuery.support.cors = true;
       var url = "http://infosense.tech:8000/policy/privacy-policy-details";
@@ -309,17 +316,62 @@
           var res = JSON.parse(JSON.stringify(response));
           var cms_data = response.userDetails;
 
-
           var title = response.userDetails.title;
           var description = response.userDetails.description;
           var privacy_id = response.userDetails._id;
 
-          console.log("cms_responsetitle", description);
+          // var quill = new Quill('.quill-editor-ful', {
+          //   theme: 'snow'
+          // });
 
-          new Quill(".quill-editor-full").clipboard.dangerouslyPasteHTML(description);
+
+          new Quill(".quill-editor-full", {
+            modules: {
+              toolbar: [
+                [{
+                  font: []
+                }, {
+                  size: []
+                }],
+                ["bold", "italic", "underline", "strike"],
+                [{
+                  color: []
+                },
+                {
+                  background: []
+                }
+                ],
+                [{
+                  script: "super"
+                },
+                {
+                  script: "sub"
+                }
+                ],
+                [{
+                  list: "ordered"
+                },
+                {
+                  list: "bullet"
+                },
+                {
+                  indent: "-1"
+                },
+                {
+                  indent: "+1"
+                }
+                ],
+                ["direction", {
+                  align: []
+                }],
+                ["link", "image", "video"],
+                ["clean"]
+              ]
+            },
+            theme: "snow"
+          }).clipboard.dangerouslyPasteHTML(description);
 
           $('#title').val(title)
-
           $('#privacy_id').val(privacy_id)
         },
         error: function (err) {
@@ -337,40 +389,58 @@
       var title = $('#title').val();
 
       var privacy_id = $('#privacy_id').val();
-      var description = $('#description').val();
+      var quill_description = new Quill(".quill-editor-full").root.innerHTML;
+
+      var check_quillDescription = new Quill(".quill-editor-full").getText();
+      console.log("check_quillDescription", check_quillDescription);
+
+
+      var description_valid = false;
+
+      if (check_quillDescription == '' || check_quillDescription == 0) {
+        $("#errorDesc").show().text("Enter Description");
+        var description_valid = false;
+        // return false;
+      } else {
+        var description_valid = true;
+        $("#errorDesc").hide();
+
+      }
+
+      if (description_valid == false) {
+        console.log("login error")
+        $(window).scrollTop(0);
+        return false;
+      }
+
+      $("#errorDesc").hide();
 
       console.log("privacy_id", privacy_id);
       console.log("title", title);
-      console.log("description", description);
 
-      var quill_description = new Quill(".quill-editor-full").root.innerHTML;
-
-      let formData = new FormData();
-      formData.append("title", title);
-      formData.append("description", quill_description);
-
-      var url = "http://infosense.tech:8000/policy/update-policy/"+privacy_id;
+      var url = "http://infosense.tech:8000/policy/update-policy/" + privacy_id;
       $.ajax({
-          url: url,
-          method: "POST",
-          type: "POST",
-          enctype: 'multipart/form-data',
-          data: formData,
-          cache: false,
-          contentType: false,
-          processData: false,
-          success: function (response) {
-              console.log(response);
-              $("#updateBlogMessage").show().text(response.message);
-              console.log(response);
-              $("#updateBlogMessage").fadeTo(2000, 500).slideUp(500, function () {
-                $("#updateBlogMessage").hide();
-              });
-              // location.reload()
-          },
-          error: function (err) {
-              console.log(err);
-          },
+        url: url,
+        type: "POST",
+        data: {
+          'title': title,
+          'description': quill_description,
+        },
+        success: function (response) {
+          console.log(response);
+          // $("#updateBlogMessage").show().text(response.message);
+          // console.log(response);
+          // $("#updateBlogMessage").fadeTo(2000, 500).slideUp(500, function () {
+          //   $("#updateBlogMessage").hide();
+          // });
+          toastr.success('Privacy Policy updated successfully');
+          // location.reload()
+        },
+        error: function (err) {
+          // console.log(err);
+          toastr.success("Somethings went wrong");
+          // location.reload()
+        },
       });
 
     }
