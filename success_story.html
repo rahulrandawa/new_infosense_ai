@@ -370,9 +370,8 @@
               num,
               '<img src="' + cat.image + '" width="50" height="50"/>',
               cat.title,
-              '<a title="View" href="view-success_stroy.html?slug=' + cat.slug + '" class="btn btn-primary">View</a> <a title="Edit" href="edit-success_stroy.html?slug=' + cat._id + '" class="btn btn-primary">Edit</a> <a title="Delete" type="button" onclick="deletBlog("' + cat.slug + '")" class="btn btn-danger">Delete</a>',
+              '<a title="View" href="view-success_stroy.html?id=' + cat._id + '" class="btn btn-primary">View</a> <a title="Edit" href="edit-success_stroy.html?id=' + cat._id + '" class="btn btn-primary">Edit</a> <a title="Delete" type="button" onclick="deletBlog("' + cat.slug + '")" class="btn btn-danger">Delete</a>',
             ]);
-
             num++;
           }
         }

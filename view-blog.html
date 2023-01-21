@@ -125,10 +125,10 @@
             <!-- End Dashboard Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="success_story.html">
-                  <i class="bi bi-grid"></i>
-                  <span>Success Stories</span>
+                    <i class="bi bi-grid"></i>
+                    <span>Success Stories</span>
                 </a>
-              </li><!-- End Dashboard Nav -->
+            </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
                 <a class="nav-link " href="blog.html">
@@ -215,28 +215,40 @@
                                 <input type="hidden" id="blogId" />
                                 <div class="col-12">
                                     <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
-                                    <input type="text" class="form-control" id="title">
+                                    <input type="text" class="form-control" id="title" disabled>
                                 </div>
 
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="form-group mt-5">
                                         <label for=""><strong>Image</strong></label>
                                         <input type="file" class="form-control" name="files" id="blogImage" multiple />
                                     </div>
                                     <div id="divImageMediaPreview"></div>
-                                </div>
+                                </div> -->
 
                                 <div class="col-12">
-                                    <label for="inputEmail4" class="form-label"><strong>Discription</strong></label>
-                                    <div class="quill-editor-full">
+                                    <div class="form-group mt-5">
+                                      <label for=""><strong>Image</strong></label>
+                                      <!-- <input type="file" class="form-control" name="files" id="blogImage" /> -->
+                                    </div>
+                                    <div class="error" id="errorImg"></div>
+                                    <div style="margin: 14px;">
+                                      <img class="file-upload-image profile-user-img" src="" alt="blogImgPreview" id="blogImgPreview" style="display: none;" width="100px;" height="100px;">
+                                    </div>
+                                  </div>
 
+                                <div class="col-12">
+
+                                    <label for="inputEmail4" class="form-label"><strong>Description</strong></label>
+
+
+                                    <div class="quill-editor-full">
+                                        <textarea class="form-control" style="height: 300px"></textarea>
                                     </div>
                                 </div>
 
-
-
-                                <div class="col-12"><button type="button" class="btn btn-primary"
-                                        onclick="updateBlogFunction(id);">Update</button></div>
+                                <!-- <div class="col-12"><button type="button" class="btn btn-primary"
+                                        onclick="updateBlogFunction(id);">Update</button></div> -->
 
                             </form>
 
@@ -329,7 +341,7 @@
         var search = window.location.search
         console.log(search);
         const urlParams = new URLSearchParams(search);
-        const slug = urlParams.get('slug');
+        const slug = urlParams.get('id');
         console.log("urlParams", slug);
         $('#blogId').val(slug)
         $("#blogImage").change(function () {
@@ -352,24 +364,70 @@
             }
         });
 
+       
         getAllCaseStudy(slug);
         function getAllCaseStudy(slug) {
             console.log("fun", slug);
             jQuery.support.cors = true;
-            var url = "http://infosense.tech:8000/blog/get-blog/" + slug;
+            var url = "http://infosense.tech:8000/blog/blog-detail/" + slug;
             $.ajax({
                 url: url,
                 type: "GET",
                 success: function (response) {
-                    console.log(response.data);
+
                     $('#title').val(response.data.title);
-                    // $('.quill-editor-full').html(response.data.description );
-                    new Quill(".quill-editor-full").clipboard.dangerouslyPasteHTML(response.data.description);
-                    var dvPreview = $("#divImageMediaPreview");
-                    var img = $("<img />");
-                    img.attr("style", "width: 150px; height:100px; padding: 10px");
-                    img.attr("src", response.data.image);
-                    dvPreview.append(img);
+                    // $(".quill-editor-full").html(response.data.description)
+                    new Quill(".quill-editor-full", {
+                        modules: {
+                            toolbar: [
+                                [{
+                                    font: []
+                                }, {
+                                    size: []
+                                }],
+                                ["bold", "italic", "underline", "strike"],
+                                [{
+                                    color: []
+                                },
+                                {
+                                    background: []
+                                }
+                                ],
+                                [{
+                                    script: "super"
+                                },
+                                {
+                                    script: "sub"
+                                }
+                                ],
+                                [{
+                                    list: "ordered"
+                                },
+                                {
+                                    list: "bullet"
+                                },
+                                {
+                                    indent: "-1"
+                                },
+                                {
+                                    indent: "+1"
+                                }
+                                ],
+                                ["direction", {
+                                    align: []
+                                }],
+                                ["link", "image", "video"],
+                                ["clean"]
+                            ]
+                        },
+                        readOnly:true,
+                        theme: "snow",
+                    }).clipboard.dangerouslyPasteHTML(response.data.description);
+
+                    
+                    $('#blogImgPreview').show()
+                    $('#blogImgPreview').attr("src", response.data.image)
+
                 },
                 error: function (err) {
                     console.log(err);
@@ -379,6 +437,4 @@
         }
     </script>
 </body>
-
-
 </html>

@@ -349,7 +349,7 @@
         var search = window.location.search
         console.log(search);
         const urlParams = new URLSearchParams(search);
-        const slug = urlParams.get('slug');
+        const slug = urlParams.get('id');
         console.log("urlParams", slug);
         $('#blogId').val(slug)
         $("#blogImage").change(function () {
@@ -382,9 +382,9 @@
         type: "GET",
         success: function (response) {
           var res = JSON.parse(JSON.stringify(response));
-          console.log("resresres",res.userDetails);
+          console.log("resresres",res.successCategoryData);
 
-            $.each(res.userDetails, function(key, value) {
+            $.each(res.successCategoryData, function(key, value) {
                 $("#category").append('<option value="' + value._id + '">' + value.name + '</option>');
             });
         },
@@ -399,7 +399,7 @@
         function getAllCaseStudy(slug) {
             console.log("fun", slug);
             jQuery.support.cors = true;
-            var url = "http://infosense.tech:8000/story/details/" + slug;
+            var url = "http://infosense.tech:8000/story/story-detail/" + slug;
             $.ajax({
                 url: url,
                 type: "GET",

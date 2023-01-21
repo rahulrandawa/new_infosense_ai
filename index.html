@@ -88,14 +88,14 @@
                   <div class="alert alert-danger" role="alert" id="errorMessage" style="display: none;">
 
                   </div>
-                  <form class="row g-3 needs-validation" id="loginForm" method="post" data-parsley-validate="">
+                  <form class="row g-3 needs-validation" id="loginForm" method="post" novalidate>
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Email-Id</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend"><i class="fa fa-envelope-o"
                             aria-hidden="true"></i></span>
-                        <input type="text" name="email" class="form-control" id="yourEmail" placeholder="Email-Id">
+                        <input type="text" name="email" class="form-control" id="yourEmail" placeholder="Email-Id" required>
 
 
                       </div>
@@ -109,7 +109,7 @@
                         <span class="input-group-text" id="inputGroupPrepend"><i class="fa fa-lock"
                             aria-hidden="true"></i></span>
                         <input type="password" name="password" class="form-control" id="yourPassword"
-                          placeholder="Password">
+                          placeholder="Password" required minlength="8">
                       </div>
                       <div class="error" id="errorPassword"></div>
                     </div>

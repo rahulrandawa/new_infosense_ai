@@ -423,9 +423,10 @@
         type: "GET",
         success: function (response) {
           var res = JSON.parse(JSON.stringify(response));
-          console.log("resresres",res.userDetails);
+          // console.log("resresres",res.userDetails);
+          console.log("resresres",res.successCategoryData);
 
-            $.each(res.userDetails, function(key, value) {
+            $.each(res.successCategoryData, function(key, value) {
                 $("#category").append('<option value="' + value._id + '">' + value.name + '</option>');
             });
 
