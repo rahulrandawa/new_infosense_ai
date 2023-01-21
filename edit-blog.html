@@ -32,6 +32,7 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/infosense.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
 
 </head>
@@ -187,12 +188,12 @@
         <div>
             <div class="row col-12 ">
                 <div class="col-6">
-                    <h3>View Blog</h3>
+                    <h3>Edit Blog</h3>
                     <nav>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
 
-                            <li class="breadcrumb-item active">View Blog</li>
+                            <li class="breadcrumb-item active">Edit Blog</li>
                         </ol>
                     </nav>
                 </div><!-- End Page Title -->
@@ -216,6 +217,7 @@
                                 <div class="col-12">
                                     <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
                                     <input type="text" class="form-control" id="title">
+                                    <div class="error" id="errorTitle"></div>
                                 </div>
 
                                 <!-- <div class="col-12">
@@ -245,10 +247,11 @@
                                     <div class="quill-editor-full">
                                         <textarea class="form-control" style="height: 300px"></textarea>
                                     </div>
+                                    <div class="error" id="errorDesc"></div>
                                 </div>
 
                                 <div class="col-12"><button type="button" class="btn btn-primary"
-                                        onclick="updateBlogFunction(id);">Update</button></div>
+                                        onclick="updateBlog();">Update</button></div>
 
                             </form>
 
@@ -286,6 +289,7 @@
     <script src="assets/vendor/datatable/datatable-basic.init.js"></script>
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         var token = localStorage.getItem("loginToken");
         console.log("token", token);
@@ -364,6 +368,47 @@
             }
         });
 
+        // -------------Add Image Preview------------------------------
+        function read(input) {
+          $('#blogImgPreview').show();
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+              $('#blogImgPreview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+          }
+        }
+        $("#blogImage").change(function () {
+          read(this);
+        });
+
+        $('#blogImage').bind('change', function () {
+          var ext = $('#blogImage').val().split('.').pop().toLowerCase();
+
+          console.log("ext", ext)
+
+          if (ext == "png" || ext == "jpg" || ext == "jpeg") {
+            $("#errorImg").hide();
+
+            console.log("yes extenstion")
+
+          } else {
+            $('#blogImgPreview').hide();
+            $('#error1').show();
+            $("#errorImg").show().text("Image formate should be png,jpg,jpeg");
+            console.log("no extenstion")
+          }
+        });
+
+
+        $(document).ready(function () {
+          $('input[id="title"]').on('keyup', function () {
+            if (title != '' || title != 0) {
+              $("#errorTitle").hide();
+            }
+          });
+        });
        
         getAllCaseStudy(slug);
         function getAllCaseStudy(slug) {
@@ -434,6 +479,89 @@
                 },
             });
         }
+        
+        function updateBlog() {
+        
+        var title = $('#title').val();
+        var content = $('.quill-editor-full').html();
+        var file = $('#blogImage')[0].files[0];
+
+        const slug = urlParams.get('id');
+        console.log("urlParams", slug);  
+       
+  
+        var check_quillDescription = new Quill(".quill-editor-full").getText(); // check data avaiable in ckeditor or not
+        var quill_description = new Quill(".quill-editor-full").root.innerHTML; //desc with html
+  
+        var title_valid = false;
+        var description_valid = false;
+
+        if (title == '' || title == 0) {
+          $("#errorTitle").show().text("Enter Title");
+          var title_valid = false;
+        } else {
+          var title_valid = true;
+          $("#errorTitle").hide();
+        }
+  
+        if (check_quillDescription == '' || check_quillDescription == 0) {
+          $("#errorDesc").show().text("Enter Description");
+          var description_valid = false;
+        } else {
+          var description_valid = true;
+          $("#errorDesc").hide();
+        }
+  
+  
+        if (title_valid == false || description_valid == false) {
+          console.log("login error")
+          $(window).scrollTop(0);
+          return false;
+        }
+
+        console.log("success")
+
+        $("#errorTitle").hide();
+        $("#errorDesc").hide();
+        $("#errorImg").hide();
+  
+        let formData = new FormData();
+        formData.append("title", title);
+        formData.append("description", quill_description);
+        if (file) {
+          formData.append("image", file);
+        }
+        
+        var url = "http://infosense.tech:8000/blog/update-blog/"+ slug;
+        $.ajax({
+          url: url,
+          method: "PUT",
+          type: "PUT",
+          enctype: 'multipart/form-data',
+          data: formData,
+          cache: false,
+          contentType: false,
+          processData: false,
+          crossDomain: true,
+          success: function (response) {
+            console.log("Update");
+            console.log(response);
+            toastr.success('Blog updated successfully');
+            setTimeout(() => {
+                location.reload()
+            }, "1000")
+          },
+          error: function (err) {
+            toastr.success("Somethings went wrong");
+            setTimeout(() => {
+                location.reload()
+            }, "1000")
+  
+          },
+        });
+  
+      }
+        
     </script>
 </body>
 </html>

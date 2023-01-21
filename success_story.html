@@ -32,6 +32,7 @@
   <link href="assets/css/style.css" rel="stylesheet">
   <link href="assets/css/infosense.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
 
 
@@ -198,8 +199,9 @@
           </nav>
         </div>
         <div class="col-6">
-          <div id="addButton"> <a href="create-success_stroy.html" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Add
-            Success Stories</a></div>
+          <div id="addButton"> <a href="create-success_stroy.html" class="btn btn-primary"><i class="bi bi-plus-lg"></i>
+              Add
+              Success Stories</a></div>
         </div>
       </div><!-- End Page Title -->
 
@@ -260,6 +262,8 @@
   <script src="assets/vendor/datatable/datatable-basic.init.js"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+ <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 </body>
 
@@ -346,8 +350,7 @@
       url: url,
       type: "GET",
       success: function (response) {
-        console.log(response.getList);
-        var data = response.getList;
+        var data = response.data;
         $("#blogTable").DataTable().clear();
         var length = Object.keys(data).length;
         console.log("length of service line", length);
@@ -370,7 +373,7 @@
               num,
               '<img src="' + cat.image + '" width="50" height="50"/>',
               cat.title,
-              '<a title="View" href="view-success_stroy.html?id=' + cat._id + '" class="btn btn-primary">View</a> <a title="Edit" href="edit-success_stroy.html?id=' + cat._id + '" class="btn btn-primary">Edit</a> <a title="Delete" type="button" onclick="deletBlog("' + cat.slug + '")" class="btn btn-danger">Delete</a>',
+              '<a title="View" href="view-success_stroy.html?id=' + cat._id + '" class="btn btn-primary">View</a> <a title="Edit" href="edit-success_stroy.html?id=' + cat._id + '" class="btn btn-primary">Edit</a> <a href="javascript:void(0)" title="Delete" type="button" onclick=deleteSuccessStory("' + cat._id + '") class="btn btn-danger">Delete</a>',
             ]);
             num++;
           }
@@ -384,6 +387,45 @@
         ]);
       },
     });
+  }
+
+  function deleteSuccessStory(id) {
+
+    swal({
+      title: "Are you sure want to delete this Success Stories?",
+      text: "Once deleted, you will not be able to recover this success stories!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          var url = "http://infosense.tech:8000/story/delete-story/" + id;
+
+          $.ajax({
+            url: url,
+            type: "DELETE",
+            success: function (response) {
+              console.log("response", response);
+              toastr.success('Success Stories delete successfully');
+              setTimeout(() => {
+                location.reload()
+              }, "1000")
+            },
+            error: function (err) {
+              console.log(err);
+              toastr.danger('Somthing went wrong!');
+              setTimeout(() => {
+                location.reload()
+              }, "1000")
+            },
+          });
+        } else {
+          swal("Your Success Stories is safe!");
+          return false;
+        }
+      });
+
   }
 </script>
 

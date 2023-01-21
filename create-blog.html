@@ -33,7 +33,10 @@
   <link href="assets/css/infosense.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
+
+
 </head>
+
 
 <body>
 
@@ -63,6 +66,9 @@
             <i class="bi bi-search"></i>
           </a>
         </li><!-- End Search Icon-->
+
+
+
 
 
         <li class="nav-item dropdown pe-3">
@@ -112,11 +118,11 @@
         </a>
       </li><!-- End Dashboard Nav -->
       <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="case-studies.html">
-          <i class="bi bi-grid"></i>
-          <span>Case studies</span>
-        </a>
-      </li> -->
+                <a class="nav-link collapsed" href="case-studies.html">
+                    <i class="bi bi-grid"></i>
+                    <span>Case studies</span>
+                </a>
+            </li> -->
       <!-- End Dashboard Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="success_story.html">
@@ -166,6 +172,9 @@
               <i class="bi bi-circle"></i><span>Cookie Policy </span>
             </a>
           </li>
+
+
+
         </ul>
       </li>
 
@@ -189,22 +198,26 @@
           </nav>
         </div><!-- End Page Title -->
         <div class="col-6">
-          <div id="addButton"> <a href="blog.html" class="btn btn-primary"><i class="bi bi-arrow-left-short"></i> Back</a></div>
+          <div id="addButton"> <a href="blog.html" class="btn btn-primary"><i class="bi bi-arrow-left-short"></i>
+              Back</a></div>
         </div>
       </div><!-- End Page Title -->
     </div>
+
+
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <div class="alert alert-success" role="alert" id="errorMessage" style="display: none;">
+              <div class="alert alert-success" role="alert" id="updateBlogMessage" style="display: none;">
               </div>
               <form action="" id="caseStudyForm" method="post" enctype="multipart/form-data">
+                <input type="hidden" id="blogId" />
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
                   <input type="text" class="form-control" id="title">
-                  <div class="error" id="errorTitle"></div>​​​​​​
+                  <div class="error" id="errorTitle"></div>
                 </div>
 
                 <div class="col-12">
@@ -214,21 +227,21 @@
                   </div>
                   <div class="error" id="errorImg"></div>
                   <div style="margin: 14px;">
-                    <img class="file-upload-image profile-user-img" src="" alt="blogImgPreview" id="blogImgPreview" style="display: none;" width="100px;" height="100px;">
+                    <img class="file-upload-image profile-user-img" src="" alt="blogImgPreview" id="blogImgPreview"
+                      style="display: none;" width="100px;" height="100px;">
                   </div>
                 </div>
 
                 <div class="col-12">
+
                   <label for="inputEmail4" class="form-label"><strong>Description</strong></label>
-
                   <div class="quill-editor-full">
-                    <textarea class="form-control" id="description" style="height: 300px"></textarea>
+                    <textarea class="form-control" style="height: 300px"></textarea>
                   </div>
-                  <div class="error" id="errorDesc"></div>​​​​​​
-
+                  <div class="error" id="errorDesc"></div>
                 </div>
 
-                <div class="col-12"><button type="button" class="btn btn-primary" onclick="blogFunction();">Add</button>
+                <div class="col-12"><button type="button" class="btn btn-primary" onclick="addBlog();">Add</button>
                 </div>
 
               </form>
@@ -241,6 +254,7 @@
     </section>
 
   </main><!-- End #main -->
+  <!-- <div id="footerDiv"></div> -->
   <footer id="footer" class="footer">
     <div class="copyright">
       &copy; Copyright <strong><span>Infosense AI</span></strong>. All Rights Reserved
@@ -248,8 +262,7 @@
 
   </footer>
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
@@ -323,7 +336,6 @@
     }
     getAdminDetails();
     function getAdminDetails() {
-      console.log("progileeeeee")
       jQuery.support.cors = true;
       var url = "http://infosense.tech:8000/admin/data";
       $.ajax({
@@ -368,14 +380,31 @@
       });
     }
 
-
-    // ClassicEditor.create(document.querySelector('#editor'))
-    //   .then(editor => {
-    //     console.log(editor);
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
+    var search = window.location.search
+    console.log(search);
+    const urlParams = new URLSearchParams(search);
+    const slug = urlParams.get('id');
+    console.log("urlParams", slug);
+    $('#blogId').val(slug)
+    $("#blogImage").change(function () {
+      if (typeof (FileReader) != "undefined") {
+        var dvPreview = $("#divImageMediaPreview");
+        dvPreview.html("");
+        $($(this)[0].files).each(function () {
+          var file = $(this);
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var img = $("<img />");
+            img.attr("style", "width: 150px; height:100px; padding: 10px");
+            img.attr("src", e.target.result);
+            dvPreview.append(img);
+          }
+          reader.readAsDataURL(file[0]);
+        });
+      } else {
+        alert("This browser does not support HTML5 FileReader.");
+      }
+    });
 
     // -------------Add Image Preview------------------------------
     function read(input) {
@@ -419,11 +448,19 @@
       });
     });
 
-    function blogFunction() {
+
+
+    function addBlog() {
+
       var title = $('#title').val();
+      var category = $('#category').val();
+
       var content = $('.quill-editor-full').html();
       var file = $('#blogImage')[0].files[0];
-      console.log("blogImg", file);
+      console.log("filefile", file);
+
+      const slug = urlParams.get('id');
+      console.log("urlParams", slug);
 
       var check_quillDescription = new Quill(".quill-editor-full").getText(); // check data avaiable in ckeditor or not
       console.log("check_quillDescription", check_quillDescription);
@@ -431,8 +468,8 @@
       var quill_description = new Quill(".quill-editor-full").root.innerHTML; //desc with html
 
       var title_valid = false;
-      var file_valid = false;
       var description_valid = false;
+      var category_valid = false;
 
       if (title == '' || title == 0) {
         $("#errorTitle").show().text("Enter Title");
@@ -440,14 +477,6 @@
       } else {
         var title_valid = true;
         $("#errorTitle").hide();
-      }
-
-      if (check_quillDescription == '' || check_quillDescription == 0) {
-        $("#errorDesc").show().text("Enter Description");
-        var description_valid = false;
-      } else {
-        var description_valid = true;
-        $("#errorDesc").hide();
       }
 
       if (file == '' || file == 0 || file == undefined) {
@@ -458,7 +487,15 @@
         $("#errorImg").hide();
       }
 
-      if (description_valid == false || description_valid == false || file_valid == false) {
+      if (check_quillDescription == '' || check_quillDescription == 0) {
+        $("#errorDesc").show().text("Enter Description");
+        var description_valid = false;
+      } else {
+        var description_valid = true;
+        $("#errorDesc").hide();
+      }
+
+      if (title_valid == false || description_valid == false || file_valid == false) {
         console.log("login error")
         $(window).scrollTop(0);
         return false;
@@ -489,23 +526,25 @@
         success: function (response) {
           console.log("Update");
           console.log(response);
+          
           toastr.success('Blog added successfully');
-          // $("#errorMessage").show().text(response.message);
-          // console.log(response);
-          // $("#errorMessage").fadeTo(2000, 500).slideUp(500, function () {
-          //   $("#errorMessage").hide();
-          // });
-          location.reload()
+          setTimeout(() => {
+            location.reload()
+          }, "1000")
+
+          
         },
         error: function (err) {
-          toastr.success("Somethings went wrong");
-          // var error = JSON.parse(err.responseText);
           console.log(err);
-
+          toastr.success("Somethings went wrong");
+          setTimeout(() => {
+            location.reload()
+          }, "1000")
         },
       });
 
     }
+
   </script>
 </body>
 

@@ -525,17 +525,16 @@
           console.log("Update");
           console.log(response);
           toastr.success('Success stories added successfully');
-          // $("#errorMessage").show().text(response.message);
-          // console.log(response);
-          // $("#errorMessage").fadeTo(2000, 500).slideUp(500, function () {
-          //   $("#errorMessage").hide();
-          // });
-          location.reload()
+          setTimeout(() => {
+            location.reload()
+          }, "1000")
         },
         error: function (err) {
           toastr.error("Somethings went wrong");
           // var error = JSON.parse(err.responseText);
-          console.log(err);
+          setTimeout(() => {
+            location.reload()
+          }, "1000")
 
         },
       });

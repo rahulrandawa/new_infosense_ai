@@ -423,18 +423,17 @@
         },
         success: function (response) {
           console.log(response);
-          // $("#updateBlogMessage").show().text(response.message);
-          // console.log(response);
-          // $("#updateBlogMessage").fadeTo(2000, 500).slideUp(500, function () {
-          //   $("#updateBlogMessage").hide();
-          // });
           toastr.success('Terms of Use updated successfully');
-          // location.reload()
+          setTimeout(() => {
+                location.reload()
+            }, "1000")
         },
         error: function (err) {
           // console.log(err);
           toastr.error("Somethings went wrong");
-          // location.reload()
+          setTimeout(() => {
+                location.reload()
+            }, "1000")
         },
       });
 

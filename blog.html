@@ -32,6 +32,7 @@
   <link href="assets/css/style.css" rel="stylesheet">
   <link href="assets/css/infosense.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
 
 
@@ -262,6 +263,9 @@
   <script src="assets/vendor/datatable/datatable-basic.init.js"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+
 
 </body>
 
@@ -321,37 +325,20 @@
   }
 
   getAllCaseStudy();
-  function deletBlog(id) {
-    console.log("fun", id);
-    jQuery.support.cors = true;
-    var url = "http://infosense.tech:8000/blog/delete-blog/" + id;
-
-    $.ajax({
-      url: url,
-      type: "GET",
-      success: function (response) {
-        console.log(response);
-
-
-      },
-      error: function (err) {
-        console.log(err);
-
-      },
-    });
-  }
   function getAllCaseStudy() {
     // jQuery.support.cors = true;
 
     // var url = "http://infosense.tech:8000/blog/get-blogList?page=1&limit=200";
     var url = "http://infosense.tech:8000/blog/blog-list?page=1&limit=200";
-    
+
     $.ajax({
       url: url,
       type: "GET",
+
       success: function (response) {
         console.log(response.getList);
-        var data = response.getList;
+        // var data = response.getList;
+        var data = response.data;
         $("#blogTable").DataTable().clear();
         var length = Object.keys(data).length;
         console.log("length of service line", length);
@@ -374,7 +361,7 @@
               num,
               '<img src="' + cat.image + '" width="50" height="50"/>',
               cat.title,
-              '<a title="View" href="view-blog.html?id=' + cat._id + '" class="btn btn-primary">View</a> <a title="Edit" href="edit-blog.html?id=' + cat._id + '" class="btn btn-primary">Edit</a> <a title="Delete" type="button" onclick="deletBlog("' + cat.slug + '")" class="btn btn-danger">Delete</a>',
+              '<a title="View" href="view-blog.html?id=' + cat._id + '" class="btn btn-primary">View</a> <a title="Edit" href="edit-blog.html?id=' + cat._id + '" class="btn btn-primary">Edit</a> <a href="javascript:void(0)" title="Delete" type="button" onclick=deletBlog("' + cat._id + '") class="btn btn-danger">Delete</a>',
             ]);
 
             num++;
@@ -389,6 +376,47 @@
         ]);
       },
     });
+  }
+
+  function deletBlog(id) {
+
+    swal({
+      title: "Are you sure want to delete this blog?",
+      text: "Once deleted, you will not be able to recover this blog!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+
+        if (willDelete) {
+          var url = "http://infosense.tech:8000/blog/delete-blog/" + id;
+          $.ajax({
+            url: url,
+            type: "DELETE",
+            success: function (response) {
+              console.log("response", response);
+              toastr.success('Delete blog successfully');
+              
+              setTimeout(() => {
+                location.reload()
+              }, "1000")
+            },
+            error: function (err) {
+              console.log(err);
+              toastr.error("Somethings went wrong");
+              setTimeout(() => {
+                location.reload()
+              }, "1000")
+
+            },
+          });
+        } else {
+          swal("Your blog is safe!");
+          toastr.error('Somthing went wrong!');
+          return false;
+        }
+      });
   }
 </script>
 

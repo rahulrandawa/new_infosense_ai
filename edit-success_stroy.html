@@ -528,6 +528,7 @@
 
         const slug = urlParams.get('id');
         console.log("urlParams", slug);
+        console.log("categorycategory", category);
 
         
   
@@ -585,7 +586,7 @@
           formData.append("image", file);
         }
         
-        var url = "http://infosense.tech:8000/story/updateStory/"+ slug;
+        var url = "http://infosense.tech:8000/story/update-story/"+ slug;
         $.ajax({
           url: url,
           method: "PUT",
@@ -600,17 +601,18 @@
             console.log("Update");
             console.log(response);
             toastr.success('Success stories update successfully');
-            // $("#errorMessage").show().text(response.message);
-            // console.log(response);
-            // $("#errorMessage").fadeTo(2000, 500).slideUp(500, function () {
-            //   $("#errorMessage").hide();
-            // });
-          //   location.reload()
+            setTimeout(() => {
+                location.reload()
+            }, "1000")
+
           },
           error: function (err) {
-            toastr.success("Somethings went wrong");
-            // var error = JSON.parse(err.responseText);
             console.log(err);
+            toastr.error("Somethings went wrong");
+            setTimeout(() => {
+                location.reload()
+            }, "1000")
+            
   
           },
         });
