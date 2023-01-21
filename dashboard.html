@@ -32,7 +32,7 @@
   <link href="assets/css/style.css" rel="stylesheet">
   <link href="assets/css/infosense.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
- 
+
 
 </head>
 
@@ -132,7 +132,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="blog.html">
-          <i class="bi bi-grid"></i>
+          <i class="bx bxl-blogger"></i>
           <span>Blog</span>
         </a>
       </li><!-- End Dashboard Nav -->
@@ -184,7 +184,7 @@
   </aside><!-- End Sidebar-->
 
 
- 
+
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -207,42 +207,41 @@
             <!-- Sales Card -->
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
+                <a class="nav-link" href="blog.html">
+                  <div class="card-body">
+                    <h5 class="card-title">Blog</h5>
 
-                <div class="card-body">
-                  <h5 class="card-title">Blog</h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-type-bold"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>5</h6>
-                      
-
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bx bxl-blogger"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6 id="blogCount">0</h6>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </a>
+
 
               </div>
             </div><!-- End Sales Card -->
 
             <div class="col-xxl-4 col-md-6">
               <div class="card info-card sales-card">
+                <a class="nav-link" href="success_story.html">
+                  <div class="card-body">
+                    <h5 class="card-title">Success Stories</h5>
 
-                <div class="card-body">
-                  <h5 class="card-title">Case Studies</h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-grid"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>5</h6>
-                      
-
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-grid"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6 id="storyCount">0</h6>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </a>
 
               </div>
             </div><!-- End Sales Card -->
@@ -257,7 +256,7 @@
     <div class="copyright">
       &copy; Copyright <strong><span>Infosense AI</span></strong>. All Rights Reserved
     </div>
-    
+
   </footer>
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
@@ -307,6 +306,51 @@
           var error = JSON.parse(err);
 
           console.log(JSON.stringify(error));
+
+        },
+      });
+    }
+    getAllBlog();
+    function getAllBlog() {
+      // jQuery.support.cors = true;
+      var url = "http://infosense.tech:8000/blog/blog-list?page=1&limit=200";
+
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (response) {
+          console.log(response.getList);
+          // var data = response.getList;
+          var data = response.data;
+          var length = Object.keys(data).length;
+          console.log("length of service line", length);
+          $('#blogCount').text(length)
+        },
+        error: function (err) {
+          $('#blogCount').text('0')
+
+        },
+      });
+    }
+
+    getAllStory();
+    function getAllStory() {
+      // jQuery.support.cors = true;
+      var url = "http://infosense.tech:8000/story/details?page=1&limit=200";
+
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (response) {
+          console.log(response.getList);
+          // var data = response.getList;
+          var data = response.data;
+          var length = Object.keys(data).length;
+          console.log("length of service line", length);
+          $('#storyCount').text(length)
+        },
+        error: function (err) {
+          $('#storyCount').text('0')
 
         },
       });
