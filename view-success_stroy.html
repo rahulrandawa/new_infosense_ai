@@ -409,18 +409,6 @@
 
                     $("#category").val(response.data.successcategoryId);
 
-                    // basicEditor.editor.enable(false)
-
-                    // var check_quillDescription = new Quill(".quill-editor-full").editor.enable(false);
-
-                    // var quill = new Quill('.quill-editor-full');
-                    // quill.enable(false);
-
-                    // $(".quill-editor-full").editor.disable();
-
-
-
-
 
                     $('#title').val(response.data.title);
                     // $(".quill-editor-full").html(response.data.description)
@@ -467,8 +455,8 @@
                                 ["clean"]
                             ]
                         },
+                        readOnly:true,
                         theme: "snow",
-                        readonly:false
                     }).clipboard.dangerouslyPasteHTML(response.data.description);
 
                     
@@ -484,6 +472,4 @@
         }
     </script>
 </body>
-
-
 </html>
