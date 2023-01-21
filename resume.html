@@ -34,8 +34,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
-
-
 </head>
 
 
@@ -52,6 +50,7 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
+
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
 
@@ -60,8 +59,6 @@
             <i class="bi bi-search"></i>
           </a>
         </li><!-- End Search Icon-->
-
-
 
 
 
@@ -120,7 +117,7 @@
       <!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link" href="success_story.html">
+        <a class="nav-link collapsed" href="success_story.html">
           <i class="bx bx-list-ul"></i>
           <span>Success Stories</span>
         </a>
@@ -141,7 +138,7 @@
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed " href="resume.html">
+        <a class="nav-link" href="resume.html">
           <i class="bx bxs-file"></i>
           <span>Resume</span>
         </a>
@@ -181,6 +178,11 @@
               <i class="bi bi-circle"></i><span>Cookie Policy </span>
             </a>
           </li>
+          <!-- <li>
+            <a href="hiring.html" class="active">
+              <i class="bi bi-circle"></i><span>Hiring </span>
+            </a>
+          </li> -->
 
 
         </ul>
@@ -196,19 +198,16 @@
     <div>
       <div class="row col-12 ">
         <div class="col-6">
-          <h3>All Success Stories</h3>
+          <h3>All Resume</h3>
           <nav>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
-              <li class="breadcrumb-item active">Success Stories</li>
+
+              <li class="breadcrumb-item active">Resume</li>
+
             </ol>
 
           </nav>
-        </div>
-        <div class="col-6">
-          <div id="addButton"> <a href="create-success_stroy.html" class="btn btn-primary"><i class="bi bi-plus-lg"></i>
-              Add
-              Success Stories</a></div>
         </div>
       </div><!-- End Page Title -->
 
@@ -226,9 +225,16 @@
                 <thead>
                   <tr>
                     <th>No</th>
-                    <th>Image</th>
-                    <th>Title</th>
-                    <th>Action</th>
+                    <th>Name</th>
+                    <th>Email-Id</th>
+                    <th>Mobile Number</th>
+                    <th>Experience</th>
+                    <th>Current CTC</th>
+                    <th>Expected CTC</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Message</th>
+                    <th>Resume</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -269,8 +275,9 @@
   <script src="assets/vendor/datatable/datatable-basic.init.js"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 
 </body>
 
@@ -330,33 +337,16 @@
   }
 
   getAllCaseStudy();
-  function deletBlog(id) {
-    console.log("fun", id);
-    jQuery.support.cors = true;
-    var url = "http://infosense.tech:8000/blog/delete-blog/" + id;
-
-    $.ajax({
-      url: url,
-      type: "GET",
-      success: function (response) {
-        console.log(response);
-
-
-      },
-      error: function (err) {
-        console.log(err);
-
-      },
-    });
-  }
   function getAllCaseStudy() {
-    // jQuery.support.cors = true;
+    var url = "http://infosense.tech:8000/hiring/hiring-contact-details";
 
-    var url = "http://infosense.tech:8000/story/details?page=1&limit=200";
     $.ajax({
       url: url,
       type: "GET",
+
       success: function (response) {
+        console.log(response.data);
+        // var data = response.getList;
         var data = response.data;
         $("#blogTable").DataTable().clear();
         var length = Object.keys(data).length;
@@ -367,7 +357,7 @@
           for (var i = 0; i <= length; i++) {
             var cat = data[i];
             $('#blogTable').dataTable({
-              // "bLengthChange": false,
+               // "bLengthChange": false,
               // "bPaginate": true,
               // "bInfo": false,
               // "autoWidth": false,
@@ -378,10 +368,18 @@
               // "dom": 'lrtip'
             }).fnAddData([
               num,
-              '<img src="' + cat.image + '" width="50" height="50"/>',
-              cat.title,
-              '<a title="View" href="view-success_stroy.html?id=' + cat._id + '" class="btn btn-primary">View</a> <a title="Edit" href="edit-success_stroy.html?id=' + cat._id + '" class="btn btn-primary">Edit</a> <a href="javascript:void(0)" title="Delete" type="button" onclick=deleteSuccessStory("' + cat._id + '") class="btn btn-danger">Delete</a>',
+              cat.name,
+              cat.email,
+              cat.contactNumber,
+              cat.experience,
+              cat.current_ctc,
+              cat.expected_ctc,
+              cat.city,
+              cat.state,
+              cat.message,
+              '<a href="' + cat.file + '" target="_blank">Download File</a>',
             ]);
+
             num++;
           }
         }
@@ -394,45 +392,6 @@
         ]);
       },
     });
-  }
-
-  function deleteSuccessStory(id) {
-
-    swal({
-      title: "Are you sure want to delete this Success Stories?",
-      text: "Once deleted, you will not be able to recover this success stories!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-      .then((willDelete) => {
-        if (willDelete) {
-          var url = "http://infosense.tech:8000/story/delete-story/" + id;
-
-          $.ajax({
-            url: url,
-            type: "DELETE",
-            success: function (response) {
-              console.log("response", response);
-              toastr.success('Success Stories delete successfully');
-              setTimeout(() => {
-                location.reload()
-              }, "1000")
-            },
-            error: function (err) {
-              console.log(err);
-              toastr.danger('Somthing went wrong!');
-              setTimeout(() => {
-                location.reload()
-              }, "1000")
-            },
-          });
-        } else {
-          swal("Your Success Stories is safe!");
-          return false;
-        }
-      });
-
   }
 </script>
 

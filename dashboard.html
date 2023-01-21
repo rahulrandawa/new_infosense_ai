@@ -10,7 +10,7 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/favicon.ico" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
@@ -51,12 +51,6 @@
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="POST" action="#">
-        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
-      </form>
-    </div><!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -66,9 +60,6 @@
             <i class="bi bi-search"></i>
           </a>
         </li><!-- End Search Icon-->
-
-
-
 
 
         <li class="nav-item dropdown pe-3">
@@ -126,7 +117,7 @@
       <!-- End Dashboard Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="success_story.html">
-          <i class="bi bi-grid"></i>
+          <i class="bx bx-list-ul"></i>
           <span>Success Stories</span>
         </a>
       </li><!-- End Dashboard Nav -->
@@ -142,6 +133,20 @@
         <a class="nav-link collapsed" href="users-profile.html">
           <i class="bi bi-person"></i>
           <span>Profile</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="resume.html">
+          <i class="bx bxs-file"></i>
+          <span>Resume</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="contact_list.html">
+          <i class="bi bi-envelope"></i>
+          <span>Contact List</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
@@ -172,9 +177,11 @@
               <i class="bi bi-circle"></i><span>Cookie Policy </span>
             </a>
           </li>
-
-
-
+          <li>
+            <a href="hiring.html">
+              <i class="bi bi-circle"></i><span>Hiring </span>
+            </a>
+          </li>
         </ul>
       </li>
 
@@ -202,11 +209,11 @@
       <div class="row">
 
         <!-- Left side columns -->
-        <div class="col-lg-8">
+        <div class="col-lg-12">
           <div class="row">
 
             <!-- Sales Card -->
-            <div class="col-xxl-4 col-md-6">
+            <div class="col-xxl-3 col-md-6">
               <div class="card info-card sales-card">
                 <a class="nav-link" href="blog.html">
                   <div class="card-body">
@@ -227,7 +234,7 @@
               </div>
             </div><!-- End Sales Card -->
 
-            <div class="col-xxl-4 col-md-6">
+            <div class="col-xxl-3 col-md-6">
               <div class="card info-card sales-card">
                 <a class="nav-link" href="success_story.html">
                   <div class="card-body">
@@ -235,10 +242,51 @@
 
                     <div class="d-flex align-items-center">
                       <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                        <i class="bi bi-grid"></i>
+                        <i class="bx bx-list-ul"></i>
                       </div>
                       <div class="ps-3">
                         <h6 id="storyCount">0</h6>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <div class="col-xxl-3 col-md-6">
+              <div class="card info-card sales-card">
+                <a class="nav-link" href="resume.html">
+                  <div class="card-body">
+                    <h5 class="card-title">Resume List</h5>
+
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bx bxs-file"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6 id="resumeCount">0</h6>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+
+              </div>
+
+            </div><!-- End Sales Card -->
+
+            <div class="col-xxl-3 col-md-6">
+              <div class="card info-card sales-card">
+                <a class="nav-link" href="contact_list.html">
+                  <div class="card-body">
+                    <h5 class="card-title">Contact List</h5>
+
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-envelope"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6 id="contactCount">0</h6>
                       </div>
                     </div>
                   </div>
@@ -341,7 +389,6 @@
           // var data = response.getList;
           var data = response.data;
           var length = Object.keys(data).length;
-          console.log("length of service line", length);
           $('#blogCount').text(length)
         },
         error: function (err) {
@@ -364,7 +411,6 @@
           // var data = response.getList;
           var data = response.data;
           var length = Object.keys(data).length;
-          console.log("length of service line", length);
           $('#storyCount').text(length)
         },
         error: function (err) {
@@ -395,6 +441,47 @@
         },
       });
     }
+
+    getAllResume();
+  function getAllResume() {
+    var url = "http://infosense.tech:8000/hiring/hiring-contact-details";
+
+    $.ajax({
+      url: url,
+      type: "GET",
+      success: function (response) {
+        var data = response.data;
+        var length = Object.keys(data).length;
+        $('#resumeCount').text(length)
+
+      },
+      error: function (err) {
+        console.log(err);
+        $('#resumeCount').text("0")
+      },
+    });
+  }
+
+  getAllContact();
+  function getAllContact() {
+    var url = "http://infosense.tech:8000/contact-us/contact-details";
+
+    $.ajax({
+      url: url,
+      type: "GET",
+
+      success: function (response) {
+        var data = response.data;
+        var length = Object.keys(data).length;
+        $('#contactCount').text(length)
+
+      },
+      error: function (err) {
+        console.log(err);
+        $('#contactCount').text("0")
+      },
+    });
+  }
   </script>
 </body>
 
