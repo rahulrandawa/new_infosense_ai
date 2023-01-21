@@ -31,6 +31,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
   <!-- =======================================================
   * Template Name: NiceAdmin - v2.5.0
@@ -290,8 +291,10 @@ $(document).ready(function() {
             success: function (response) {
               var res = JSON.parse(JSON.stringify(response));
               console.log("AAAAAAAAAA", res.token);
-              localStorage.setItem("loginToken", res.token);
+              var logint_status = 1;
 
+              localStorage.setItem("loginToken", res.token);
+              localStorage.setItem("loginStatus", logint_status);
               window.location.href = "dashboard.html";
             
             },

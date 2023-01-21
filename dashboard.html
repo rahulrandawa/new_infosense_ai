@@ -32,6 +32,7 @@
   <link href="assets/css/style.css" rel="stylesheet">
   <link href="assets/css/infosense.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
 
 </head>
@@ -282,7 +283,24 @@
   <script>
 
     var token = localStorage.getItem("loginToken");
+
+    var loginStatus = localStorage.getItem("loginStatus");
+
+
     console.log("token", token);
+    console.log("loginStatus", loginStatus);
+
+    if(loginStatus == 1){
+      var logint_status = 0;
+      console.log("loginStatusgggggggg");
+      localStorage.setItem("loginStatus", logint_status);
+      toastr.success('Login Successful');
+      setTimeout(() => {
+        location.reload()
+      }, "1000")
+    }
+
+
     if (!token) {
       window.location.href = "index.html";
     }

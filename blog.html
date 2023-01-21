@@ -414,7 +414,9 @@
         } else {
           swal("Your blog is safe!");
           toastr.error('Somthing went wrong!');
-          return false;
+          setTimeout(() => {
+                location.reload()
+              }, "1000")
         }
       });
   }
