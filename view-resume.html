@@ -32,7 +32,6 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/infosense.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
 
 </head>
@@ -196,17 +195,17 @@
         <div>
             <div class="row col-12 ">
                 <div class="col-6">
-                    <h3>View Success Stories</h3>
+                    <h3>View Resume Details</h3>
                     <nav>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
 
-                            <li class="breadcrumb-item active">View Success Stories</li>
+                            <li class="breadcrumb-item active">View Resume Details</li>
                         </ol>
                     </nav>
                 </div><!-- End Page Title -->
                 <div class="col-6">
-                    <div id="addButton"> <a href="success_story.html" class="btn btn-primary"><i
+                    <div id="addButton"> <a href="resume.html" class="btn btn-primary"><i
                                 class="bi bi-arrow-left-short"></i> Back</a></div>
                 </div>
             </div><!-- End Page Title -->
@@ -220,54 +219,62 @@
                         <div class="card-body">
                             <div class="alert alert-success" role="alert" id="updateBlogMessage" style="display: none;">
                             </div>
-                            <form action="" id="caseStudyForm" method="post" enctype="multipart/form-data">
-                                <input type="hidden" id="blogId" />
-                                <div class="col-12">
-                                    <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
-                                    <input type="text" class="form-control" id="title">
+                            <form class="row g-3 needs-validation" novalidate>
+                                <div class="col-md-6">
+                                  <label for="validationCustom01" class="form-label">Name</label>
+                                  <input type="text" class="form-control" id="fullName" value="John" disabled>
+                                  
                                 </div>
 
-                                <div class="col-12">
-                                    <label for=""><strong>Category</strong></label>
-                                    <select id="category" class="form-control">
-                                        <option selected value="">Select Category</option>
-                                    </select>
-                                    <div class="error" id="errorCategory"></div>
-                                </div>
-
-                                <!-- <div class="col-12">
-                                    <div class="form-group mt-5">
-                                        <label for=""><strong>Image</strong></label>
-                                        <input type="file" class="form-control" name="files" id="blogImage" multiple />
-                                    </div>
-                                    <div id="divImageMediaPreview"></div>
-                                </div> -->
-
-                                <div class="col-12">
-                                    <div class="form-group mt-5">
-                                      <label for=""><strong>Image</strong></label>
-                                      <input type="file" class="form-control" name="files" id="blogImage" />
-                                    </div>
-                                    <div class="error" id="errorImg"></div>
-                                    <div style="margin: 14px;">
-                                      <img class="file-upload-image profile-user-img" src="" alt="blogImgPreview" id="blogImgPreview" style="display: none;" width="100px;" height="100px;">
-                                    </div>
+                                <div class="col-md-6">
+                                    <label for="validationCustom03" class="form-label">Email</label>
+                                    <input type="text" class="form-control" id="emailId" disabled>
+                                   
                                   </div>
 
-                                <div class="col-12">
+                                <!-- <div class="col-md-6">
+                                  <label for="validationCustom02" class="form-label">Company Name</label>
+                                  <input type="text" class="form-control" id="companyName" value="Doe" disabled>
+                                  
+                                </div> -->
+                             
+                              
+                                <div class="col-md-6">
+                                    <label for="validationCustom03" class="form-label">Phone No.</label>
+                                    <input type="text" class="form-control" id="phoneNumber" disabled>
+                                   
+                                  </div>
 
-                                    <label for="inputEmail4" class="form-label"><strong>Description</strong></label>
-
-
-                                    <div class="quill-editor-full">
-                                        <textarea class="form-control" style="height: 300px"></textarea>
-                                    </div>
+                                  <div class="col-md-6">
+                                    <label for="inputCity" class="form-label">State</label>
+                                    <input type="text" class="form-control" id="inputState" disabled>
+                                  </div> 
+                                   <div class="col-md-6">
+                                    <label for="inputCity" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="inputCity" disabled>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <label for="inputCity" class="form-label">Experience</label>
+                                    <input type="text" class="form-control" id="inputExperience" disabled>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <label for="inputCity" class="form-label">Current CTC</label>
+                                    <input type="text" class="form-control" id="inputCurrentCTC" disabled>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <label for="inputCity" class="form-label">Expected CTC</label>
+                                    <input type="text" class="form-control" id="inputExpectedCTC" disabled>
+                                  </div>
+                                  
+                              
+                                <div class="col-md-12">
+                                  <label for="validationCustom05" class="form-label">Message</label>
+                                  <textarea type="text" class="form-control" id="inputMessage" disabled style="height: 150px;"></textarea>
+                                  
                                 </div>
-
-                                <div class="col-12"><button type="button" class="btn btn-primary"
-                                        onclick="updateStory();">Update</button></div>
-
-                            </form>
+                           
+                                
+                              </form><!-- End Custom Styled Validation -->
 
                         </div>
                     </div>
@@ -285,6 +292,8 @@
 
     </footer>
 
+
+
     <!-- Vendor JS Files -->
     <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -301,7 +310,6 @@
     <script src="assets/vendor/datatable/datatable-basic.init.js"></script>
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         var token = localStorage.getItem("loginToken");
         console.log("token", token);
@@ -357,166 +365,31 @@
         var search = window.location.search
         console.log(search);
         const urlParams = new URLSearchParams(search);
-        const slug = urlParams.get('id');
-        console.log("urlParams", slug);
+        const id = urlParams.get('id');
+        console.log("urlParams", id);
 
-        $('#blogId').val(slug)
-
-        $("#blogImage").change(function () {
-            if (typeof (FileReader) != "undefined") {
-                var dvPreview = $("#divImageMediaPreview");
-                dvPreview.html("");
-                $($(this)[0].files).each(function () {
-                    var file = $(this);
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        var img = $("<img />");
-                        img.attr("style", "width: 150px; height:100px; padding: 10px");
-                        img.attr("src", e.target.result);
-                        dvPreview.append(img);
-                    }
-                    reader.readAsDataURL(file[0]);
-                });
-            } else {
-                alert("This browser does not support HTML5 FileReader.");
-            }
-        });
-
-        getSuccessCategoryDetail();
-    function getSuccessCategoryDetail() {
-      console.log("categories")
-      jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/story/success-categories-details";
-      $.ajax({
-        url: url,
-        type: "GET",
-        success: function (response) {
-          var res = JSON.parse(JSON.stringify(response));
-          console.log("resresres",res.successCategoryData);
-
-            $.each(res.successCategoryData, function(key, value) {
-                $("#category").append('<option value="' + value._id + '">' + value.name + '</option>');
-            });
-
-        //   var fullname = admin.firstName + " " + admin.lastName;
-        //   $('#adminName').text(fullname ? fullname : "Admin")
-        //   $('#adminProfileImage').attr('src', admin.image)
-        },
-        error: function (err) {
-          var error = JSON.parse(err);
-          console.log(JSON.stringify(error));
-        },
-      });
-    }
-
-    // -------------Add Image Preview------------------------------
-    function read(input) {
-      $('#blogImgPreview').show();
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-          $('#blogImgPreview').attr('src', e.target.result);
-        }
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
-    $("#blogImage").change(function () {
-      read(this);
-    });
-
-    $('#blogImage').bind('change', function () {
-      var ext = $('#blogImage').val().split('.').pop().toLowerCase();
-
-      console.log("ext", ext)
-
-      if (ext == "png" || ext == "jpg" || ext == "jpeg") {
-        $("#errorImg").hide();
-
-        console.log("yes extenstion")
-
-      } else {
-        $('#blogImgPreview').hide();
-        $('#error1').show();
-        $("#errorImg").show().text("Image formate should be png,jpg,jpeg");
-        console.log("no extenstion")
-      }
-    });
-
-
-    $(document).ready(function () {
-      $('input[id="title"]').on('keyup', function () {
-        if (title != '' || title != 0) {
-          $("#errorTitle").hide();
-        }
-      });
-    });
-
-
-        getAllCaseStudy(slug);
-        function getAllCaseStudy(slug) {
-            console.log("fun", slug);
+        getContactDetails(id);
+        function getContactDetails(id) {
+            console.log("fun", id);
             jQuery.support.cors = true;
-            var url = "http://infosense.tech:8000/story/story-detail/" + slug;
+            var url = "http://infosense.tech:8000/hiring/hiring-contact-details/" + id;
             $.ajax({
                 url: url,
                 type: "GET",
                 success: function (response) {
-                    console.log(response.data);
-                    console.log("successcategoryId",response.data.successcategoryId);
-
-                    $("#category").val(response.data.successcategoryId);
-
-                    $('#title').val(response.data.title);
-                    new Quill(".quill-editor-full", {
-                        modules: {
-                            toolbar: [
-                                [{
-                                    font: []
-                                }, {
-                                    size: []
-                                }],
-                                ["bold", "italic", "underline", "strike"],
-                                [{
-                                    color: []
-                                },
-                                {
-                                    background: []
-                                }
-                                ],
-                                [{
-                                    script: "super"
-                                },
-                                {
-                                    script: "sub"
-                                }
-                                ],
-                                [{
-                                    list: "ordered"
-                                },
-                                {
-                                    list: "bullet"
-                                },
-                                {
-                                    indent: "-1"
-                                },
-                                {
-                                    indent: "+1"
-                                }
-                                ],
-                                ["direction", {
-                                    align: []
-                                }],
-                                ["link", "image", "video"],
-                                ["clean"]
-                            ]
-                        },
-                        theme: "snow"
-                    }).clipboard.dangerouslyPasteHTML(response.data.description);
-                    
-                    
-                    $('#blogImgPreview').show()
-                    $('#blogImgPreview').attr("src", response.data.image)
-
+                console.log(response);
+                var resumedata = response.data;
+                $('#fullName').val(resumedata.name)
+                // $('#companyName').val(resumedata.companyName)
+                $('#emailId').val(resumedata.email)
+                $('#phoneNumber').val(resumedata.contactNumber)
+                $('#inputState').val(resumedata.state)
+                $('#inputCity').val(resumedata.city)
+                $('#inputExperience').val(resumedata.experience)
+                $('#inputCurrentCTC').val(resumedata.current_ctc)
+                $('#inputExpectedCTC').val(resumedata.expected_ctc)
+                $('#inputMessage').val(resumedata.message)
+               
                 },
                 error: function (err) {
                     console.log(err);
@@ -524,110 +397,6 @@
                 },
             });
         }
-
-        function updateStory() {
-        
-        var title = $('#title').val();
-        var category = $('#category').val();
-  
-        var content = $('.quill-editor-full').html();
-        var file = $('#blogImage')[0].files[0];
-        console.log("filefile", file);
-
-        const slug = urlParams.get('id');
-        console.log("urlParams", slug);
-        console.log("categorycategory", category);
-
-        
-  
-        var check_quillDescription = new Quill(".quill-editor-full").getText(); // check data avaiable in ckeditor or not
-        console.log("check_quillDescription", check_quillDescription);
-  
-        var quill_description = new Quill(".quill-editor-full").root.innerHTML; //desc with html
-  
-        var title_valid = false;
-        var description_valid = false;
-        var category_valid = false;
-  
-        if (title == '' || title == 0) {
-          $("#errorTitle").show().text("Enter Title");
-          var title_valid = false;
-        } else {
-          var title_valid = true;
-          $("#errorTitle").hide();
-        }
-        
-  
-        if (category == '' || category == 0) {
-          $("#errorCategory").show().text("Select Category");
-          var category_valid = false;
-        } else {
-          var category_valid = true;
-          $("#errorCategory").hide();
-        }
-  
-        if (check_quillDescription == '' || check_quillDescription == 0) {
-          $("#errorDesc").show().text("Enter Description");
-          var description_valid = false;
-        } else {
-          var description_valid = true;
-          $("#errorDesc").hide();
-        }
-  
-  
-        if (description_valid == false || description_valid == false || category_valid == false) {
-          console.log("login error")
-          $(window).scrollTop(0);
-          return false;
-        }
-
-  
-        $("#errorTitle").hide();
-        $("#errorDesc").hide();
-        $("#errorImg").hide();
-  
-        let formData = new FormData();
-        formData.append("title", title);
-        formData.append("description", quill_description);
-        formData.append("successcategoryId", category);
-        if (file) {
-          formData.append("image", file);
-        }
-        
-        var url = "http://infosense.tech:8000/story/update-story/"+ slug;
-        $.ajax({
-          url: url,
-          method: "PUT",
-          type: "PUT",
-          enctype: 'multipart/form-data',
-          data: formData,
-          cache: false,
-          contentType: false,
-          processData: false,
-          crossDomain: true,
-          success: function (response) {
-            console.log("Update");
-            console.log(response);
-            toastr.success('Success stories update successfully');
-            setTimeout(() => {
-                location.reload()
-            }, "1000")
-
-          },
-          error: function (err) {
-            console.log(err);
-            toastr.error("Somethings went wrong");
-            setTimeout(() => {
-                location.reload()
-            }, "1000")
-            
-  
-          },
-        });
-  
-      }
     </script>
 </body>
-
-
 </html>

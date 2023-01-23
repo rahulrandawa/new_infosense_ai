@@ -99,6 +99,10 @@ h6 {
   opacity: 1;
 }
 
+li.nav-item.dropdown.pe33 {
+  padding-right: 4rem!important;
+}
+
 /*--------------------------------------------------------------
 # Override some default Bootstrap stylings
 --------------------------------------------------------------*/

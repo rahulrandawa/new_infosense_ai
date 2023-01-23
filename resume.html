@@ -62,7 +62,7 @@
 
 
 
-        <li class="nav-item dropdown pe-3">
+        <li class="nav-item dropdown pe33">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img alt="Profile" class="rounded-circle" id="adminProfileImage">
@@ -229,12 +229,7 @@
                     <th>Email-Id</th>
                     <th>Mobile Number</th>
                     <th>Experience</th>
-                    <th>Current CTC</th>
-                    <th>Expected CTC</th>
-                    <th>City</th>
-                    <th>State</th>
-                    <th>Message</th>
-                    <th>Resume</th>
+                    <th>Action/Resume</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -357,13 +352,13 @@
           for (var i = 0; i <= length; i++) {
             var cat = data[i];
             $('#blogTable').dataTable({
-               // "bLengthChange": false,
+              //  "bLengthChange": false,
               // "bPaginate": true,
               // "bInfo": false,
-              // "autoWidth": false,
+              "autoWidth": false,
               // "order": [[0, "desc"]],
-              // "processing": true,
-              // "serverSide": false,
+              "processing": true,
+              "serverSide": false,
               "destroy": true,
               // "dom": 'lrtip'
             }).fnAddData([
@@ -372,12 +367,7 @@
               cat.email,
               cat.contactNumber,
               cat.experience,
-              cat.current_ctc,
-              cat.expected_ctc,
-              cat.city,
-              cat.state,
-              cat.message,
-              '<a href="' + cat.file + '" target="_blank">Download File</a>',
+              '<a title="View" href="view-resume.html?id=' + cat._id + '" class="btn btn-primary">View</a> <a href="' + cat.file + '" target="_blank" class="btn btn-primary">Download File</a> ',
             ]);
 
             num++;
