@@ -34,6 +34,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
+
 </head>
 
 
@@ -58,6 +59,7 @@
             <i class="bi bi-search"></i>
           </a>
         </li><!-- End Search Icon-->
+
 
         <li class="nav-item dropdown pe33">
 
@@ -141,13 +143,13 @@
         </a>
       </li><!-- End Profile Page Nav -->
       <li class="nav-item">
-        <a class="nav-link collapsed " href="hiring-developer.html">
+        <a class="nav-link" href="hiring-developer.html">
           <i class="bi bi-envelope"></i>
           <span>Hiring Developer List</span>
         </a>
       </li><!-- End Hiring Developer page Nav -->
       <li class="nav-item">
-        <a class="nav-link" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -187,50 +189,60 @@
 
   </aside><!-- End Sidebar-->
 
-  <!-- 
-  <div id="headerDiv"></div>
-  <div id="sidebarDiv"></div> -->
   <main id="main" class="main">
+    <div>
+      <div class="row col-12 ">
+        <div class="col-6">
+          <h3>Add Hiring Developer</h3>
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
 
-    <div class="pagetitle">
-      <h1>Cookie Policy</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
+              <li class="breadcrumb-item active">Add Hiring Developer</li>
+            </ol>
+          </nav>
+        </div><!-- End Page Title -->
+        <div class="col-6">
+          <div id="addButton"> <a href="hiring-developer.html" class="btn btn-primary"><i
+                class="bi bi-arrow-left-short"></i>
+              Back</a></div>
+        </div>
+      </div><!-- End Page Title -->
+    </div>
 
-          <li class="breadcrumb-item active">Cookie Policy</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
 
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
           <div class="card">
             <div class="card-body">
-              <form>
-                <input type="hidden" class="form-control" id="cookies_id">
+              <div class="alert alert-success" role="alert" id="updateBlogMessage" style="display: none;">
+              </div>
+              <form action="" id="caseStudyForm" method="post" enctype="multipart/form-data">
+                <input type="hidden" id="blogId" />
                 <div class="col-12">
-                  <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
-                  <input type="text" class="form-control" value="Cookie Policy" id="title" disabled>
-
+                  <label for="inputNanme4" class="form-label"><strong>Developer Type</strong></label>
+                  <input type="text" class="form-control" id="developerType">
+                  <div class="error" id="errorDeveloperType"></div>
                 </div>
 
+
+
                 <div class="col-12">
+
                   <label for="inputEmail4" class="form-label"><strong>Description</strong></label>
-
-
                   <div class="quill-editor-full">
                     <textarea class="form-control" style="height: 300px"></textarea>
                   </div>
-
-
-
-                  <div class="error" id="errorDesc"></div>​​​​​​
+                  <div class="error" id="errorDesc"></div>
                 </div>
+
                 <div class="col-12"><button type="button" class="btn btn-primary"
-                    onclick="updateCookiePolicy();">Update</button>
+                    onclick="addHiringDeveloper();">Add</button>
+                </div>
+
               </form>
+
             </div>
           </div>
 
@@ -247,6 +259,8 @@
 
   </footer>
 
+
+
   <!-- Vendor JS Files -->
   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -261,11 +275,57 @@
   <script src="assets/vendor/chart.js/chart.umd.js"></script>
   <script src="assets/vendor/extra-libs/DataTables/datatables.min.js"></script>
   <script src="assets/vendor/datatable/datatable-basic.init.js"></script>
-
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <script>
+    $(document).ready(function () {
+      new Quill(".quill-editor-full", {
+        modules: {
+          toolbar: [
+            [{
+              font: []
+            }, {
+              size: []
+            }],
+            ["bold", "italic", "underline", "strike"],
+            [{
+              color: []
+            },
+            {
+              background: []
+            }
+            ],
+            [{
+              script: "super"
+            },
+            {
+              script: "sub"
+            }
+            ],
+            [{
+              list: "ordered"
+            },
+            {
+              list: "bullet"
+            },
+            {
+              indent: "-1"
+            },
+            {
+              indent: "+1"
+            }
+            ],
+            ["direction", {
+              align: []
+            }],
+            ["link", "image", "video"],
+            ["clean"]
+          ]
+        },
+        theme: "snow"
+      });
+    });
     var token = localStorage.getItem("loginToken");
     console.log("token", token);
     if (!token) {
@@ -317,147 +377,95 @@
       });
     }
 
-    getCookiePolicy();
+    var search = window.location.search
+    console.log(search);
+    const urlParams = new URLSearchParams(search);
+    const slug = urlParams.get('id');
+    console.log("urlParams", slug);
 
-
-    function getCookiePolicy() {
-      jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/policy/cookie-policy-details";
-      $.ajax({
-        url: url,
-        type: "GET",
-        success: function (response) {
-          var res = JSON.parse(JSON.stringify(response));
-          var cms_data = response.userDetails;
-
-          var title = response.userDetails.title;
-          var description = response.userDetails.description;
-          var cookies_id = response.userDetails._id;
-
-          // var quill = new Quill('.quill-editor-ful', {
-          //   theme: 'snow'
-          // });
-
-
-          new Quill(".quill-editor-full", {
-            modules: {
-              toolbar: [
-                [{
-                  font: []
-                }, {
-                  size: []
-                }],
-                ["bold", "italic", "underline", "strike"],
-                [{
-                  color: []
-                },
-                {
-                  background: []
-                }
-                ],
-                [{
-                  script: "super"
-                },
-                {
-                  script: "sub"
-                }
-                ],
-                [{
-                  list: "ordered"
-                },
-                {
-                  list: "bullet"
-                },
-                {
-                  indent: "-1"
-                },
-                {
-                  indent: "+1"
-                }
-                ],
-                ["direction", {
-                  align: []
-                }],
-                ["link", "image", "video"],
-                ["clean"]
-              ]
-            },
-            theme: "snow"
-          }).clipboard.dangerouslyPasteHTML(description);
-
-          $('#title').val(title)
-          $('#cookies_id').val(cookies_id)
-        },
-        error: function (err) {
-          var error = JSON.parse(err);
-
-          console.log(JSON.stringify(error));
-
-        },
+    $(document).ready(function () {
+      $('input[id="developerType"]').on('keyup', function () {
+        // if (title != '' || title != 0) {
+        $("#errorDeveloperType").hide();
+        // }
       });
-    }
+    });
 
-    function updateCookiePolicy() {
-      console.log(1)
 
-      var title = $('#title').val();
 
-      var cookies_id = $('#cookies_id').val();
-      var quill_description = new Quill(".quill-editor-full").root.innerHTML;
 
-      var check_quillDescription = new Quill(".quill-editor-full").getText();
+    function addHiringDeveloper() {
+      // alert(1);
+
+      var developerType = $('#developerType').val();
+      var content = $('.quill-editor-full').html();
+      const slug = urlParams.get('id');
+      console.log("urlParams", slug);
+
+      var check_quillDescription = new Quill(".quill-editor-full").getText(); // check data avaiable in ckeditor or not
       console.log("check_quillDescription", check_quillDescription);
 
+      var quill_description = new Quill(".quill-editor-full").root.innerHTML; //desc with html
 
+      var developerType_valid = false;
       var description_valid = false;
+
+
+      if (developerType == '' || developerType == 0) {
+        $("#errorDeveloperType").show().text("Enter Developer Type");
+        var developerType_valid = false;
+      } else {
+        var developerType_valid = true;
+        $("#errorDeveloperType").hide();
+      }
+
+
 
       if (check_quillDescription == '' || check_quillDescription == 0) {
         $("#errorDesc").show().text("Enter Description");
         var description_valid = false;
-        // return false;
       } else {
         var description_valid = true;
         $("#errorDesc").hide();
-
       }
 
-      if (description_valid == false) {
+      if (developerType_valid == false || description_valid == false) {
         console.log("login error")
         $(window).scrollTop(0);
         return false;
       }
 
+      $("#errorDeveloperType").hide();
       $("#errorDesc").hide();
 
-      console.log("privacy_id", cookies_id);
-      console.log("title", title);
-
-      var url = "http://infosense.tech:8000/policy/update-cookies/" + cookies_id;
+      // alert(developerType);
+      // alert(quill_description);
+      var url = "http://infosense.tech:8000/hiring/add-hiring";
       $.ajax({
         url: url,
         type: "POST",
-        data: {
-          'title': title,
-          'description': quill_description,
-        },
+        data: { "developerType": developerType, "detail": quill_description },
         success: function (response) {
-          console.log(response);
-          // $("#updateBlogMessage").show().text(response.message);
-          // console.log(response);
-          // $("#updateBlogMessage").fadeTo(2000, 500).slideUp(500, function () {
-          //   $("#updateBlogMessage").hide();
-          // });
-          toastr.success('Cookies Policy updated successfully');
-          // location.reload()
+          // alert("Update");
+          // alert(response);
+
+          toastr.success('Hiring Developer added successfully');
+          setTimeout(() => {
+            location.reload()
+          }, "1000")
+
         },
         error: function (err) {
-          // console.log(err);
+          console.log(err);
           toastr.success("Somethings went wrong");
-          // location.reload()
+          setTimeout(() => {
+            location.reload()
+          }, "1000")
         },
       });
 
     }
+
   </script>
 </body>
 

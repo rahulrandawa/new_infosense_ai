@@ -108,12 +108,13 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-      <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="case-studies.html">
-          <i class="bi bi-grid"></i>
-          <span>Case studies</span>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
         </a>
-      </li> -->
+      </li><!-- End Profile Page Nav -->
+
       <!-- End Dashboard Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="success_story.html">
@@ -130,13 +131,6 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
-
-      <li class="nav-item">
         <a class="nav-link collapsed " href="resume.html">
           <i class="bx bxs-file"></i>
           <span>Resume</span>
@@ -149,7 +143,12 @@
           <span>Contact List</span>
         </a>
       </li><!-- End Profile Page Nav -->
-
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="hiring-developer.html">
+          <i class="bi bi-envelope"></i>
+          <span>Hiring Developer List</span>
+        </a>
+      </li><!-- End Hiring Developer page Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -338,7 +337,7 @@
     console.log("token", token);
     console.log("loginStatus", loginStatus);
 
-    if(loginStatus == 1){
+    if (loginStatus == 1) {
       var logint_status = 0;
       console.log("loginStatusgggggggg");
       localStorage.setItem("loginStatus", logint_status);
@@ -443,45 +442,45 @@
     }
 
     getAllResume();
-  function getAllResume() {
-    var url = "http://infosense.tech:8000/hiring/hiring-contact-details";
+    function getAllResume() {
+      var url = "http://infosense.tech:8000/hiring/hiring-contact-details";
 
-    $.ajax({
-      url: url,
-      type: "GET",
-      success: function (response) {
-        var data = response.data;
-        var length = Object.keys(data).length;
-        $('#resumeCount').text(length)
+      $.ajax({
+        url: url,
+        type: "GET",
+        success: function (response) {
+          var data = response.data;
+          var length = Object.keys(data).length;
+          $('#resumeCount').text(length)
 
-      },
-      error: function (err) {
-        console.log(err);
-        $('#resumeCount').text("0")
-      },
-    });
-  }
+        },
+        error: function (err) {
+          console.log(err);
+          $('#resumeCount').text("0")
+        },
+      });
+    }
 
-  getAllContact();
-  function getAllContact() {
-    var url = "http://infosense.tech:8000/contact-us/contact-details";
+    getAllContact();
+    function getAllContact() {
+      var url = "http://infosense.tech:8000/contact-us/contact-details";
 
-    $.ajax({
-      url: url,
-      type: "GET",
+      $.ajax({
+        url: url,
+        type: "GET",
 
-      success: function (response) {
-        var data = response.data;
-        var length = Object.keys(data).length;
-        $('#contactCount').text(length)
+        success: function (response) {
+          var data = response.data;
+          var length = Object.keys(data).length;
+          $('#contactCount').text(length)
 
-      },
-      error: function (err) {
-        console.log(err);
-        $('#contactCount').text("0")
-      },
-    });
-  }
+        },
+        error: function (err) {
+          console.log(err);
+          $('#contactCount').text("0")
+        },
+      });
+    }
   </script>
 </body>
 

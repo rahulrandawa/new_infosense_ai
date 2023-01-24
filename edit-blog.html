@@ -111,12 +111,13 @@
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
-            <!-- <li class="nav-item">
-                <a class="nav-link collapsed" href="case-studies.html">
-                    <i class="bi bi-grid"></i>
-                    <span>Case studies</span>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="users-profile.html">
+                    <i class="bi bi-person"></i>
+                    <span>Profile</span>
                 </a>
-            </li> -->
+            </li><!-- End Profile Page Nav -->
+
             <!-- End Dashboard Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="success_story.html">
@@ -126,43 +127,41 @@
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link " href="blog.html">
+                <a class="nav-link" href="blog.html">
                     <i class="bx bxl-blogger"></i>
                     <span>Blog</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-person"></i>
-                    <span>Profile</span>
+                <a class="nav-link collapsed " href="resume.html">
+                    <i class="bx bxs-file"></i>
+                    <span>Resume</span>
                 </a>
             </li><!-- End Profile Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed " href="resume.html">
-                  <i class="bx bxs-file"></i>
-                  <span>Resume</span>
-                </a>
-              </li><!-- End Profile Page Nav -->
-        
-              <li class="nav-item">
                 <a class="nav-link collapsed " href="contact_list.html">
-                  <i class="bi bi-envelope"></i>
-                  <span>Contact List</span>
+                    <i class="bi bi-envelope"></i>
+                    <span>Contact List</span>
                 </a>
-              </li><!-- End Profile Page Nav -->
-
+            </li><!-- End Profile Page Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed " href="hiring-developer.html">
+                    <i class="bi bi-envelope"></i>
+                    <span>Hiring Developer List</span>
+                </a>
+            </li><!-- End Hiring Developer page Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <!-- <li>
-            <a href="about-us.html">
-              <i class="bi bi-circle"></i><span>about us</span>
-            </a>
-          </li> -->
+                <a href="about-us.html">
+                  <i class="bi bi-circle"></i><span>about us</span>
+                </a>
+              </li> -->
                     <li>
                         <a href="privacy-policy.html">
                             <i class="bi bi-circle"></i><span>Privacy Policy</span>
@@ -180,9 +179,11 @@
                             <i class="bi bi-circle"></i><span>Cookie Policy </span>
                         </a>
                     </li>
-
-
-
+                    <li>
+                        <a href="hiring.html">
+                            <i class="bi bi-circle"></i><span>Hiring </span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
@@ -238,14 +239,15 @@
 
                                 <div class="col-12">
                                     <div class="form-group mt-5">
-                                      <label for=""><strong>Image</strong></label>
-                                      <input type="file" class="form-control" name="files" id="blogImage" />
+                                        <label for=""><strong>Image</strong></label>
+                                        <input type="file" class="form-control" name="files" id="blogImage" />
                                     </div>
                                     <div class="error" id="errorImg"></div>
                                     <div style="margin: 14px;">
-                                      <img class="file-upload-image profile-user-img" src="" alt="blogImgPreview" id="blogImgPreview" style="display: none;" width="100px;" height="100px;">
+                                        <img class="file-upload-image profile-user-img" src="" alt="blogImgPreview"
+                                            id="blogImgPreview" style="display: none;" width="100px;" height="100px;">
                                     </div>
-                                  </div>
+                                </div>
 
                                 <div class="col-12">
 
@@ -378,46 +380,46 @@
 
         // -------------Add Image Preview------------------------------
         function read(input) {
-          $('#blogImgPreview').show();
-          if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-              $('#blogImgPreview').attr('src', e.target.result);
+            $('#blogImgPreview').show();
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#blogImgPreview').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
             }
-            reader.readAsDataURL(input.files[0]);
-          }
         }
         $("#blogImage").change(function () {
-          read(this);
+            read(this);
         });
 
         $('#blogImage').bind('change', function () {
-          var ext = $('#blogImage').val().split('.').pop().toLowerCase();
+            var ext = $('#blogImage').val().split('.').pop().toLowerCase();
 
-          console.log("ext", ext)
+            console.log("ext", ext)
 
-          if (ext == "png" || ext == "jpg" || ext == "jpeg") {
-            $("#errorImg").hide();
+            if (ext == "png" || ext == "jpg" || ext == "jpeg") {
+                $("#errorImg").hide();
 
-            console.log("yes extenstion")
+                console.log("yes extenstion")
 
-          } else {
-            $('#blogImgPreview').hide();
-            $('#error1').show();
-            $("#errorImg").show().text("Image formate should be png,jpg,jpeg");
-            console.log("no extenstion")
-          }
+            } else {
+                $('#blogImgPreview').hide();
+                $('#error1').show();
+                $("#errorImg").show().text("Image formate should be png,jpg,jpeg");
+                console.log("no extenstion")
+            }
         });
 
 
         $(document).ready(function () {
-          $('input[id="title"]').on('keyup', function () {
-            if (title != '' || title != 0) {
-              $("#errorTitle").hide();
-            }
-          });
+            $('input[id="title"]').on('keyup', function () {
+                if (title != '' || title != 0) {
+                    $("#errorTitle").hide();
+                }
+            });
         });
-       
+
         getAllCaseStudy(slug);
         function getAllCaseStudy(slug) {
             console.log("fun", slug);
@@ -476,7 +478,7 @@
                         theme: "snow",
                     }).clipboard.dangerouslyPasteHTML(response.data.description);
 
-                    
+
                     $('#blogImgPreview').show()
                     $('#blogImgPreview').attr("src", response.data.image)
 
@@ -487,89 +489,90 @@
                 },
             });
         }
-        
+
         function updateBlog() {
-        
-        var title = $('#title').val();
-        var content = $('.quill-editor-full').html();
-        var file = $('#blogImage')[0].files[0];
 
-        const slug = urlParams.get('id');
-        console.log("urlParams", slug);  
-       
-  
-        var check_quillDescription = new Quill(".quill-editor-full").getText(); // check data avaiable in ckeditor or not
-        var quill_description = new Quill(".quill-editor-full").root.innerHTML; //desc with html
-  
-        var title_valid = false;
-        var description_valid = false;
+            var title = $('#title').val();
+            var content = $('.quill-editor-full').html();
+            var file = $('#blogImage')[0].files[0];
 
-        if (title == '' || title == 0) {
-          $("#errorTitle").show().text("Enter Title");
-          var title_valid = false;
-        } else {
-          var title_valid = true;
-          $("#errorTitle").hide();
-        }
-  
-        if (check_quillDescription == '' || check_quillDescription == 0) {
-          $("#errorDesc").show().text("Enter Description");
-          var description_valid = false;
-        } else {
-          var description_valid = true;
-          $("#errorDesc").hide();
-        }
-  
-  
-        if (title_valid == false || description_valid == false) {
-          console.log("login error")
-          $(window).scrollTop(0);
-          return false;
+            const slug = urlParams.get('id');
+            console.log("urlParams", slug);
+
+
+            var check_quillDescription = new Quill(".quill-editor-full").getText(); // check data avaiable in ckeditor or not
+            var quill_description = new Quill(".quill-editor-full").root.innerHTML; //desc with html
+
+            var title_valid = false;
+            var description_valid = false;
+
+            if (title == '' || title == 0) {
+                $("#errorTitle").show().text("Enter Title");
+                var title_valid = false;
+            } else {
+                var title_valid = true;
+                $("#errorTitle").hide();
+            }
+
+            if (check_quillDescription == '' || check_quillDescription == 0) {
+                $("#errorDesc").show().text("Enter Description");
+                var description_valid = false;
+            } else {
+                var description_valid = true;
+                $("#errorDesc").hide();
+            }
+
+
+            if (title_valid == false || description_valid == false) {
+                console.log("login error")
+                $(window).scrollTop(0);
+                return false;
+            }
+
+            console.log("success")
+
+            $("#errorTitle").hide();
+            $("#errorDesc").hide();
+            $("#errorImg").hide();
+
+            let formData = new FormData();
+            formData.append("title", title);
+            formData.append("description", quill_description);
+            if (file) {
+                formData.append("image", file);
+            }
+
+            var url = "http://infosense.tech:8000/blog/update-blog/" + slug;
+            $.ajax({
+                url: url,
+                method: "PUT",
+                type: "PUT",
+                enctype: 'multipart/form-data',
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                crossDomain: true,
+                success: function (response) {
+                    console.log("Update");
+                    console.log(response);
+                    toastr.success('Blog updated successfully');
+                    setTimeout(() => {
+                        location.reload()
+                    }, "1000")
+                },
+                error: function (err) {
+                    toastr.success("Somethings went wrong");
+                    setTimeout(() => {
+                        location.reload()
+                    }, "1000")
+
+                },
+            });
+
         }
 
-        console.log("success")
-
-        $("#errorTitle").hide();
-        $("#errorDesc").hide();
-        $("#errorImg").hide();
-  
-        let formData = new FormData();
-        formData.append("title", title);
-        formData.append("description", quill_description);
-        if (file) {
-          formData.append("image", file);
-        }
-        
-        var url = "http://infosense.tech:8000/blog/update-blog/"+ slug;
-        $.ajax({
-          url: url,
-          method: "PUT",
-          type: "PUT",
-          enctype: 'multipart/form-data',
-          data: formData,
-          cache: false,
-          contentType: false,
-          processData: false,
-          crossDomain: true,
-          success: function (response) {
-            console.log("Update");
-            console.log(response);
-            toastr.success('Blog updated successfully');
-            setTimeout(() => {
-                location.reload()
-            }, "1000")
-          },
-          error: function (err) {
-            toastr.success("Somethings went wrong");
-            setTimeout(() => {
-                location.reload()
-            }, "1000")
-  
-          },
-        });
-  
-      }
-        
     </script>
 </body>
+
 </html>

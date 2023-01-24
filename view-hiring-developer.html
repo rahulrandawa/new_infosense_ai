@@ -32,6 +32,7 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <link href="assets/css/infosense.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css">
 
 
 </head>
@@ -50,7 +51,6 @@
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
-
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
 
@@ -59,9 +59,6 @@
                         <i class="bi bi-search"></i>
                     </a>
                 </li><!-- End Search Icon-->
-
-
-
 
 
                 <li class="nav-item dropdown pe33">
@@ -119,7 +116,7 @@
 
             <!-- End Dashboard Nav -->
             <li class="nav-item">
-                <a class="nav-link " href="success_story.html">
+                <a class="nav-link collapsed" href="success_story.html">
                     <i class="bx bx-list-ul"></i>
                     <span>Success Stories</span>
                 </a>
@@ -146,7 +143,7 @@
                 </a>
             </li><!-- End Profile Page Nav -->
             <li class="nav-item">
-                <a class="nav-link collapsed " href="hiring-developer.html">
+                <a class="nav-link" href="hiring-developer.html">
                     <i class="bi bi-envelope"></i>
                     <span>Hiring Developer List</span>
                 </a>
@@ -196,18 +193,19 @@
         <div>
             <div class="row col-12 ">
                 <div class="col-6">
-                    <h3>View Success Stories</h3>
+                    <h3>Hiring Developer Details</h3>
                     <nav>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="dashboard.html">Dashboard</a></li>
 
-                            <li class="breadcrumb-item active">View Success Stories</li>
+                            <li class="breadcrumb-item active">Hiring Developer Details</li>
                         </ol>
                     </nav>
                 </div><!-- End Page Title -->
                 <div class="col-6">
-                    <div id="addButton"> <a href="success_story.html" class="btn btn-primary"><i
-                                class="bi bi-arrow-left-short"></i> Back</a></div>
+                    <div id="addButton"> <a href="hiring-developer.html" class="btn btn-primary"><i
+                                class="bi bi-arrow-left-short"></i>
+                            Back</a></div>
                 </div>
             </div><!-- End Page Title -->
         </div>
@@ -220,60 +218,34 @@
                         <div class="card-body">
                             <div class="alert alert-success" role="alert" id="updateBlogMessage" style="display: none;">
                             </div>
-                            <form action="" id="caseStudyForm" method="post" enctype="multipart/form-data">
-                                <input type="hidden" id="blogId" />
-                                <div class="col-12">
-                                    <label for="inputNanme4" class="form-label"><strong>Title</strong></label>
-                                    <input type="text" class="form-control" id="title" disabled>
-                                </div>
+                            <form>
 
                                 <div class="col-12">
-                                    <label for=""><strong>Category</strong></label>
-                                    <select id="category" class="form-control" disabled>
-                                        <option selected value="">Select Category</option>
-                                    </select>
-                                    <div class="error" id="errorCategory"></div>
+                                    <label for="inputNanme4" class="form-label"><strong>Developer Type</strong></label>
+                                    <input type="text" class="form-control" id="developerType" disabled>
+
                                 </div>
 
-                                <!-- <div class="col-12">
-                                    <div class="form-group mt-5">
-                                        <label for=""><strong>Image</strong></label>
-                                        <input type="file" class="form-control" name="files" id="blogImage" multiple />
-                                    </div>
-                                    <div id="divImageMediaPreview"></div>
-                                </div> -->
 
-                                <div class="col-12">
-                                    <div class="form-group mt-5">
-                                        <label for=""><strong>Image</strong></label>
-                                        <!-- <input type="file" class="form-control" name="files" id="blogImage" /> -->
-                                    </div>
-                                    <div class="error" id="errorImg"></div>
-                                    <div style="margin: 14px;">
-                                        <img class="file-upload-image profile-user-img" src="" alt="blogImgPreview"
-                                            id="blogImgPreview" style="display: none;" width="100px;" height="100px;">
-                                    </div>
-                                </div>
 
                                 <div class="col-12">
 
                                     <label for="inputEmail4" class="form-label"><strong>Description</strong></label>
-
-
                                     <div class="quill-editor-full">
                                         <textarea class="form-control" style="height: 300px"></textarea>
                                     </div>
+
                                 </div>
 
-                                <!-- <div class="col-12"><button type="button" class="btn btn-primary"
-                                        onclick="updateBlogFunction(id);">Update</button></div> -->
-
-                            </form>
 
                         </div>
-                    </div>
 
+                        </form>
+
+                    </div>
                 </div>
+
+            </div>
             </div>
         </section>
 
@@ -304,7 +276,9 @@
     <script src="assets/vendor/datatable/datatable-basic.init.js"></script>
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
+
         var token = localStorage.getItem("loginToken");
         console.log("token", token);
         if (!token) {
@@ -359,69 +333,22 @@
         var search = window.location.search
         console.log(search);
         const urlParams = new URLSearchParams(search);
-        const slug = urlParams.get('id');
-        console.log("urlParams", slug);
-        $('#blogId').val(slug)
-        $("#blogImage").change(function () {
-            if (typeof (FileReader) != "undefined") {
-                var dvPreview = $("#divImageMediaPreview");
-                dvPreview.html("");
-                $($(this)[0].files).each(function () {
-                    var file = $(this);
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        var img = $("<img />");
-                        img.attr("style", "width: 150px; height:100px; padding: 10px");
-                        img.attr("src", e.target.result);
-                        dvPreview.append(img);
-                    }
-                    reader.readAsDataURL(file[0]);
-                });
-            } else {
-                alert("This browser does not support HTML5 FileReader.");
-            }
-        });
+        const id = urlParams.get('id');
+        console.log("urlParams", id);
 
-        getSuccessCategoryDetail();
-        function getSuccessCategoryDetail() {
-            console.log("categories")
+        getHiringDeveloperDetail(id);
+        function getHiringDeveloperDetail(id) {
+
             jQuery.support.cors = true;
-            var url = "http://infosense.tech:8000/story/success-categories-details";
-            $.ajax({
-                url: url,
-                type: "GET",
-                success: function (response) {
-                    var res = JSON.parse(JSON.stringify(response));
-                    console.log("resresres", res.successCategoryData);
-
-                    $.each(res.successCategoryData, function (key, value) {
-                        $("#category").append('<option value="' + value._id + '">' + value.name + '</option>');
-                    });
-                },
-                error: function (err) {
-                    var error = JSON.parse(err);
-                    console.log(JSON.stringify(error));
-                },
-            });
-        }
-
-        getAllCaseStudy(slug);
-        function getAllCaseStudy(slug) {
-            console.log("fun", slug);
-            jQuery.support.cors = true;
-            var url = "http://infosense.tech:8000/story/story-detail/" + slug;
+            // var url = "http://infosense.tech:8000/hiring/get-career/" + id;
+            var url = "http://infosense.tech:8000/hiring/get-career/63cf70a365e1158ab7d36d23"
             $.ajax({
                 url: url,
                 type: "GET",
                 success: function (response) {
                     console.log(response.data);
-                    console.log("successcategoryId", response.data.successcategoryId);
 
-                    $("#category").val(response.data.successcategoryId);
-
-
-                    $('#title').val(response.data.title);
-                    // $(".quill-editor-full").html(response.data.description)
+                    $("#developerType").val(response.data.developerType);
                     new Quill(".quill-editor-full", {
                         modules: {
                             toolbar: [
@@ -467,11 +394,10 @@
                         },
                         readOnly: true,
                         theme: "snow",
-                    }).clipboard.dangerouslyPasteHTML(response.data.description);
+                    }).clipboard.dangerouslyPasteHTML(response.data.detail);
 
 
-                    $('#blogImgPreview').show()
-                    $('#blogImgPreview').attr("src", response.data.image)
+
 
                 },
                 error: function (err) {
@@ -480,6 +406,8 @@
                 },
             });
         }
+
+
     </script>
 </body>
 

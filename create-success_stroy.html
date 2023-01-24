@@ -106,15 +106,16 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-      <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="case-studies.html">
-          <i class="bi bi-grid"></i>
-          <span>Case studies</span>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
         </a>
-      </li> -->
+      </li><!-- End Profile Page Nav -->
+
       <!-- End Dashboard Nav -->
       <li class="nav-item">
-        <a class="nav-link " href="success_story.html">
+        <a class="nav-link" href="success_story.html">
           <i class="bx bx-list-ul"></i>
           <span>Success Stories</span>
         </a>
@@ -126,13 +127,6 @@
           <span>Blog</span>
         </a>
       </li><!-- End Dashboard Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed " href="resume.html">
@@ -147,7 +141,12 @@
           <span>Contact List</span>
         </a>
       </li><!-- End Profile Page Nav -->
-
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="hiring-developer.html">
+          <i class="bi bi-envelope"></i>
+          <span>Hiring Developer List</span>
+        </a>
+      </li><!-- End Hiring Developer page Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -175,8 +174,16 @@
               <i class="bi bi-circle"></i><span>Cookie Policy </span>
             </a>
           </li>
+          <li>
+            <a href="hiring.html">
+              <i class="bi bi-circle"></i><span>Hiring </span>
+            </a>
+          </li>
         </ul>
       </li>
+
+
+
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -195,7 +202,8 @@
           </nav>
         </div><!-- End Page Title -->
         <div class="col-6">
-          <div id="addButton"> <a href="success_story.html" class="btn btn-primary"><i class="bi bi-arrow-left-short"></i> Back</a></div>
+          <div id="addButton"> <a href="success_story.html" class="btn btn-primary"><i
+                class="bi bi-arrow-left-short"></i> Back</a></div>
         </div>
       </div><!-- End Page Title -->
     </div>
@@ -214,13 +222,13 @@
                 </div>
 
                 <div class="col-12">
-                    <label for=""><strong>Category</strong></label>
-                    <select id="category" class="form-control">
-                        <option selected value="">Select Category</option>
-                    </select>
-                    <div class="error" id="errorCategory"></div>
+                  <label for=""><strong>Category</strong></label>
+                  <select id="category" class="form-control">
+                    <option selected value="">Select Category</option>
+                  </select>
+                  <div class="error" id="errorCategory"></div>
                 </div>
-                
+
 
                 <div class="col-12">
                   <div class="form-group mt-5">
@@ -229,7 +237,8 @@
                   </div>
                   <div class="error" id="errorImg"></div>
                   <div style="margin: 14px;">
-                    <img class="file-upload-image profile-user-img" src="" alt="blogImgPreview" id="blogImgPreview" style="display: none;" width="100px;" height="100px;">
+                    <img class="file-upload-image profile-user-img" src="" alt="blogImgPreview" id="blogImgPreview"
+                      style="display: none;" width="100px;" height="100px;">
                   </div>
                 </div>
 
@@ -433,15 +442,15 @@
         success: function (response) {
           var res = JSON.parse(JSON.stringify(response));
           // console.log("resresres",res.userDetails);
-          console.log("resresres",res.successCategoryData);
+          console.log("resresres", res.successCategoryData);
 
-            $.each(res.successCategoryData, function(key, value) {
-                $("#category").append('<option value="' + value._id + '">' + value.name + '</option>');
-            });
+          $.each(res.successCategoryData, function (key, value) {
+            $("#category").append('<option value="' + value._id + '">' + value.name + '</option>');
+          });
 
-        //   var fullname = admin.firstName + " " + admin.lastName;
-        //   $('#adminName').text(fullname ? fullname : "Admin")
-        //   $('#adminProfileImage').attr('src', admin.image)
+          //   var fullname = admin.firstName + " " + admin.lastName;
+          //   $('#adminName').text(fullname ? fullname : "Admin")
+          //   $('#adminProfileImage').attr('src', admin.image)
         },
         error: function (err) {
           var error = JSON.parse(err);
@@ -451,7 +460,7 @@
     }
 
     function blogFunction() {
-        
+
       var title = $('#title').val();
       var category = $('#category').val();
 

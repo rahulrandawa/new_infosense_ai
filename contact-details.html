@@ -110,15 +110,16 @@
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
-            <!-- <li class="nav-item">
-                <a class="nav-link collapsed" href="case-studies.html">
-                    <i class="bi bi-grid"></i>
-                    <span>Case studies</span>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="users-profile.html">
+                    <i class="bi bi-person"></i>
+                    <span>Profile</span>
                 </a>
-            </li> -->
+            </li><!-- End Profile Page Nav -->
+
             <!-- End Dashboard Nav -->
             <li class="nav-item">
-                <a class="nav-link " href="success_story.html">
+                <a class="nav-link collapsed" href="success_story.html">
                     <i class="bx bx-list-ul"></i>
                     <span>Success Stories</span>
                 </a>
@@ -132,36 +133,34 @@
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="users-profile.html">
-                    <i class="bi bi-person"></i>
-                    <span>Profile</span>
+                <a class="nav-link collapsed " href="resume.html">
+                    <i class="bx bxs-file"></i>
+                    <span>Resume</span>
                 </a>
             </li><!-- End Profile Page Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed " href="resume.html">
-                  <i class="bx bxs-file"></i>
-                  <span>Resume</span>
+                <a class="nav-link" href="contact_list.html">
+                    <i class="bi bi-envelope"></i>
+                    <span>Contact List</span>
                 </a>
-              </li><!-- End Profile Page Nav -->
-        
-              <li class="nav-item">
-                <a class="nav-link collapsed " href="contact_list.html">
-                  <i class="bi bi-envelope"></i>
-                  <span>Contact List</span>
+            </li><!-- End Profile Page Nav -->
+            <li class="nav-item">
+                <a class="nav-link collapsed " href="hiring-developer.html">
+                    <i class="bi bi-envelope"></i>
+                    <span>Hiring Developer List</span>
                 </a>
-              </li><!-- End Profile Page Nav -->
-
+            </li><!-- End Hiring Developer page Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <!-- <li>
-            <a href="about-us.html">
-              <i class="bi bi-circle"></i><span>about us</span>
-            </a>
-          </li> -->
+                <a href="about-us.html">
+                  <i class="bi bi-circle"></i><span>about us</span>
+                </a>
+              </li> -->
                     <li>
                         <a href="privacy-policy.html">
                             <i class="bi bi-circle"></i><span>Privacy Policy</span>
@@ -179,9 +178,11 @@
                             <i class="bi bi-circle"></i><span>Cookie Policy </span>
                         </a>
                     </li>
-
-
-
+                    <li>
+                        <a href="hiring.html">
+                            <i class="bi bi-circle"></i><span>Hiring </span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
@@ -221,35 +222,36 @@
                             </div>
                             <form class="row g-3 needs-validation" novalidate>
                                 <div class="col-md-6">
-                                  <label for="validationCustom01" class="form-label">Name</label>
-                                  <input type="text" class="form-control" id="fullName" value="John" disabled>
-                                  
+                                    <label for="validationCustom01" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="fullName" value="John" disabled>
+
                                 </div>
                                 <div class="col-md-6">
-                                  <label for="validationCustom02" class="form-label">Company Name</label>
-                                  <input type="text" class="form-control" id="companyName" value="Doe" disabled>
-                                  
+                                    <label for="validationCustom02" class="form-label">Company Name</label>
+                                    <input type="text" class="form-control" id="companyName" value="Doe" disabled>
+
                                 </div>
-                             
+
                                 <div class="col-md-6">
-                                  <label for="validationCustom03" class="form-label">Email</label>
-                                  <input type="text" class="form-control" id="emailId" disabled>
-                                 
+                                    <label for="validationCustom03" class="form-label">Email</label>
+                                    <input type="text" class="form-control" id="emailId" disabled>
+
                                 </div>
                                 <div class="col-md-6">
                                     <label for="validationCustom03" class="form-label">Phone No.</label>
                                     <input type="text" class="form-control" id="phoneNumber" disabled>
-                                   
-                                  </div>
-                              
-                                <div class="col-md-12">
-                                  <label for="validationCustom05" class="form-label">Message</label>
-                                  <textarea type="text" class="form-control" id="message" disabled style="height: 150px;"></textarea>
-                                  
+
                                 </div>
-                           
-                                
-                              </form><!-- End Custom Styled Validation -->
+
+                                <div class="col-md-12">
+                                    <label for="validationCustom05" class="form-label">Message</label>
+                                    <textarea type="text" class="form-control" id="message" disabled
+                                        style="height: 150px;"></textarea>
+
+                                </div>
+
+
+                            </form><!-- End Custom Styled Validation -->
 
                         </div>
                     </div>
@@ -352,13 +354,13 @@
                 url: url,
                 type: "GET",
                 success: function (response) {
-                console.log(response);
-                var contacts = response.data;
-                $('#fullName').val(contacts.name)
-                $('#companyName').val(contacts.companyName)
-                $('#emailId').val(contacts.email)
-                $('#phoneNumber').val(contacts.phone)
-                $('#message').val(contacts.message)
+                    console.log(response);
+                    var contacts = response.data;
+                    $('#fullName').val(contacts.name)
+                    $('#companyName').val(contacts.companyName)
+                    $('#emailId').val(contacts.email)
+                    $('#phoneNumber').val(contacts.phone)
+                    $('#message').val(contacts.message)
 
                 },
                 error: function (err) {
@@ -369,4 +371,5 @@
         }
     </script>
 </body>
+
 </html>

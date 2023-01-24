@@ -107,12 +107,13 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-      <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="case-studies.html">
-          <i class="bi bi-grid"></i>
-          <span>Case studies</span>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
         </a>
-      </li> -->
+      </li><!-- End Profile Page Nav -->
+
       <!-- End Dashboard Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="success_story.html">
@@ -129,13 +130,6 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
-
-      <li class="nav-item">
         <a class="nav-link collapsed " href="resume.html">
           <i class="bx bxs-file"></i>
           <span>Resume</span>
@@ -148,19 +142,24 @@
           <span>Contact List</span>
         </a>
       </li><!-- End Profile Page Nav -->
-
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed " href="hiring-developer.html">
+          <i class="bi bi-envelope"></i>
+          <span>Hiring Developer List</span>
+        </a>
+      </li><!-- End Hiring Developer page Nav -->
+      <li class="nav-item">
+        <a class="nav-link" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <!-- <li>
             <a href="about-us.html">
               <i class="bi bi-circle"></i><span>about us</span>
             </a>
           </li> -->
           <li>
-            <a href="privacy-policy.html" class="active">
+            <a href="privacy-policy.html">
               <i class="bi bi-circle"></i><span>Privacy Policy</span>
             </a>
           </li>
@@ -176,9 +175,12 @@
               <i class="bi bi-circle"></i><span>Cookie Policy </span>
             </a>
           </li>
-
+          <li>
+            <a href="hiring.html">
+              <i class="bi bi-circle"></i><span>Hiring </span>
+            </a>
+          </li>
         </ul>
-
       </li>
 
 
@@ -382,7 +384,7 @@
                 ["clean"]
               ]
             },
-            
+
             theme: "snow"
           }).clipboard.dangerouslyPasteHTML(description);
 
@@ -445,15 +447,15 @@
           console.log(response);
           toastr.success('Privacy Policy updated successfully');
           setTimeout(() => {
-                location.reload()
-            }, "1000")
+            location.reload()
+          }, "1000")
         },
         error: function (err) {
           // console.log(err);
           toastr.success("Somethings went wrong");
           setTimeout(() => {
-                location.reload()
-            }, "1000")
+            location.reload()
+          }, "1000")
         },
       });
 

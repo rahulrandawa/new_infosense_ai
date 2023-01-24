@@ -62,7 +62,7 @@
 
 
 
-        <li class="nav-item dropdown pe33">
+        <li class="nav-item dropdown" style="padding-right:4rem!important;">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img alt="Profile" class="rounded-circle" id="adminProfileImage">
@@ -108,14 +108,14 @@
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
-      <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="case-studies.html">
-          <i class="bi bi-grid"></i>
-          <span>Case studies</span>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="users-profile.html">
+          <i class="bi bi-person"></i>
+          <span>Profile</span>
         </a>
-      </li> -->
-      <!-- End Dashboard Nav -->
+      </li><!-- End Profile Page Nav -->
 
+      <!-- End Dashboard Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="success_story.html">
           <i class="bx bx-list-ul"></i>
@@ -131,13 +131,6 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
-          <i class="bi bi-person"></i>
-          <span>Profile</span>
-        </a>
-      </li><!-- End Profile Page Nav -->
-
-      <li class="nav-item">
         <a class="nav-link" href="resume.html">
           <i class="bx bxs-file"></i>
           <span>Resume</span>
@@ -150,7 +143,12 @@
           <span>Contact List</span>
         </a>
       </li><!-- End Profile Page Nav -->
-
+      <li class="nav-item">
+        <a class="nav-link collapsed " href="hiring-developer.html">
+          <i class="bi bi-envelope"></i>
+          <span>Hiring Developer List</span>
+        </a>
+      </li><!-- End Hiring Developer page Nav -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>CMS</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -178,13 +176,11 @@
               <i class="bi bi-circle"></i><span>Cookie Policy </span>
             </a>
           </li>
-          <!-- <li>
-            <a href="hiring.html" class="active">
+          <li>
+            <a href="hiring.html">
               <i class="bi bi-circle"></i><span>Hiring </span>
             </a>
-          </li> -->
-
-
+          </li>
         </ul>
       </li>
 
@@ -229,7 +225,8 @@
                     <th>Email-Id</th>
                     <th>Mobile Number</th>
                     <th>Experience</th>
-                    <th>Action/Resume</th>
+                    <th>Resume</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -352,13 +349,13 @@
           for (var i = 0; i <= length; i++) {
             var cat = data[i];
             $('#blogTable').dataTable({
-              //  "bLengthChange": false,
+              // "bLengthChange": false,
               // "bPaginate": true,
               // "bInfo": false,
               "autoWidth": false,
               // "order": [[0, "desc"]],
-              "processing": true,
-              "serverSide": false,
+              // "processing": true,
+              // "serverSide": false,
               "destroy": true,
               // "dom": 'lrtip'
             }).fnAddData([
@@ -367,7 +364,8 @@
               cat.email,
               cat.contactNumber,
               cat.experience,
-              '<a title="View" href="view-resume.html?id=' + cat._id + '" class="btn btn-primary">View</a> <a href="' + cat.file + '" target="_blank" class="btn btn-primary">Download File</a> ',
+              '<a href="' + cat.file + '" target="_blank" class="btn btn-primary">Download </a> ',
+              '<a title="View" href="view-resume.html?id=' + cat._id + '" class="btn btn-primary">View</a>',
             ]);
 
             num++;
