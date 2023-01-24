@@ -428,33 +428,58 @@
 
   function changeStatus(id,status) {  
 
-   jQuery.support.cors = true;
-    var url = "http://infosense.tech:8000/hiring/change-status/"+id;
-    $.ajax({
-      url: url,
-      method:"PUT",
-      type: "PUT",
-      data:{status:status},
-      success: function (response) {
-        console.log("response", response);
-              toastr.success('Status change successfully');
+    if(status == 'active'){
+      var capital = 'Active';
+    }else{
+      var capital = 'Deactive';
+    }
+    swal({
+      title: "Are you sure want to "+capital+" this Hiring Developer?",
+      text: "Once deleted, you will not be able to recover this Hiring Developer!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((willDelete) => {
 
-              setTimeout(() => {
-                location.reload()
-              }, "1000")
-        
-        
-      },
-      error: function (err) {
-        console.log("response", response);
-              toastr.error('Something went wrong!');
+        if (willDelete) {
+          jQuery.support.cors = true;
+          var url = "http://infosense.tech:8000/hiring/change-status/"+id;
+          $.ajax({
+            url: url,
+            method:"PUT",
+            type: "PUT",
+            data:{status:status},
+            success: function (response) {
+              console.log("response", response);
+                    toastr.success('Status change successfully');
 
-              setTimeout(() => {
-                location.reload()
-              }, "1000")
+                    setTimeout(() => {
+                      location.reload()
+                    }, "1000")
+              
+              
+            },
+            error: function (err) {
+              console.log("response", response);
+                    toastr.error('Something went wrong!');
 
-      },
-    });
+                    setTimeout(() => {
+                      location.reload()
+                    }, "1000")
+
+            },
+          });
+        } else {
+          swal("Your hiring developer is safe!");
+          toastr.error('Somthing went wrong!');
+          setTimeout(() => {
+            location.reload()
+          }, "1000")
+        }
+      });
+
+   
   }
 </script>
 
