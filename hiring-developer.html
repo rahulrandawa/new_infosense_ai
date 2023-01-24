@@ -329,11 +329,9 @@
     });
   }
 
-  getAllCaseStudy();
-  function getAllCaseStudy() {
-    // jQuery.support.cors = true;
-
-    // var url = "http://infosense.tech:8000/blog/get-blogList?page=1&limit=200";
+  getAllHiringData();
+  function getAllHiringData() {
+   
     var url = "http://infosense.tech:8000/hiring/get-career-data";
 
     $.ajax({
@@ -350,9 +348,9 @@
           for (var i = 0; i <= length; i++) {
             var cat = data[i];
             if (cat.status == 'active') {
-              var activebutton = '<button type="button" title="active"  class="btn btn-primary" onclick="changeStatus(' + cat._id + ')">Active</button>';
+              var activebutton = '<a href="javascript:void(0)" title="active"  class="btn btn-primary" onclick="changeStatus(\''+cat._id+'\',\'deactive\')">Active</a>';
             } else {
-              var activebutton = '<button type="button" title="deactive"  class="btn btn-danger" onclick="changeStatus(' + cat._id + ')">Deactive</button>';
+              var activebutton = '<a href="javascript:void(0)" title="deactive"  class="btn btn-danger" onclick="changeStatus(\''+cat._id+'\',\'active\')">Deactive</a>';
             }
             $('#blogTable').dataTable({
               // "bLengthChange": false,
@@ -426,6 +424,37 @@
           }, "1000")
         }
       });
+  }
+
+  function changeStatus(id,status) {  
+
+   jQuery.support.cors = true;
+    var url = "http://infosense.tech:8000/hiring/change-status/"+id;
+    $.ajax({
+      url: url,
+      method:"PUT",
+      type: "PUT",
+      data:{status:status},
+      success: function (response) {
+        console.log("response", response);
+              toastr.success('Status change successfully');
+
+              setTimeout(() => {
+                location.reload()
+              }, "1000")
+        
+        
+      },
+      error: function (err) {
+        console.log("response", response);
+              toastr.error('Something went wrong!');
+
+              setTimeout(() => {
+                location.reload()
+              }, "1000")
+
+      },
+    });
   }
 </script>
 

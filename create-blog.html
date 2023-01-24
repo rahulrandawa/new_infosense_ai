@@ -238,6 +238,12 @@
                 </div>
 
                 <div class="col-12">
+                  <label for="inputNanme4" class="form-label"><strong>Short Description</strong></label>
+                  <textarea class="form-control" style="height: 100px;" id="sortDescription"></textarea>
+                  <div class="error" id="errorSortDescription"></div>
+                </div>
+
+                <div class="col-12">
 
                   <label for="inputEmail4" class="form-label"><strong>Description</strong></label>
                   <div class="quill-editor-full">
@@ -459,7 +465,7 @@
 
       var title = $('#title').val();
       var category = $('#category').val();
-
+      var sortDescription = $('#sortDescription').val();
       var content = $('.quill-editor-full').html();
       var file = $('#blogImage')[0].files[0];
       console.log("filefile", file);
@@ -475,6 +481,7 @@
       var title_valid = false;
       var description_valid = false;
       var category_valid = false;
+      var sortDescription_valid = false;
 
       if (title == '' || title == 0) {
         $("#errorTitle").show().text("Enter Title");
@@ -492,6 +499,14 @@
         $("#errorImg").hide();
       }
 
+      if (sortDescription == '' || sortDescription == 0) {
+        $("#errorSortDescription").show().text("Enter Short Description");
+        var sortDescription_valid = false;
+      } else {
+        var sortDescription_valid = true;
+        $("#errorSortDescription").hide();
+      }
+
       if (check_quillDescription == '' || check_quillDescription == 0) {
         $("#errorDesc").show().text("Enter Description");
         var description_valid = false;
@@ -500,7 +515,7 @@
         $("#errorDesc").hide();
       }
 
-      if (title_valid == false || description_valid == false || file_valid == false) {
+      if (title_valid == false || description_valid == false || file_valid == false || sortDescription_valid == false) {
         console.log("login error")
         $(window).scrollTop(0);
         return false;
@@ -508,11 +523,14 @@
 
       $("#errorTitle").hide();
       $("#errorDesc").hide();
+      $("#errorSortDescription").hide();
       $("#errorImg").hide();
 
       let formData = new FormData();
       formData.append("title", title);
+      formData.append("sortDescription", sortDescription);
       formData.append("description", quill_description);
+      
       if (file) {
         formData.append("image", file);
       }

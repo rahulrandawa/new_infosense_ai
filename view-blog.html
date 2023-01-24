@@ -248,6 +248,12 @@
                                 </div>
 
                                 <div class="col-12">
+                                    <label for="inputNanme4" class="form-label"><strong>Short Description</strong></label>
+                                    <textarea class="form-control" style="height: 100px;" id="sortDescription" disabled></textarea>
+                                    <div class="error" id="errorSortDescription"></div>
+                                  </div>
+
+                                <div class="col-12">
 
                                     <label for="inputEmail4" class="form-label"><strong>Description</strong></label>
 
@@ -386,6 +392,7 @@
                 success: function (response) {
 
                     $('#title').val(response.data.title);
+                    $('#sortDescription').val(response.data.sortDescription);
                     // $(".quill-editor-full").html(response.data.description)
                     new Quill(".quill-editor-full", {
                         modules: {
