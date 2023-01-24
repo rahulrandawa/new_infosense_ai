@@ -269,10 +269,14 @@
                                 </div>
 
                                 <div class="col-12">
+                                    <label for="inputNanme4" class="form-label"><strong>Short Description</strong></label>
+                                    <textarea class="form-control" style="height: 100px;" id="short_description"></textarea>
+                                    <div class="error" id="errorSortDescription"></div>
+                                </div>
+
+                                <div class="col-12">
 
                                     <label for="inputEmail4" class="form-label"><strong>Description</strong></label>
-
-
                                     <div class="quill-editor-full">
                                         <textarea class="form-control" style="height: 300px"></textarea>
                                     </div>
@@ -479,8 +483,10 @@
                     console.log("successcategoryId", response.data.successcategoryId);
 
                     $("#category").val(response.data.successcategoryId);
+                    
 
                     $('#title').val(response.data.title);
+                    $('#short_description').val(response.data.short_description);
                     new Quill(".quill-editor-full", {
                         modules: {
                             toolbar: [
@@ -544,16 +550,14 @@
             var title = $('#title').val();
             var category = $('#category').val();
 
+            var short_description = $('#short_description').val();
+
             var content = $('.quill-editor-full').html();
             var file = $('#blogImage')[0].files[0];
             console.log("filefile", file);
 
             const slug = urlParams.get('id');
-            console.log("urlParams", slug);
-            console.log("categorycategory", category);
-
-
-
+            
             var check_quillDescription = new Quill(".quill-editor-full").getText(); // check data avaiable in ckeditor or not
             console.log("check_quillDescription", check_quillDescription);
 
@@ -562,6 +566,7 @@
             var title_valid = false;
             var description_valid = false;
             var category_valid = false;
+            var short_description_valid = false;
 
             if (title == '' || title == 0) {
                 $("#errorTitle").show().text("Enter Title");
@@ -570,7 +575,6 @@
                 var title_valid = true;
                 $("#errorTitle").hide();
             }
-
 
             if (category == '' || category == 0) {
                 $("#errorCategory").show().text("Select Category");
@@ -588,12 +592,21 @@
                 $("#errorDesc").hide();
             }
 
+            if (short_description == '' || short_description == 0) {
+                $("#errorSortDescription").show().text("Enter Short Description");
+                var short_description_valid = false;
+            } else {
+                var short_description_valid = true;
+                $("#errorSortDescription").hide();
+            }
 
-            if (description_valid == false || description_valid == false || category_valid == false) {
+            if (description_valid == false || description_valid == false || category_valid == false || short_description_valid == false) {
                 console.log("login error")
                 $(window).scrollTop(0);
                 return false;
             }
+
+            console.log("short_description", short_description);
 
 
             $("#errorTitle").hide();
@@ -604,11 +617,14 @@
             formData.append("title", title);
             formData.append("description", quill_description);
             formData.append("successcategoryId", category);
+            formData.append("short_description", short_description);
+            
             if (file) {
                 formData.append("image", file);
             }
 
             var url = "http://infosense.tech:8000/story/update-story/" + slug;
+            // var url = "http://infosense.tech:8000/story/updateStory/63cfca29db6c5896213be01c"
             $.ajax({
                 url: url,
                 method: "PUT",

@@ -243,6 +243,12 @@
                 </div>
 
                 <div class="col-12">
+                  <label for="inputNanme4" class="form-label"><strong>Short Description</strong></label>
+                  <textarea class="form-control" style="height: 100px;" id="short_description"></textarea>
+                  <div class="error" id="errorSortDescription"></div>
+                </div>
+
+                <div class="col-12">
                   <label for="inputEmail4" class="form-label"><strong>Description</strong></label>
 
                   <div class="quill-editor-full">
@@ -463,10 +469,13 @@
 
       var title = $('#title').val();
       var category = $('#category').val();
+      var short_description = $('#short_description').val();
+      
 
       var content = $('.quill-editor-full').html();
       var file = $('#blogImage')[0].files[0];
       console.log("category", category);
+      
 
       var check_quillDescription = new Quill(".quill-editor-full").getText(); // check data avaiable in ckeditor or not
       console.log("check_quillDescription", check_quillDescription);
@@ -477,6 +486,7 @@
       var file_valid = false;
       var description_valid = false;
       var category_valid = false;
+      var short_description_valid = false;
 
       if (title == '' || title == 0) {
         $("#errorTitle").show().text("Enter Title");
@@ -492,6 +502,14 @@
       } else {
         var category_valid = true;
         $("#errorCategory").hide();
+      }
+
+      if (short_description == '' || short_description == 0) {
+        $("#errorSortDescription").show().text("Enter Short Description");
+        var short_description_valid = false;
+      } else {
+        var short_description_valid = true;
+        $("#errorSortDescription").hide();
       }
 
       if (check_quillDescription == '' || check_quillDescription == 0) {
@@ -510,7 +528,7 @@
         $("#errorImg").hide();
       }
 
-      if (description_valid == false || description_valid == false || file_valid == false || category_valid == false) {
+      if (description_valid == false || description_valid == false || file_valid == false || category_valid == false || short_description_valid == false) {
         console.log("login error")
         $(window).scrollTop(0);
         return false;
@@ -524,6 +542,7 @@
       formData.append("title", title);
       formData.append("description", quill_description);
       formData.append("successcategoryId", category);
+      formData.append("short_description", short_description);
       if (file) {
         formData.append("image", file);
       }

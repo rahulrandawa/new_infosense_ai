@@ -246,6 +246,7 @@
                                     </select>
                                     <div class="error" id="errorCategory"></div>
                                 </div>
+                                
 
                                 <!-- <div class="col-12">
                                     <div class="form-group mt-5">
@@ -265,6 +266,12 @@
                                         <img class="file-upload-image profile-user-img" src="" alt="blogImgPreview"
                                             id="blogImgPreview" style="display: none;" width="100px;" height="100px;">
                                     </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="inputNanme4" class="form-label"><strong>Short Description</strong></label>
+                                    <textarea class="form-control" style="height: 100px;" id="short_description" disabled></textarea>
+                                    <div class="error" id="errorSortDescription"></div>
                                 </div>
 
                                 <div class="col-12">
@@ -430,8 +437,9 @@
                     console.log("successcategoryId", response.data.successcategoryId);
 
                     $("#category").val(response.data.successcategoryId);
+                    $("#short_description").val(response.data.short_description);
 
-
+                    
                     $('#title').val(response.data.title);
                     // $(".quill-editor-full").html(response.data.description)
                     new Quill(".quill-editor-full", {
