@@ -348,7 +348,7 @@
     getAdminDetails();
     function getAdminDetails() {
       jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/data";
+      var url = "https://infosense.tech/admin/data";
       $.ajax({
         url: url,
         type: "GET",
@@ -372,7 +372,7 @@
 
     function logOut() {
       jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/logout   ";
+      var url = "https://infosense.tech/admin/logout   ";
       $.ajax({
         url: url,
         type: "GET",
@@ -535,7 +535,7 @@
         formData.append("image", file);
       }
 
-      var url = "http://infosense.tech:8000/blog/create-blog";
+      var url = "https://infosense.tech/blog/create-blog";
       $.ajax({
         url: url,
         method: "POST",

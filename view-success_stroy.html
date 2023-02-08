@@ -332,7 +332,7 @@
         getAdminDetails();
         function getAdminDetails() {
             jQuery.support.cors = true;
-            var url = "http://infosense.tech:8000/admin/data";
+            var url = "https://infosense.tech/admin/data";
             $.ajax({
                 url: url,
                 type: "GET",
@@ -356,7 +356,7 @@
 
         function logOut() {
             jQuery.support.cors = true;
-            var url = "http://infosense.tech:8000/admin/logout   ";
+            var url = "https://infosense.tech/admin/logout   ";
             $.ajax({
                 url: url,
                 type: "GET",
@@ -405,7 +405,7 @@
         function getSuccessCategoryDetail() {
             console.log("categories")
             jQuery.support.cors = true;
-            var url = "http://infosense.tech:8000/story/success-categories-details";
+            var url = "https://infosense.tech/story/success-categories-details";
             $.ajax({
                 url: url,
                 type: "GET",
@@ -428,7 +428,7 @@
         function getAllCaseStudy(slug) {
             console.log("fun", slug);
             jQuery.support.cors = true;
-            var url = "http://infosense.tech:8000/story/story-detail/" + slug;
+            var url = "https://infosense.tech/story/story-detail/" + slug;
             $.ajax({
                 url: url,
                 type: "GET",

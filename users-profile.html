@@ -457,7 +457,7 @@
     getAdminDetails();
     function getAdminDetails() {
       jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/data";
+      var url = "https://infosense.tech/admin/data";
       $.ajax({
         url: url,
         type: "GET",
@@ -491,7 +491,7 @@
 
     function logOut() {
       jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/logout   ";
+      var url = "https://infosense.tech/admin/logout   ";
       $.ajax({
         url: url,
         type: "GET",
@@ -551,7 +551,7 @@
         formData.append("image", image, image.name);
       }
       // return  
-      var url = "http://infosense.tech:8000/admin/update/" + id;
+      var url = "https://infosense.tech/admin/update/" + id;
       $.ajax({
         url: url,
         method: "PUT",
@@ -650,7 +650,7 @@
       console.log("error", error);
 
       jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/changePassword";
+      var url = "https://infosense.tech/admin/changePassword";
       var data = {};
       data._id = $(".adminId").val();
       data.oldPassword = $("#currentPassword").val();

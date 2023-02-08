@@ -299,7 +299,7 @@
         getAdminDetails();
         function getAdminDetails() {
             jQuery.support.cors = true;
-            var url = "http://infosense.tech:8000/admin/data";
+            var url = "https://infosense.tech/admin/data";
             $.ajax({
                 url: url,
                 type: "GET",
@@ -323,7 +323,7 @@
 
         function logOut() {
             jQuery.support.cors = true;
-            var url = "http://infosense.tech:8000/admin/logout   ";
+            var url = "https://infosense.tech/admin/logout   ";
             $.ajax({
                 url: url,
                 type: "GET",
@@ -352,8 +352,8 @@
         function getHiringDeveloperDetail(id) {
 
             jQuery.support.cors = true;
-            // var url = "http://infosense.tech:8000/hiring/get-career/" + id;
-            var url = "http://infosense.tech:8000/hiring/get-career/63cf70a365e1158ab7d36d23"
+            // var url = "https://infosense.tech/hiring/get-career/" + id;
+            var url = "https://infosense.tech/hiring/get-career/63cf70a365e1158ab7d36d23"
             $.ajax({
                 url: url,
                 type: "GET",

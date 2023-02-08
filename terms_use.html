@@ -288,7 +288,7 @@
     getAdminDetails();
     function getAdminDetails() {
       jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/data";
+      var url = "https://infosense.tech/admin/data";
       $.ajax({
         url: url,
         type: "GET",
@@ -312,7 +312,7 @@
 
     function logOut() {
       jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/admin/logout   ";
+      var url = "https://infosense.tech/admin/logout   ";
       $.ajax({
         url: url,
         type: "GET",
@@ -335,7 +335,7 @@
 
     function getTermsUse() {
       jQuery.support.cors = true;
-      var url = "http://infosense.tech:8000/policy/terms-of-use-details";
+      var url = "https://infosense.tech/policy/terms-of-use-details";
       $.ajax({
         url: url,
         type: "GET",
@@ -438,7 +438,7 @@
       console.log("title", title)
 
 
-      var url = "http://infosense.tech:8000/policy/update-terms/" + termsUse_id;
+      var url = "https://infosense.tech/policy/update-terms/" + termsUse_id;
       $.ajax({
         url: url,
         type: "POST",

@@ -299,7 +299,7 @@
   function getAdminDetails() {
     console.log("progileeeeee")
     jQuery.support.cors = true;
-    var url = "http://infosense.tech:8000/admin/data";
+    var url = "https://infosense.tech/admin/data";
     $.ajax({
       url: url,
       type: "GET",
@@ -323,7 +323,7 @@
 
   function logOut() {
     jQuery.support.cors = true;
-    var url = "http://infosense.tech:8000/admin/logout   ";
+    var url = "https://infosense.tech/admin/logout   ";
     $.ajax({
       url: url,
       type: "GET",
@@ -346,7 +346,7 @@
   function deletBlog(id) {
     console.log("fun", id);
     jQuery.support.cors = true;
-    var url = "http://infosense.tech:8000/blog/delete-blog/" + id;
+    var url = "https://infosense.tech/blog/delete-blog/" + id;
 
     $.ajax({
       url: url,
@@ -365,7 +365,7 @@
   function getAllCaseStudy() {
     // jQuery.support.cors = true;
 
-    var url = "http://infosense.tech:8000/story/details?page=1&limit=200";
+    var url = "https://infosense.tech/story/details?page=1&limit=200";
     $.ajax({
       url: url,
       type: "GET",
@@ -420,7 +420,7 @@
     })
       .then((willDelete) => {
         if (willDelete) {
-          var url = "http://infosense.tech:8000/story/delete-story/" + id;
+          var url = "https://infosense.tech/story/delete-story/" + id;
 
           $.ajax({
             url: url,

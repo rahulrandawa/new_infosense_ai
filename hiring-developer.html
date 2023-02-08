@@ -298,7 +298,7 @@
   function getAdminDetails() {
     console.log("progileeeeee")
     jQuery.support.cors = true;
-    var url = "http://infosense.tech:8000/admin/data";
+    var url = "https://infosense.tech/admin/data";
     $.ajax({
       url: url,
       type: "GET",
@@ -322,7 +322,7 @@
 
   function logOut() {
     jQuery.support.cors = true;
-    var url = "http://infosense.tech:8000/admin/logout   ";
+    var url = "https://infosense.tech/admin/logout   ";
     $.ajax({
       url: url,
       type: "GET",
@@ -344,7 +344,7 @@
   getAllHiringData();
   function getAllHiringData() {
    
-    var url = "http://infosense.tech:8000/hiring/get-career-data";
+    var url = "https://infosense.tech/hiring/get-career-data";
 
     $.ajax({
       url: url,
@@ -407,7 +407,7 @@
       .then((willDelete) => {
 
         if (willDelete) {
-          var url = "http://infosense.tech:8000/hiring/delete-career/" + id;
+          var url = "https://infosense.tech/hiring/delete-career/" + id;
           $.ajax({
             url: url,
             type: "DELETE",
@@ -456,7 +456,7 @@
 
         if (willDelete) {
           jQuery.support.cors = true;
-          var url = "http://infosense.tech:8000/hiring/change-status/"+id;
+          var url = "https://infosense.tech/hiring/change-status/"+id;
           $.ajax({
             url: url,
             method:"PUT",
